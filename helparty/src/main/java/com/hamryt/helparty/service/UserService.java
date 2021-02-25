@@ -4,6 +4,6 @@ import com.hamryt.helparty.dto.UserDto;
 
 public interface UserService {
 
-  void insertUser(UserDto userDto);
+    void insertUser(UserDto userDto);
 
 }

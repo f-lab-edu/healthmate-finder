@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-  int insertUser(UserDto user);
+    int insertUser(UserDto user);
 
-  Boolean isExistsEmail(String email);
+    Boolean isExistsEmail(String email);
 
 }

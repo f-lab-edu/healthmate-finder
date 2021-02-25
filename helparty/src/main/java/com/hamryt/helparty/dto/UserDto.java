@@ -10,10 +10,10 @@ import lombok.ToString;
 @ToString
 public class UserDto {
 
-  @NotEmpty(message = "이메일은 필수 입니다")
-  private String email;
+    @NotEmpty(message = "이메일은 필수 입니다")
+    private String email;
 
-  private String name;
+    private String name;
 
-  private String password;
+    private String password;
 }

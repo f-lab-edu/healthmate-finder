@@ -16,22 +16,22 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @MapperScan(basePackages = "com.hamryt.helparty.mapper")
 public class DatabaseConfiguration {
 
-  @Autowired
-  private ApplicationContext applicationContext;
+    @Autowired
+    private ApplicationContext applicationContext;
 
-  @Bean
-  public SqlSessionFactory mainSqlSessionFactory(DataSource dataSource) throws Exception {
-    SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-    sqlSessionFactoryBean.setDataSource(dataSource);
-    sqlSessionFactoryBean.setTypeAliasesPackage("com.hamryt.helparty.dto");
-    sqlSessionFactoryBean
-        .setMapperLocations(applicationContext.getResources("classpath:mybatis/mapper/*.xml"));
-    return sqlSessionFactoryBean.getObject();
-  }
+    @Bean
+    public SqlSessionFactory mainSqlSessionFactory(DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
+        sqlSessionFactoryBean.setDataSource(dataSource);
+        sqlSessionFactoryBean.setTypeAliasesPackage("com.hamryt.helparty.dto");
+        sqlSessionFactoryBean
+            .setMapperLocations(applicationContext.getResources("classpath:mybatis/mapper/*.xml"));
+        return sqlSessionFactoryBean.getObject();
+    }
 
-  @Bean
-  public SqlSessionTemplate mainSqlSessionTemplate(SqlSessionFactory mainSqlSessionFactory) {
-    return new SqlSessionTemplate(mainSqlSessionFactory);
-  }
+    @Bean
+    public SqlSessionTemplate mainSqlSessionTemplate(SqlSessionFactory mainSqlSessionFactory) {
+        return new SqlSessionTemplate(mainSqlSessionFactory);
+    }
 
 }
