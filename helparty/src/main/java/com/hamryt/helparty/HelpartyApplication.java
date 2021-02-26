@@ -9,9 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HelpartyApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(HelpartyApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(HelpartyApplication.class, args);
+    }
 
 
 }
