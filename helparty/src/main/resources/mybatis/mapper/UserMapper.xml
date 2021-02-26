@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hamryt.helparty.mapper.UserMapper">
+
+  <insert id="insertUser" parameterType="com.hamryt.helparty.dto.UserDto">
+    INSERT INTO user (email, name, password)
+    VALUES(#{email}, #{name}, #{password})
+  </insert>
+
+  <select id="isExistsEmail" resultType="_boolean">
+    SELECT EXISTS (SELECT * FROM user WHERE email=#{email}) AS success;
+  </select>
+
+</mapper>
