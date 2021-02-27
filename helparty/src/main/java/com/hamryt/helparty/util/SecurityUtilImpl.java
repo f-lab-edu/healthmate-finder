@@ -1,4 +1,4 @@
-package com.hamryt.helparty.utill;
+package com.hamryt.helparty.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,7 +13,7 @@ public class SecurityUtilImpl implements SecurityUtil {
     }
 
     @Override
-    public String encryptSha256(String data) {
+    public String encryption(String data) {
         String retVal = "";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

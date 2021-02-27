@@ -9,6 +9,6 @@ public interface UserMapper {
 
     int insertUser(UserDto user);
 
-    Boolean isExistsEmail(String email);
+    boolean isExistsEmail(String email);
 
 }
