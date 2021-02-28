@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
             .password(encodedPassword)
             .build();
 
-        if (userMapper.insertUser(newUser) == 0) {
+        if (userMapper.insertUser(newUser) != 1) {
             throw new UnexpectedResultException(userDto.toString());
         }
 
