@@ -4,7 +4,6 @@ import com.hamryt.helparty.dto.UserDto;
 import com.hamryt.helparty.exception.EmailExistedException;
 import com.hamryt.helparty.exception.UnexpectedResultException;
 import com.hamryt.helparty.mapper.UserMapper;
-import com.hamryt.helparty.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final SecurityUtil securityUtil;
+    private final SecurityService securityService;
 
     @Transactional
     public void insertUser(UserDto userDto) {
@@ -26,7 +25,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistedException(userDto.getEmail());
         }
 
-        String encodedPassword = securityUtil.encryption(userDto.getPassword());
+        String encodedPassword = securityService.encryption(userDto.getPassword());
 
         UserDto newUser = UserDto.builder()
             .email(userDto.getEmail())

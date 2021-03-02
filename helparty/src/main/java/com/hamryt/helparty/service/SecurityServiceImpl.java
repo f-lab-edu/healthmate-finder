@@ -1,4 +1,4 @@
-package com.hamryt.helparty.util;
+package com.hamryt.helparty.service;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SecurityUtilImpl implements SecurityUtil {
+public class SecurityServiceImpl implements SecurityService {
 
-    private SecurityUtilImpl() {
+    private SecurityServiceImpl() {
     }
 
     @Override
