@@ -7,13 +7,13 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SecurityServiceImpl implements SecurityService {
+public class Sha256Encryt implements Encryptor {
 
-    private SecurityServiceImpl() {
+    public Sha256Encryt() {
     }
 
     @Override
-    public String encryption(String data) {
+    public String encrypt(String data) {
         String retVal = "";
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

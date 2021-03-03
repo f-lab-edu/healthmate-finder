@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
-    private final SecurityService securityService;
+    private final Encryptor encryptor;
 
     @Transactional
     public void insertUser(UserDto userDto) {
@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
             throw new EmailExistedException(userDto.getEmail());
         }
 
-        String encodedPassword = securityService.encryption(userDto.getPassword());
+        String encodedPassword = encryptor.encrypt(userDto.getPassword());
 
         UserDto newUser = UserDto.builder()
             .email(userDto.getEmail())
