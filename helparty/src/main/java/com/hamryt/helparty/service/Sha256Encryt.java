@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class Sha256Encryt implements Encryptor {
 
-    public Sha256Encryt() {
-    }
 
     @Override
     public String encrypt(String data) {
