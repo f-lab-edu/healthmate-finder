@@ -18,6 +18,15 @@ public class UserServiceImpl implements UserService {
 
     private final Encryptor encryptor;
 
+    @Override
+    public UserDto loginUser(String email, String password) {
+
+        String encryptPassword = encryptor.encrypt(password);
+        UserDto userDto = userMapper.findByIdAndPassword(email, encryptPassword);
+
+        return userDto;
+    }
+
     @Transactional
     public void insertUser(UserDto userDto) {
 

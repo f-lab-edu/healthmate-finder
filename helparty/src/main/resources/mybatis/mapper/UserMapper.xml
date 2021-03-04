@@ -13,4 +13,12 @@
     SELECT EXISTS (SELECT * FROM user WHERE email=#{email}) AS success;
   </select>
 
+  <select id="findByIdAndPassword" resultType="com.hamryt.helparty.dto.UserDto">
+    SELECT *
+    FROM user
+    WHERE email = #{email}
+    AND password = #{password}
+    AND status != 'DELETE'
+  </select>
+
 </mapper>
