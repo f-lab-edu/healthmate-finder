@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class UserDto {
 
-    public enum Status{
+    public enum Status {
         DEFAULT, DELETE
     }
 
