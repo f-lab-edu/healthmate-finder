@@ -10,10 +10,6 @@ import lombok.ToString;
 @ToString
 public class UserDto {
 
-    public enum Status {
-        DEFAULT, DELETE
-    }
-
     @NotEmpty(message = "이메일은 필수 입니다")
     private String email;
     @NotEmpty
@@ -21,5 +17,4 @@ public class UserDto {
     @NotEmpty
     private String password;
 
-    private Status status;
 }
