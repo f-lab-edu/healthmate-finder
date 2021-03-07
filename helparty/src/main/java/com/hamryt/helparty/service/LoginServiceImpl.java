@@ -15,19 +15,20 @@ public class LoginServiceImpl implements LoginService {
 
     private final Encryptor encryptor;
     private final UserMapper userMapper;
+    private final UserService userService;
 
     @Transactional
     public UserDto login(String email, String password, HttpSession session) {
 
         String encryptPassword = encryptor.encrypt(password);
 
-        if (userMapper.findByEmailAndPassword(email, encryptPassword)) {
+        if (userService.findByEmailAndPassword(email, encryptPassword)) {
             setLoginUserEmail(session, email);
         } else {
             throw new UserNotExistedException(email);
         }
 
-        return userMapper.findUserByEmail(email);
+        return userService.findUserByEmail(email);
     }
 
     public void setLoginUserEmail(HttpSession session, String email) {

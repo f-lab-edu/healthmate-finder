@@ -44,4 +44,14 @@ public class UserServiceImpl implements UserService {
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
     }
+
+    @Transactional(readOnly = true)
+    public boolean findByEmailAndPassword(String email, String password){
+        return userMapper.findByEmailAndPassword(email, password);
+    }
+
+    @Transactional
+    public UserDto findUserByEmail(String email){
+        return userMapper.findUserByEmail(email);
+    }
 }
