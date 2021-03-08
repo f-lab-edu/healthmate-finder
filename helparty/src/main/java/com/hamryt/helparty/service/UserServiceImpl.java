@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
     }
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.findByEmailAndPassword(email, password);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDto findUserByEmail(String email){
         return userMapper.findUserByEmail(email);
     }
