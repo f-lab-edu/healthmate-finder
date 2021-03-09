@@ -14,6 +14,6 @@ public interface UserMapper {
 
     boolean isExistsEmail(String email);
 
-    UserDto findUserByEmail(String email);
+    UserDto findUserByEmailAndPassword(String email, String password);
 
 }

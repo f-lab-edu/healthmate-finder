@@ -46,12 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public boolean findByEmailAndPassword(String email, String password){
-        return userMapper.findByEmailAndPassword(email, password);
-    }
-
-    @Transactional(readOnly = true)
-    public UserDto findUserByEmail(String email){
-        return userMapper.findUserByEmail(email);
+    public UserDto findUserByEmailAndPassword(String email, String password) {
+        return userMapper.findUserByEmailAndPassword(email, password);
     }
 }
