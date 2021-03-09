@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
 
-    boolean findByEmailAndPassword(String email,  String password);
+    boolean findByEmailAndPassword(String email, String password);
 
     int insertUser(UserDto user);
 

@@ -36,7 +36,7 @@ public class LoginController {
 
     @Getter
     @RequiredArgsConstructor
-    private static class LoginRequest{
+    private static class LoginRequest {
 
         @NonNull
         private String email;
@@ -47,7 +47,7 @@ public class LoginController {
 
     @Getter
     @RequiredArgsConstructor
-    private static class LoginResponse{
+    private static class LoginResponse {
 
         @NonNull
         private UserDto userDto;
