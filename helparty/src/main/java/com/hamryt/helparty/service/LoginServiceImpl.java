@@ -22,7 +22,7 @@ public class LoginServiceImpl implements LoginService {
         String encryptPassword = encryptor.encrypt(password);
         UserDto userDto = userService.findUserByEmailAndPassword(email, encryptPassword);
 
-        if (userDto != null) {
+        if (userDto!=null){
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
         } else {
             throw new UserNotExistedException(email);
