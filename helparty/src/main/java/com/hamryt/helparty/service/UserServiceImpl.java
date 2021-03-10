@@ -18,6 +18,7 @@ public class UserServiceImpl implements UserService {
 
     private final Encryptor encryptor;
 
+
     @Transactional
     public void insertUser(UserDto userDto) {
 
@@ -39,8 +40,13 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto findUserByEmailAndPassword(String email, String password) {
+        return userMapper.findUserByEmailAndPassword(email, password);
     }
 }

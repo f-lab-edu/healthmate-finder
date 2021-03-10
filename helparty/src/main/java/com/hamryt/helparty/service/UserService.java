@@ -6,4 +6,6 @@ public interface UserService {
 
     void insertUser(UserDto userDto);
 
+    UserDto findUserByEmailAndPassword(String email, String password);
+
 }

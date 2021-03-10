@@ -12,8 +12,9 @@ public class UserDto {
 
     @NotEmpty(message = "이메일은 필수 입니다")
     private String email;
-
+    @NotEmpty
     private String name;
-
+    @NotEmpty
     private String password;
+
 }
