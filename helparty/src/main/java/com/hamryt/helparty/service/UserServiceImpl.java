@@ -4,6 +4,7 @@ import com.hamryt.helparty.dto.UserDto;
 import com.hamryt.helparty.exception.EmailExistedException;
 import com.hamryt.helparty.exception.UnexpectedResultException;
 import com.hamryt.helparty.mapper.UserMapper;
+import com.hamryt.helparty.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,22 +21,24 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public void insertUser(UserDto userDto) {
+    public void insertUser(SignUpRequest request) {
 
-        if (isExistsEmail(userDto.getEmail())) {
-            throw new EmailExistedException(userDto.getEmail());
+        if (isExistsEmail(request.getEmail())) {
+            throw new EmailExistedException(request.getEmail());
         }
 
-        String encodedPassword = encryptor.encrypt(userDto.getPassword());
+        String encodedPassword = encryptor.encrypt(request.getPassword());
 
         UserDto newUser = UserDto.builder()
-            .email(userDto.getEmail())
-            .name(userDto.getName())
+            .email(request.getEmail())
+            .name(request.getName())
             .password(encodedPassword)
+            .addressCode(request.getAddressCode())
+            .addressDetail(request.getAddressDetail())
             .build();
 
         if (userMapper.insertUser(newUser) != 1) {
-            throw new UnexpectedResultException(userDto.toString());
+            throw new UnexpectedResultException(newUser.toString());
         }
 
     }
@@ -49,4 +52,5 @@ public class UserServiceImpl implements UserService {
     public UserDto findUserByEmailAndPassword(String email, String password) {
         return userMapper.findUserByEmailAndPassword(email, password);
     }
+
 }

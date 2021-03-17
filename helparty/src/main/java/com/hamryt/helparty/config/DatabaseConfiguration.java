@@ -24,6 +24,7 @@ public class DatabaseConfiguration {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeAliasesPackage("com.hamryt.helparty.dto");
+        sqlSessionFactoryBean.setConfigLocation(applicationContext.getResource("classpath:mybatis-config.xml"));
         sqlSessionFactoryBean
             .setMapperLocations(applicationContext.getResources("classpath:mybatis/mapper/*.xml"));
         return sqlSessionFactoryBean.getObject();
