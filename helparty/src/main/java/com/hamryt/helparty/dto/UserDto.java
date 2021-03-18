@@ -19,13 +19,13 @@ public class UserDto {
     private String addressDetail;
 
     @Builder
-    public UserDto(String email, String name, String password, String addressCode, String addressDetail){
+    public UserDto(String email, String name, String password, String addressCode,
+        String addressDetail) {
         this.email = email;
         this.name = name;
         this.password = password;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }
-
 
 }

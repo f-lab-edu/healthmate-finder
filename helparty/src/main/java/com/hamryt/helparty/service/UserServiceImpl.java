@@ -21,20 +21,20 @@ public class UserServiceImpl implements UserService {
 
 
     @Transactional
-    public void insertUser(SignUpRequest request) {
+    public void insertUser(SignUpRequest signupRequest) {
 
-        if (isExistsEmail(request.getEmail())) {
-            throw new EmailExistedException(request.getEmail());
+        if (isExistsEmail(signupRequest.getEmail())) {
+            throw new EmailExistedException(signupRequest.getEmail());
         }
 
-        String encodedPassword = encryptor.encrypt(request.getPassword());
+        String encodedPassword = encryptor.encrypt(signupRequest.getPassword());
 
         UserDto newUser = UserDto.builder()
-            .email(request.getEmail())
-            .name(request.getName())
+            .email(signupRequest.getEmail())
+            .name(signupRequest.getName())
             .password(encodedPassword)
-            .addressCode(request.getAddressCode())
-            .addressDetail(request.getAddressDetail())
+            .addressCode(signupRequest.getAddressCode())
+            .addressDetail(signupRequest.getAddressDetail())
             .build();
 
         if (userMapper.insertUser(newUser) != 1) {

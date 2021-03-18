@@ -7,6 +7,8 @@ public interface UserService {
 
     void insertUser(SignUpRequest userDto);
 
+    boolean isExistsEmail(String email);
+
     UserDto findUserByEmailAndPassword(String email, String password);
 
 }
