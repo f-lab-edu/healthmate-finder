@@ -2,7 +2,6 @@ package com.hamryt.helparty.mapper;
 
 import com.hamryt.helparty.dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 
 @Mapper
@@ -14,4 +13,7 @@ public interface UserMapper {
 
     UserDto findUserByEmailAndPassword(String email, String password);
 
+    UserDto findUserById(Long id);
+
+    int updateUser(UserDto user);
 }

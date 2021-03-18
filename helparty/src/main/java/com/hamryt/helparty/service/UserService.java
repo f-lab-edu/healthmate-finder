@@ -2,6 +2,7 @@ package com.hamryt.helparty.service;
 
 import com.hamryt.helparty.dto.UserDto;
 import com.hamryt.helparty.request.SignUpRequest;
+import com.hamryt.helparty.request.UpdateUserReqeust;
 
 public interface UserService {
 
@@ -11,4 +12,5 @@ public interface UserService {
 
     UserDto findUserByEmailAndPassword(String email, String password);
 
+    UserDto updateUser(Long id, UpdateUserReqeust updateUserReqeust);
 }

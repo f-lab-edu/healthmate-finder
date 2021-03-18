@@ -2,7 +2,7 @@ package com.hamryt.helparty.service;
 
 import com.hamryt.helparty.dto.UserDto;
 import com.hamryt.helparty.exception.LoginUserNotFoundException;
-import com.hamryt.helparty.exception.UserNotExistedException;
+import com.hamryt.helparty.exception.UserNotFoundException;
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -28,17 +28,17 @@ public class LoginServiceImpl implements LoginService {
         if (userDto != null) {
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
         } else {
-            throw new UserNotExistedException(email);
+            throw new UserNotFoundException();
         }
 
         return userDto;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public boolean checkAuth(UserDto userDto) {
 
         if (!userService.isExistsEmail(userDto.getEmail())) {
-            throw new UserNotExistedException(userDto.getEmail());
+            throw new UserNotFoundException();
         }
 
         String userEmail = getLoginId();
