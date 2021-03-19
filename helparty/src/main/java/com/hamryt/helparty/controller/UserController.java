@@ -34,20 +34,14 @@ public class UserController {
         userService.insertUser(resource);
     }
 
-    @PostMapping("check_authority")
-    @ResponseStatus(HttpStatus.OK)
-    public boolean checkAuthority(
-        @Valid @RequestBody UserDto resource
-    ) {
-        return loginService.checkAuth(resource);
-    }
-
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserDto updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
+        loginService.checkAuth(updateUserRequest.getEmail());
+
         return userService.updateUser(id, updateUserRequest);
 
     }

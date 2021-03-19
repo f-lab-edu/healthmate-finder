@@ -1,4 +1,4 @@
-package com.hamryt.helparty.exception;
+package com.hamryt.helparty.exception.user;
 
 public class EmailExistedException extends RuntimeException {
 

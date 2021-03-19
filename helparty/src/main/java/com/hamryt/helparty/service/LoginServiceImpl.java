@@ -1,15 +1,15 @@
 package com.hamryt.helparty.service;
 
 import com.hamryt.helparty.dto.UserDto;
-import com.hamryt.helparty.exception.LoginUserNotFoundException;
-import com.hamryt.helparty.exception.UserNotFoundException;
+import com.hamryt.helparty.exception.login.LoginUserDoesNotMatch;
+import com.hamryt.helparty.exception.login.LoginUserNotFoundException;
+import com.hamryt.helparty.exception.user.UserNotFoundByEmailException;
+import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @RequiredArgsConstructor
 @Service
@@ -28,27 +28,24 @@ public class LoginServiceImpl implements LoginService {
         if (userDto != null) {
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(userDto.toString());
         }
 
         return userDto;
     }
 
     @Transactional(readOnly = true)
-    public boolean checkAuth(UserDto userDto) {
+    public void checkAuth(String email) {
 
-        if (!userService.isExistsEmail(userDto.getEmail())) {
-            throw new UserNotFoundException();
+        if (!userService.isExistsEmail(email)) {
+            throw new UserNotFoundByEmailException(email);
         }
 
         String userEmail = getLoginId();
 
-        if (!userEmail.equals(userDto.getEmail())) {
-            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED) {
-            };
+        if (!userEmail.equals(email)) {
+            throw new LoginUserDoesNotMatch(email);
         }
-
-        return true;
     }
 
     @Transactional

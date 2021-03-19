@@ -8,5 +8,5 @@ public interface LoginService {
 
     String getLoginId();
 
-    boolean checkAuth(UserDto userDto);
+    void checkAuth(String email);
 }
