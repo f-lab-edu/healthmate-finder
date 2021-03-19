@@ -1,20 +1,28 @@
 package com.hamryt.helparty.dto;
 
-import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder
 @ToString
 public class UserDto {
 
-    @NotEmpty(message = "이메일은 필수 입니다")
+    private Long id;
     private String email;
-    @NotEmpty
     private String name;
-    @NotEmpty
     private String password;
+    private String addressCode;
+    private String addressDetail;
+
+    @Builder
+    public UserDto(String email, String name, String password, String addressCode,
+        String addressDetail) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.addressCode = addressCode;
+        this.addressDetail = addressDetail;
+    }
 
 }

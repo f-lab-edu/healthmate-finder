@@ -4,9 +4,9 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.UserMapper">
 
-  <insert id="insertUser" parameterType="com.hamryt.helparty.dto.UserDto">
-    INSERT INTO user (email, name, password)
-    VALUES(#{email}, #{name}, #{password})
+  <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.hamryt.helparty.dto.UserDto">
+    INSERT INTO user (email, name, password, address_code, address_detail)
+    VALUES(#{email}, #{name}, #{password}, #{addressCode}, #{addressDetail})
   </insert>
 
   <select id="isExistsEmail" resultType="_boolean">
@@ -14,7 +14,7 @@
   </select>
 
   <select id="findUserByEmailAndPassword" resultType="com.hamryt.helparty.dto.UserDto">
-    SELECT email, name, password FROM user WHERE email=#{email} AND password=#{password}
+    SELECT id, email, name, password, address_code, address_detail FROM user WHERE email=#{email} AND password=#{password}
   </select>
 
 </mapper>

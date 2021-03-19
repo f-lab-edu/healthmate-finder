@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <settings>
+    <!-- snake형식을 camel형식으로 바꿔주는 설정 -->
+    <setting name="mapUnderscoreToCamelCase" value="true"/>
+    <!-- query 결과 필드가 null인 경우, 값이 누락되지 않게 하기 위한 설정 -->
+    <setting name="callSettersOnNulls" value="true"/>
+  </settings>
+</configuration>

@@ -1,6 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.UserDto;
+import com.hamryt.helparty.request.SignUpRequest;
 import com.hamryt.helparty.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +23,10 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void registerUser(
-        @Valid @RequestBody UserDto resource
+        @Valid @RequestBody SignUpRequest resource
     ) {
-
         userService.insertUser(resource);
     }
+
 
 }

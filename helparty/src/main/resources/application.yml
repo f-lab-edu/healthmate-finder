@@ -1,11 +1,14 @@
 ## Database 설정
 spring:
   datasource:
-      driverClassName: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://localhost:3306/helpartydb?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
-      username: root
-      password: 1234
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/helpartydb?allowPublicKeyRetrieval=true&useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
   redis:
     host: localhost
     port: 6379
-
+mybatis:
+  config-location: classpath:mybatis-config.xml
+  configuration:
+    map-underscore-to-camel-case: true
