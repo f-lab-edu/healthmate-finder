@@ -48,9 +48,10 @@ public class UserServiceImpl implements UserService {
     public UserDto updateUser(Long id, UpdateUserReqeust updateUserReqeust) {
 
         UserDto userDto = findUserById(id);
+        String encodedPassword = encryptor.encrypt(updateUserReqeust.getPassword());
 
         userDto.setName(updateUserReqeust.getName());
-        userDto.setPassword(updateUserReqeust.getPassword());
+        userDto.setPassword(encodedPassword);
         userDto.setAddressCode(updateUserReqeust.getAddressCode());
         userDto.setAddressDetail(updateUserReqeust.getAddressDetail());
 
