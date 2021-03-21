@@ -1,9 +1,8 @@
 package com.hamryt.helparty.service;
 
-import com.hamryt.helparty.dto.UserDto;
-import com.hamryt.helparty.exception.login.LoginUserDoesNotMatch;
+import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
 import com.hamryt.helparty.exception.login.LoginUserNotFoundException;
-import com.hamryt.helparty.exception.user.UserNotFoundByEmailException;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;
@@ -37,14 +36,10 @@ public class LoginServiceImpl implements LoginService {
     @Transactional(readOnly = true)
     public void checkAuth(String email) {
 
-        if (!userService.isExistsEmail(email)) {
-            throw new UserNotFoundByEmailException(email);
-        }
-
         String userEmail = getLoginId();
 
         if (!userEmail.equals(email)) {
-            throw new LoginUserDoesNotMatch(email);
+            throw new LoginUserDoesNotMatchException(email);
         }
     }
 

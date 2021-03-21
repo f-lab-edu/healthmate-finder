@@ -1,7 +1,7 @@
 package com.hamryt.helparty.controller;
 
 
-import com.hamryt.helparty.dto.UserDto;
+import com.hamryt.helparty.dto.user.UserDto;
 import com.hamryt.helparty.service.LoginService;
 import javax.validation.Valid;
 import lombok.Getter;

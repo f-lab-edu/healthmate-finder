@@ -1,6 +1,6 @@
 package com.hamryt.helparty.service;
 
-import com.hamryt.helparty.dto.UserDto;
+import com.hamryt.helparty.dto.user.UserDto;
 
 public interface LoginService {
 

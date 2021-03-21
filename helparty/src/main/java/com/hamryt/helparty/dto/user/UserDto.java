@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto;
+package com.hamryt.helparty.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;

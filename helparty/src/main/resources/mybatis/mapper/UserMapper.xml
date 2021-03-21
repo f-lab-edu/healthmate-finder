@@ -5,12 +5,12 @@
 <mapper namespace="com.hamryt.helparty.mapper.UserMapper">
 
   <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
-    parameterType="com.hamryt.helparty.dto.UserDto">
+    parameterType="com.hamryt.helparty.dto.user.UserDto">
     INSERT INTO user (email, name, password, address_code, address_detail)
     VALUES(#{email}, #{name}, #{password}, #{addressCode}, #{addressDetail})
   </insert>
 
-  <select id="findUserById" resultType="com.hamryt.helparty.dto.UserDto">
+  <select id="findUserById" resultType="com.hamryt.helparty.dto.user.UserDto">
     SELECT id, email, name, password, address_code, address_detail FROM user WHERE id=#{id}
   </select>
 
@@ -18,7 +18,7 @@
     SELECT EXISTS (SELECT * FROM user WHERE email=#{email}) AS success;
   </select>
 
-  <select id="findUserByEmailAndPassword" resultType="com.hamryt.helparty.dto.UserDto">
+  <select id="findUserByEmailAndPassword" resultType="com.hamryt.helparty.dto.user.UserDto">
     SELECT
     id,
     email,
@@ -31,7 +31,7 @@
     AND password=#{password}
   </select>
 
-  <update id="updateUser" parameterType="com.hamryt.helparty.dto.UserDto">
+  <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.UpdateInfo">
     UPDATE user SET
     name = #{name},
     password = #{password},

@@ -1,6 +1,7 @@
 package com.hamryt.helparty.service;
 
-import com.hamryt.helparty.dto.UserDto;
+import com.hamryt.helparty.dto.user.UpdateInfo;
+import com.hamryt.helparty.dto.user.UserDto;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
@@ -45,21 +46,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public UserDto updateUser(Long id, UpdateUserReqeust updateUserReqeust) {
+    public UpdateInfo updateUser(Long id, UpdateUserReqeust updateUserReqeust) {
 
-        UserDto userDto = findUserById(id);
         String encodedPassword = encryptor.encrypt(updateUserReqeust.getPassword());
 
-        userDto.setName(updateUserReqeust.getName());
-        userDto.setPassword(encodedPassword);
-        userDto.setAddressCode(updateUserReqeust.getAddressCode());
-        userDto.setAddressDetail(updateUserReqeust.getAddressDetail());
+        UpdateInfo updateInfo = UpdateInfo.of(id, encodedPassword, updateUserReqeust);
 
-        if (userMapper.updateUser(userDto) != 1) {
-            throw new UpdateFailedException(userDto.toString());
+        if (userMapper.updateUser(updateInfo) != 1) {
+            throw new UpdateFailedException(updateInfo.toString());
         }
 
-        return userDto;
+        return updateInfo;
     }
 
     @Transactional(readOnly = true)
