@@ -1,6 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.user.UpdateInfo;
+import com.hamryt.helparty.dto.user.UserUpdateResponse;
 import com.hamryt.helparty.request.SignUpRequest;
 import com.hamryt.helparty.request.UpdateUserReqeust;
 import com.hamryt.helparty.service.LoginService;
@@ -36,7 +36,7 @@ public class UserController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UpdateInfo updateUser(
+    public UserUpdateResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {

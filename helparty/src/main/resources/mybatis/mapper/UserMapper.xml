@@ -31,7 +31,7 @@
     AND password=#{password}
   </select>
 
-  <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.UpdateInfo">
+  <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.UserUpdateResponse">
     UPDATE user SET
     name = #{name},
     password = #{password},

@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UpdateInfo {
+public class UserUpdateResponse {
     @NonNull
     private Long id;
     private String name;
@@ -17,7 +17,7 @@ public class UpdateInfo {
     private String addressDetail;
 
     @Builder
-    public UpdateInfo(Long id, String name, String password, String addressCode, String addressDetail){
+    public UserUpdateResponse(Long id, String name, String password, String addressCode, String addressDetail){
         this.id = id;
         this.name = name;
         this.password = password;
@@ -25,8 +25,8 @@ public class UpdateInfo {
         this.addressDetail = addressDetail;
     }
 
-    public static UpdateInfo of(Long id, String password, UpdateUserReqeust updateUserReqeust){
-        return UpdateInfo.builder()
+    public static UserUpdateResponse of(Long id, String password, UpdateUserReqeust updateUserReqeust){
+        return UserUpdateResponse.builder()
             .id(id)
             .name(updateUserReqeust.getName())
             .password(password)
