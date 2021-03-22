@@ -40,4 +40,8 @@
     WHERE id = #{id}
   </update>
 
+  <delete id="deleteUserByEmailAndPassword">
+    DELETE FROM user WHERE email=#{email} AND password=#{password}
+  </delete>
+
 </mapper>

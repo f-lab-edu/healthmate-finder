@@ -6,7 +6,5 @@ public interface LoginService {
 
     UserDto login(String email, String password);
 
-    String getLoginId();
-
-    void checkAuth(String email);
+    void checkAuth();
 }

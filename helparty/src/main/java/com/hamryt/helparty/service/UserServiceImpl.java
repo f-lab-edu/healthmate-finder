@@ -1,10 +1,12 @@
 package com.hamryt.helparty.service;
 
+import com.hamryt.helparty.dto.user.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.UserUpdateResponse;
 import com.hamryt.helparty.dto.user.UserDto;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
+import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
 import com.hamryt.helparty.mapper.UserMapper;
 import com.hamryt.helparty.request.SignUpRequest;
@@ -58,6 +60,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return userUpdateResponse;
+    }
+
+    @Transactional
+    public void deleteUser( UserDeleteRequest userDeleteRequest) {
+        String email = userDeleteRequest.getEmail();
+        String encodedPassword = encryptor.encrypt(userDeleteRequest.getPassword());
+
+        if(userMapper.deleteUserByEmailAndPassword(email, encodedPassword) != 1){
+            throw new UserDeleteFailedException(email);
+        }
     }
 
     @Transactional(readOnly = true)

@@ -1,5 +1,6 @@
 package com.hamryt.helparty.controller;
 
+import com.hamryt.helparty.dto.user.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.UserUpdateResponse;
 import com.hamryt.helparty.request.SignUpRequest;
 import com.hamryt.helparty.request.UpdateUserReqeust;
@@ -9,6 +10,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -35,15 +37,20 @@ public class UserController {
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
     public UserUpdateResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.checkAuth(updateUserRequest.getEmail());
-
+        loginService.checkAuth();
         return userService.updateUser(id, updateUserRequest);
+    }
 
+    @DeleteMapping
+    public void deleteUser(
+        @Valid @RequestBody UserDeleteRequest userDeleteRequest
+    ) {
+        loginService.checkAuth();
+        userService.deleteUser(userDeleteRequest);
     }
 
 }
