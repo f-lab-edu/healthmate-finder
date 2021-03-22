@@ -34,23 +34,12 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Transactional(readOnly = true)
-    public void checkAuth(String email) {
-
-        String userEmail = getLoginId();
-
-        if (!userEmail.equals(email)) {
-            throw new LoginUserDoesNotMatchException(email);
-        }
-    }
-
-    @Transactional
-    public String getLoginId() {
-
+    public void checkAuth() {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
         if (userEmail == null) {
             throw new LoginUserNotFoundException();
         }
-        return userEmail;
     }
+
 
 }

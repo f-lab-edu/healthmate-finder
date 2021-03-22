@@ -40,7 +40,7 @@ public class UserController {
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.checkAuth(updateUserRequest.getEmail());
+        loginService.checkAuth();
 
         return userService.updateUser(id, updateUserRequest);
 
