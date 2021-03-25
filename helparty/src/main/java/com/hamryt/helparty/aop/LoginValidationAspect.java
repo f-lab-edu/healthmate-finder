@@ -18,12 +18,7 @@ public class LoginValidationAspect {
     @Before("@annotation(com.hamryt.helparty.aop.LoginValidation)")
     public void userLoginValidation() {
 
-        String email = loginService.getLoginEmail();
-
-        if (email == null) {
-            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED) {
-            };
-        }
+        loginService.checkAuth();
     }
 
 }
