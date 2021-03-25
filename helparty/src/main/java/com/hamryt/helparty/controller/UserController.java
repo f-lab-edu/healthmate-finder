@@ -1,5 +1,6 @@
 package com.hamryt.helparty.controller;
 
+import com.hamryt.helparty.aop.LoginValidation;
 import com.hamryt.helparty.dto.user.UserUpdateResponse;
 import com.hamryt.helparty.request.SignUpRequest;
 import com.hamryt.helparty.request.UpdateUserReqeust;
@@ -34,16 +35,14 @@ public class UserController {
         userService.insertUser(resource);
     }
 
+    @LoginValidation
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public UserUpdateResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.checkAuth();
-
         return userService.updateUser(id, updateUserRequest);
-
     }
 
 }

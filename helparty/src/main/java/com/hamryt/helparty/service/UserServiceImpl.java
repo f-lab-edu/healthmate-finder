@@ -61,15 +61,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findUserById(Long id) {
-        UserDto userDto = userMapper.findUserById(id);
-        if (userDto == null) {
-            throw new UserNotFoundByIdException(id);
-        }
-        return userDto;
-    }
-
-    @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
     }
