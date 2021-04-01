@@ -1,35 +1,40 @@
-package com.hamryt.helparty.dto.user;
+package com.hamryt.helparty.dto.user.response;
 
-import com.hamryt.helparty.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class UserUpdateResponse {
+@NoArgsConstructor
+public class UpdateUserResponse {
+
     @NonNull
     private Long id;
-    private String name;
     private String password;
+    private String name;
     private String addressCode;
     private String addressDetail;
 
     @Builder
-    public UserUpdateResponse(Long id, String name, String password, String addressCode, String addressDetail){
+    public UpdateUserResponse(Long id, String password, String name, String addressCode,
+        String addressDetail) {
         this.id = id;
-        this.name = name;
         this.password = password;
+        this.name = name;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }
 
-    public static UserUpdateResponse of(Long id, String password, UpdateUserReqeust updateUserReqeust){
-        return UserUpdateResponse.builder()
+    public static UpdateUserResponse of(Long id, String encodedPassword,
+        UpdateUserReqeust updateUserReqeust) {
+        return UpdateUserResponse.builder()
             .id(id)
+            .password(encodedPassword)
             .name(updateUserReqeust.getName())
-            .password(password)
             .addressCode(updateUserReqeust.getAddressCode())
             .addressDetail(updateUserReqeust.getAddressDetail())
             .build();

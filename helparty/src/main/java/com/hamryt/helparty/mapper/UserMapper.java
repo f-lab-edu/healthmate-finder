@@ -1,7 +1,7 @@
 package com.hamryt.helparty.mapper;
 
-import com.hamryt.helparty.dto.user.UserUpdateResponse;
 import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -16,5 +16,5 @@ public interface UserMapper {
 
     UserDto findUserById(Long id);
 
-    int updateUser(UserUpdateResponse userUpdateResponse);
+    int updateUser(UpdateUserResponse updateUserResponse);
 }

@@ -5,6 +5,7 @@ import com.hamryt.helparty.dto.user.UserDto;
 import com.hamryt.helparty.service.LoginService;
 import javax.validation.Valid;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,7 @@ public class LoginController {
 
     @Getter
     @RequiredArgsConstructor
+    @NoArgsConstructor
     private static class LoginRequest {
 
         @NonNull
@@ -47,6 +49,7 @@ public class LoginController {
 
     @Getter
     @RequiredArgsConstructor
+    @NoArgsConstructor
     private static class LoginResponse {
 
         @NonNull

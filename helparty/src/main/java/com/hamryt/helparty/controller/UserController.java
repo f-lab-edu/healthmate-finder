@@ -1,9 +1,9 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.aop.LoginValidation;
-import com.hamryt.helparty.dto.user.UserUpdateResponse;
-import com.hamryt.helparty.request.SignUpRequest;
-import com.hamryt.helparty.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
+import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.LoginService;
 import com.hamryt.helparty.service.UserService;
 import javax.validation.Valid;
@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserService userService;
     private final LoginService loginService;
+    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -38,10 +38,11 @@ public class UserController {
     @LoginValidation
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public UserUpdateResponse updateUser(
+    public UpdateUserResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
+        loginService.validateUser(id);
         return userService.updateUser(id, updateUserRequest);
     }
 
