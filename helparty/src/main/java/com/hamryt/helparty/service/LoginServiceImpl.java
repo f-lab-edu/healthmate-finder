@@ -33,13 +33,12 @@ public class LoginServiceImpl implements LoginService {
         return userDto;
     }
 
-    public boolean checkAuth() {
+    public void isAuthorized() {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
 
         if (userEmail == null) {
             throw new NoLoginAuthException();
         }
-        return true;
     }
 
     @Transactional(readOnly = true)

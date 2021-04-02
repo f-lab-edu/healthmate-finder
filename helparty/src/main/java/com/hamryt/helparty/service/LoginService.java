@@ -6,7 +6,7 @@ public interface LoginService {
 
     UserDto login(String email, String password);
 
-    boolean checkAuth();
+    void isAuthorized();
 
     void validateUser(Long id);
 
