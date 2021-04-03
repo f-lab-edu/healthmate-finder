@@ -27,7 +27,7 @@ public class LoginValidationInterceptor implements HandlerInterceptor {
         LoginValidation loginValidation = handlerMethod.getMethodAnnotation(LoginValidation.class);
 
         if (loginValidation != null) {
-            loginService.isAuthorized();
+            loginService.sessionValidate();
         }
 
         return true;

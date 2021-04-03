@@ -33,7 +33,7 @@ public class LoginServiceImpl implements LoginService {
         return userDto;
     }
 
-    public void isAuthorized() {
+    public void sessionValidate() {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
 
         if (userEmail == null) {
