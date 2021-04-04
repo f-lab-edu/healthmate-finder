@@ -6,7 +6,6 @@ import com.hamryt.helparty.exception.login.NoLoginAuthException;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.service.user.UserService;
 import com.hamryt.helparty.util.SessionKeys;
-import com.mysql.cj.Session;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

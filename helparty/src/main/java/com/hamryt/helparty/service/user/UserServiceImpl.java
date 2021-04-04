@@ -1,12 +1,15 @@
 package com.hamryt.helparty.service.user;
 
 import com.hamryt.helparty.dto.user.UserDTO;
-import com.hamryt.helparty.dto.user.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
+import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
+import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
 import com.hamryt.helparty.mapper.user.UserMapper;
 import com.hamryt.helparty.service.login.Encryptor;
@@ -22,27 +25,28 @@ public class UserServiceImpl implements UserService {
     private final Encryptor encryptor;
 
     @Transactional
-    public void insertUser(SignUpRequest signupRequest) {
+    public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
 
-        if (isExistsEmail(signupRequest.getEmail())) {
-            throw new EmailExistedException(signupRequest.getEmail());
+        if (isExistsEmail(signupUserRequest.getEmail())) {
+            throw new EmailExistedException(signupUserRequest.getEmail());
         }
 
-        String encodedPassword = encryptor.encrypt(signupRequest.getPassword());
+        String encodedPassword = encryptor.encrypt(signupUserRequest.getPassword());
 
         UserDTO newUser = UserDTO.builder()
-            .email(signupRequest.getEmail())
-            .name(signupRequest.getName())
+            .email(signupUserRequest.getEmail())
+            .name(signupUserRequest.getName())
             .password(encodedPassword)
-            .phoneNumber(signupRequest.getPhoneNumber())
-            .addressCode(signupRequest.getAddressCode())
-            .addressDetail(signupRequest.getAddressDetail())
+            .phoneNumber(signupUserRequest.getPhoneNumber())
+            .addressCode(signupUserRequest.getAddressCode())
+            .addressDetail(signupUserRequest.getAddressDetail())
             .build();
 
         if (userMapper.insertUser(newUser) != 1) {
             throw new InsertUserFailedException(newUser.toString());
         }
 
+        return SignUpUserResponse.of(newUser);
     }
 
     @Transactional
@@ -58,6 +62,16 @@ public class UserServiceImpl implements UserService {
         }
 
         return updateUserResponse;
+    }
+
+    @Transactional
+    public void deleteUser( UserDeleteRequest userDeleteRequest) {
+        String email = userDeleteRequest.getEmail();
+        String encodedPassword = encryptor.encrypt(userDeleteRequest.getPassword());
+
+        if(userMapper.deleteUserByEmailAndPassword(email, encodedPassword) != 1){
+            throw new UserDeleteFailedException(email);
+        }
     }
 
     @Transactional(readOnly = true)
@@ -83,6 +97,5 @@ public class UserServiceImpl implements UserService {
     public UserDTO findUserByEmailAndPassword(String email, String password) {
         return userMapper.findUserByEmailAndPassword(email, password);
     }
-
 
 }
