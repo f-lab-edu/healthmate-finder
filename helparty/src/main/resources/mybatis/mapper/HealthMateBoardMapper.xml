@@ -36,8 +36,8 @@
 
   <insert id="insertHealthMateBaord" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.healthmateboard.HealthMateBoardDTO">
-    INSERT INTO healthmateboard (user_email, gym, content, created_at, modified_at, user_id)
-    VALUES(#{userEmail}, #{gym}, #{content}, NOW(), NOW(), #{name}, #{user.id})
+    INSERT INTO healthmateboard (user_email, gym, content, start_time, end_time, created_at, modified_at, user_id)
+    VALUES(#{userEmail}, #{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW(), #{name}, #{user.id})
 <!--    <selectKey resultType="Long" order="AFTER" keyProperty="id">-->
 <!--      SELECT LAST_INSERT_ID() as id-->
 <!--    </selectKey>-->
