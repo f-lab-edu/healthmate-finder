@@ -1,9 +1,10 @@
 package com.hamryt.helparty.controller;
 
 import com.hamryt.helparty.dto.user.UserDeleteRequest;
-import com.hamryt.helparty.dto.user.UserUpdateResponse;
-import com.hamryt.helparty.request.SignUpRequest;
-import com.hamryt.helparty.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
+import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.LoginService;
 import com.hamryt.helparty.service.UserService;
 import javax.validation.Valid;
@@ -25,8 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserService userService;
     private final LoginService loginService;
+    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -36,20 +37,22 @@ public class UserController {
         userService.insertUser(resource);
     }
 
+    @LoginValidation
     @PutMapping("{id}")
-    public UserUpdateResponse updateUser(
+    @ResponseStatus(HttpStatus.OK)
+    public UpdateUserResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.checkAuth();
+        loginService.validateUser(id);
         return userService.updateUser(id, updateUserRequest);
     }
 
+    @LoginValidation
     @DeleteMapping
     public void deleteUser(
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
-        loginService.checkAuth();
         userService.deleteUser(userDeleteRequest);
     }
 

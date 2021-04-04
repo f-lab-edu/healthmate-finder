@@ -2,28 +2,24 @@ package com.hamryt.helparty.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class UserDto {
 
     private Long id;
 
-    @Setter
     private String email;
 
-    @Setter
     private String name;
 
-    @Setter
     private String password;
 
-    @Setter
     private String addressCode;
 
-    @Setter
     private String addressDetail;
 
     @Builder
