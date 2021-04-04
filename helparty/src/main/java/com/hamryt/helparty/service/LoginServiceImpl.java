@@ -1,7 +1,9 @@
 package com.hamryt.helparty.service;
 
-import com.hamryt.helparty.dto.UserDto;
-import com.hamryt.helparty.exception.UserNotExistedException;
+import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
+import com.hamryt.helparty.exception.login.NoLoginAuthException;
+import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +24,30 @@ public class LoginServiceImpl implements LoginService {
         String encryptPassword = encryptor.encrypt(password);
         UserDto userDto = userService.findUserByEmailAndPassword(email, encryptPassword);
 
-        if (userDto!=null){
+        if (userDto != null) {
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
         } else {
-            throw new UserNotExistedException(email);
+            throw new UserNotFoundException(userDto.toString());
         }
 
         return userDto;
+    }
+
+    public void sessionValidate() {
+        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+
+        if (userEmail == null) {
+            throw new NoLoginAuthException();
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public void validateUser(Long id) {
+        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        UserDto user = userService.getUserById(id);
+        if (!user.getEmail().equals(userEmail)) {
+            throw new LoginUserDoesNotMatchException(userEmail);
+        }
     }
 
 }

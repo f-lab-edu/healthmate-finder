@@ -1,18 +1,25 @@
-package com.hamryt.helparty.dto;
+package com.hamryt.helparty.dto.user;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class UserDto {
 
     private Long id;
+
     private String email;
+
     private String name;
+
     private String password;
+
     private String addressCode;
+
     private String addressDetail;
 
     @Builder
@@ -24,5 +31,4 @@ public class UserDto {
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }
-
 }
