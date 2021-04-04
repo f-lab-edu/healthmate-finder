@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto.user;
+package com.hamryt.helparty.dto.user.request;
 
 import javax.validation.constraints.NotNull;
 import lombok.Getter;

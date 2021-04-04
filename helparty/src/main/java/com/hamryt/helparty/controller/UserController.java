@@ -1,8 +1,9 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.user.UserDeleteRequest;
-import com.hamryt.helparty.dto.user.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
+import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.LoginService;
@@ -31,10 +32,10 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void signUpUser(
-        @Valid @RequestBody SignUpRequest resource
+    public SignUpUserResponse signUpUser(
+        @Valid @RequestBody SignUpUserRequest resource
     ) {
-        userService.insertUser(resource);
+        return userService.insertUser(resource);
     }
 
     @LoginValidation
@@ -49,10 +50,12 @@ public class UserController {
     }
 
     @LoginValidation
-    @DeleteMapping
+    @DeleteMapping("{id}")
     public void deleteUser(
+        @PathVariable("id") Long id,
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
+        loginService.validateUser(id);
         userService.deleteUser(userDeleteRequest);
     }
 

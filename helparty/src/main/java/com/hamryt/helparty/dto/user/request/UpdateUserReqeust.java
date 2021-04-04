@@ -21,6 +21,9 @@ public class UpdateUserReqeust {
     private String password;
 
     @NonNull
+    private String phoneNumber;
+
+    @NonNull
     private String addressCode;
 
     @NonNull
