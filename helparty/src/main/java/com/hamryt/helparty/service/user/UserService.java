@@ -1,6 +1,6 @@
-package com.hamryt.helparty.service;
+package com.hamryt.helparty.service.user;
 
-import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
@@ -11,9 +11,11 @@ public interface UserService {
 
     boolean isExistsEmail(String email);
 
-    UserDto findUserByEmailAndPassword(String email, String password);
+    UserDTO findUserByEmail(String email);
+
+    UserDTO findUserByEmailAndPassword(String email, String password);
 
     UpdateUserResponse updateUser(Long id, UpdateUserReqeust updateUserReqeust);
 
-    UserDto getUserById(Long id);
+    UserDTO getUserById(Long id);
 }

@@ -16,15 +16,19 @@ public class UpdateUserResponse {
     private Long id;
     private String password;
     private String name;
+    private String phoneNumber;
     private String addressCode;
     private String addressDetail;
 
     @Builder
-    public UpdateUserResponse(Long id, String password, String name, String addressCode,
-        String addressDetail) {
+    public UpdateUserResponse(
+        Long id, String password, String name, String addressCode,
+        String addressDetail, String phoneNumber
+    ) {
         this.id = id;
         this.password = password;
         this.name = name;
+        this.phoneNumber = phoneNumber;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }
@@ -35,6 +39,7 @@ public class UpdateUserResponse {
             .id(id)
             .password(encodedPassword)
             .name(updateUserReqeust.getName())
+            .phoneNumber(updateUserReqeust.getPhoneNumber())
             .addressCode(updateUserReqeust.getAddressCode())
             .addressDetail(updateUserReqeust.getAddressDetail())
             .build();

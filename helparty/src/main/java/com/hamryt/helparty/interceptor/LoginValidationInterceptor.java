@@ -1,6 +1,6 @@
 package com.hamryt.helparty.interceptor;
 
-import com.hamryt.helparty.service.LoginService;
+import com.hamryt.helparty.service.login.LoginService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;

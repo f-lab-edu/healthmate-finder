@@ -1,4 +1,4 @@
-package com.hamryt.helparty.service;
+package com.hamryt.helparty.service.login;
 
 public interface Encryptor {
 

@@ -1,5 +1,6 @@
 package com.hamryt.helparty.dto.user.request;
 
+import javax.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -7,23 +8,24 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@RequiredArgsConstructor
 @NoArgsConstructor
 public class UpdateUserReqeust {
 
     private Long id;
 
-    @NonNull
+    @NotEmpty
     private String name;
 
-    @NonNull
-    @Setter
+    @NotEmpty
     private String password;
 
-    @NonNull
+    @NotEmpty
+    private String phoneNumber;
+
+    @NotEmpty
     private String addressCode;
 
-    @NonNull
+    @NotEmpty
     private String addressDetail;
 
 }

@@ -8,26 +8,30 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class UserDto {
+public class UserDTO {
 
     private Long id;
 
     private String email;
 
+    private String password;
+
     private String name;
 
-    private String password;
+    private String phoneNumber;
 
     private String addressCode;
 
     private String addressDetail;
 
     @Builder
-    public UserDto(String email, String name, String password, String addressCode,
-        String addressDetail) {
+    public UserDTO(String email, String name, String password,
+        String addressCode, String addressDetail, String phoneNumber
+    ) {
         this.email = email;
         this.name = name;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }

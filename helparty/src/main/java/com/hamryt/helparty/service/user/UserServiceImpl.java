@@ -1,6 +1,6 @@
-package com.hamryt.helparty.service;
+package com.hamryt.helparty.service.user;
 
-import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
@@ -8,7 +8,8 @@ import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
-import com.hamryt.helparty.mapper.UserMapper;
+import com.hamryt.helparty.mapper.user.UserMapper;
+import com.hamryt.helparty.service.login.Encryptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,10 +30,11 @@ public class UserServiceImpl implements UserService {
 
         String encodedPassword = encryptor.encrypt(signupRequest.getPassword());
 
-        UserDto newUser = UserDto.builder()
+        UserDTO newUser = UserDTO.builder()
             .email(signupRequest.getEmail())
             .name(signupRequest.getName())
             .password(encodedPassword)
+            .phoneNumber(signupRequest.getPhoneNumber())
             .addressCode(signupRequest.getAddressCode())
             .addressDetail(signupRequest.getAddressDetail())
             .build();
@@ -59,8 +61,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto getUserById(Long id) {
-        UserDto user = userMapper.findUserById(id);
+    public UserDTO getUserById(Long id) {
+        UserDTO user = userMapper.findUserById(id);
         if (user == null) {
             throw new UserNotFoundByIdException(id);
         }
@@ -73,7 +75,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findUserByEmailAndPassword(String email, String password) {
+    public UserDTO findUserByEmail(String email) {
+        return userMapper.findUserByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO findUserByEmailAndPassword(String email, String password) {
         return userMapper.findUserByEmailAndPassword(email, password);
     }
 

@@ -4,8 +4,8 @@ import com.hamryt.helparty.dto.user.request.SignUpRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
-import com.hamryt.helparty.service.LoginService;
-import com.hamryt.helparty.service.UserService;
+import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.user.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,6 @@ public class UserController {
 
     @LoginValidation
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.OK)
     public UpdateUserResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest

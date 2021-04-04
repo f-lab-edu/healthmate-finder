@@ -1,10 +1,12 @@
-package com.hamryt.helparty.service;
+package com.hamryt.helparty.service.login;
 
-import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
 import com.hamryt.helparty.exception.login.NoLoginAuthException;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
+import com.hamryt.helparty.service.user.UserService;
 import com.hamryt.helparty.util.SessionKeys;
+import com.mysql.cj.Session;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,10 +21,10 @@ public class LoginServiceImpl implements LoginService {
     private final HttpSession session;
 
     @Transactional
-    public UserDto login(String email, String password) {
+    public UserDTO login(String email, String password) {
 
         String encryptPassword = encryptor.encrypt(password);
-        UserDto userDto = userService.findUserByEmailAndPassword(email, encryptPassword);
+        UserDTO userDto = userService.findUserByEmailAndPassword(email, encryptPassword);
 
         if (userDto != null) {
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
@@ -44,10 +46,14 @@ public class LoginServiceImpl implements LoginService {
     @Transactional(readOnly = true)
     public void validateUser(Long id) {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
-        UserDto user = userService.getUserById(id);
+        UserDTO user = userService.getUserById(id);
         if (!user.getEmail().equals(userEmail)) {
             throw new LoginUserDoesNotMatchException(userEmail);
         }
+    }
+
+    public String getSessionEmail(){
+        return (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
     }
 
 }
