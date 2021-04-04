@@ -1,14 +1,18 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.UserDto;
-import com.hamryt.helparty.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.SignUpRequest;
+import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
+import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.LoginService;
 import com.hamryt.helparty.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,8 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 public class UserController {
 
-    private final UserService userService;
     private final LoginService loginService;
+    private final UserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,12 +35,15 @@ public class UserController {
         userService.insertUser(resource);
     }
 
-    @PostMapping("check_authority")
+    @LoginValidation
+    @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean checkAuthority(
-        @Valid @RequestBody UserDto resource
+    public UpdateUserResponse updateUser(
+        @PathVariable("id") Long id,
+        @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        return loginService.checkAuth(resource);
+        loginService.validateUser(id);
+        return userService.updateUser(id, updateUserRequest);
     }
 
 }

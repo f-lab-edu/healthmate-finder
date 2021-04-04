@@ -4,17 +4,40 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.UserMapper">
 
-  <insert id="insertUser" useGeneratedKeys="true" keyProperty="id" parameterType="com.hamryt.helparty.dto.UserDto">
+  <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
+    parameterType="com.hamryt.helparty.dto.user.UserDto">
     INSERT INTO user (email, name, password, address_code, address_detail)
     VALUES(#{email}, #{name}, #{password}, #{addressCode}, #{addressDetail})
   </insert>
+
+  <select id="findUserById" resultType="com.hamryt.helparty.dto.user.UserDto">
+    SELECT id, email, name, password, address_code, address_detail FROM user WHERE id=#{id}
+  </select>
 
   <select id="isExistsEmail" resultType="_boolean">
     SELECT EXISTS (SELECT * FROM user WHERE email=#{email}) AS success;
   </select>
 
-  <select id="findUserByEmailAndPassword" resultType="com.hamryt.helparty.dto.UserDto">
-    SELECT id, email, name, password, address_code, address_detail FROM user WHERE email=#{email} AND password=#{password}
+  <select id="findUserByEmailAndPassword" resultType="com.hamryt.helparty.dto.user.UserDto">
+    SELECT
+    id,
+    email,
+    name,
+    password,
+    address_code,
+    address_detail
+    FROM user
+    WHERE email=#{email}
+    AND password=#{password}
   </select>
+
+  <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.response.UpdateUserResponse">
+    UPDATE user SET
+    name = #{name},
+    password = #{password},
+    address_code = #{addressCode},
+    address_detail = #{addressDetail}
+    WHERE id = #{id}
+  </update>
 
 </mapper>

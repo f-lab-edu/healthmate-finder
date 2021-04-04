@@ -1,4 +1,4 @@
-package com.hamryt.helparty.exception;
+package com.hamryt.helparty.exception.login;
 
 public class LoginUserNotFoundException extends RuntimeException {
 

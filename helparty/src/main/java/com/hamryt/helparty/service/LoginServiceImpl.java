@@ -1,15 +1,14 @@
 package com.hamryt.helparty.service;
 
-import com.hamryt.helparty.dto.UserDto;
-import com.hamryt.helparty.exception.LoginUserNotFoundException;
-import com.hamryt.helparty.exception.UserNotExistedException;
+import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
+import com.hamryt.helparty.exception.login.NoLoginAuthException;
+import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.client.HttpStatusCodeException;
 
 @RequiredArgsConstructor
 @Service
@@ -28,37 +27,27 @@ public class LoginServiceImpl implements LoginService {
         if (userDto != null) {
             session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
         } else {
-            throw new UserNotExistedException(email);
+            throw new UserNotFoundException(userDto.toString());
         }
 
         return userDto;
     }
 
-    @Transactional
-    public boolean checkAuth(UserDto userDto) {
+    public void sessionValidate() {
+        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
 
-        if (!userService.isExistsEmail(userDto.getEmail())) {
-            throw new UserNotExistedException(userDto.getEmail());
+        if (userEmail == null) {
+            throw new NoLoginAuthException();
         }
-
-        String userEmail = getLoginId();
-
-        if (!userEmail.equals(userDto.getEmail())) {
-            throw new HttpStatusCodeException(HttpStatus.UNAUTHORIZED) {
-            };
-        }
-
-        return true;
     }
 
-    @Transactional
-    public String getLoginId() {
-
+    @Transactional(readOnly = true)
+    public void validateUser(Long id) {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
-        if (userEmail == null) {
-            throw new LoginUserNotFoundException();
+        UserDto user = userService.getUserById(id);
+        if (!user.getEmail().equals(userEmail)) {
+            throw new LoginUserDoesNotMatchException(userEmail);
         }
-        return userEmail;
     }
 
 }

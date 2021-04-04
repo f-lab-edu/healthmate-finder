@@ -3,8 +3,9 @@
 
 <configuration>
   <settings>
+    <!-- snake형식을 camel형식으로 바꿔주는 설정 -->
     <setting name="mapUnderscoreToCamelCase" value="true"/>
+    <!-- query 결과 필드가 null인 경우, 값이 누락되지 않게 하기 위한 설정 -->
     <setting name="callSettersOnNulls" value="true"/>
-    <setting name="jdbcTypeForNull" value="NULL"/>
   </settings>
 </configuration>
