@@ -29,7 +29,7 @@ public class MateBoardController {
         @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest
     ) {
         String email = loginService.getSessionEmail();
-        return mateBoardService.insertMateBoard(createMateBoardRequest, email);
+        return mateBoardService.addMateBoard(createMateBoardRequest, email);
     }
 
 }

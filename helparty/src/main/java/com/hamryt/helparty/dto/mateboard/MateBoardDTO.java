@@ -12,8 +12,6 @@ public class MateBoardDTO {
 
     private Long id;
 
-    private String userEmail;
-
     private String gym;
 
     private String content;
@@ -26,18 +24,23 @@ public class MateBoardDTO {
 
     private LocalDateTime modifiedAt;
 
+    private Long userId;
+
     private UserDTO user;
 
     @Builder
     public MateBoardDTO(
-        String userEmail, String gym, UserDTO user,
-        String content, String startTime, String endTime
-    ){
-        this.userEmail = userEmail;
+        String gym, UserDTO user, String content,
+        String startTime, String endTime, Long userId,
+        LocalDateTime createdAt, LocalDateTime modifiedAt
+    ) {
         this.gym = gym;
-        this.user = user;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
+        this.userId = userId;
+        this.user = user;
     }
 }

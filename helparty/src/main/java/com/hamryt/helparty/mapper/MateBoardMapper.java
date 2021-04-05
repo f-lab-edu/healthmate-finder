@@ -1,4 +1,4 @@
-package com.hamryt.helparty.mapper.mateboard;
+package com.hamryt.helparty.mapper;
 
 import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
 import org.apache.ibatis.annotations.Mapper;

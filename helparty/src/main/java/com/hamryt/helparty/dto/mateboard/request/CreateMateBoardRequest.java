@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateMateBoardRequest {
 
-  @NotEmpty
   private String gym;
 
   @NotEmpty

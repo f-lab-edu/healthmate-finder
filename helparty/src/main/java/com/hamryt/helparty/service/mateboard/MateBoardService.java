@@ -5,6 +5,6 @@ import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 
 public interface MateBoardService {
 
-    CreateMateBoardResponse insertMateBoard(
+    CreateMateBoardResponse addMateBoard(
         CreateMateBoardRequest createMateBoardRequest, String email);
 }

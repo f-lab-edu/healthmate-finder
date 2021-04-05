@@ -5,7 +5,7 @@ import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
-import com.hamryt.helparty.mapper.mateboard.MateBoardMapper;
+import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class MateBoardServiceImpl implements MateBoardService {
     private final MateBoardMapper mateBoardMapper;
 
     @Transactional
-    public CreateMateBoardResponse insertMateBoard(
+    public CreateMateBoardResponse addMateBoard(
         CreateMateBoardRequest createMateBoardRequest,
         String email
     ) {
@@ -27,11 +27,11 @@ public class MateBoardServiceImpl implements MateBoardService {
 
         MateBoardDTO mateBoard
             = MateBoardDTO.builder()
-            .userEmail(email)
             .gym(createMateBoardRequest.getGym())
             .content(createMateBoardRequest.getContent())
             .startTime(createMateBoardRequest.getStartTime())
             .endTime(createMateBoardRequest.getEndTime())
+            .userId(user.getId())
             .user(user)
             .build();
 

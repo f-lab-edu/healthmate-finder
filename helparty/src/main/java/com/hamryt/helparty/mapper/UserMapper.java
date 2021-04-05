@@ -1,4 +1,4 @@
-package com.hamryt.helparty.mapper.user;
+package com.hamryt.helparty.mapper;
 
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;

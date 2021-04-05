@@ -12,7 +12,7 @@ import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
-import com.hamryt.helparty.mapper.user.UserMapper;
+import com.hamryt.helparty.mapper.UserMapper;
 import com.hamryt.helparty.service.login.Encryptor;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -87,8 +87,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
-        return Optional.ofNullable(userMapper.isExistsEmail(email))
-            .orElse(false);
+        return userMapper.isExistsEmail(email);
+
     }
 
     @Transactional(readOnly = true)
@@ -99,8 +99,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public UserDTO findUserByEmailAndPassword(String email, String password) {
-        return Optional.ofNullable(userMapper.findUserByEmailAndPassword(email, password))
-            .orElseThrow();//todo: fill the exception
+        return userMapper.findUserByEmailAndPassword(email, password);
     }
 
 }
