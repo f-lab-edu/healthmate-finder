@@ -44,7 +44,7 @@ public class LoginServiceImpl implements LoginService {
     @Transactional(readOnly = true)
     public void validateUser(Long id) {
         String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
-        UserDto user = userService.getUserById(id);
+        UserDto user = userService.findUserById(id);
         if (!user.getEmail().equals(userEmail)) {
             throw new LoginUserDoesNotMatchException(userEmail);
         }

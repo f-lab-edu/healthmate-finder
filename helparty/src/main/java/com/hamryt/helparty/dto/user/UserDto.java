@@ -18,16 +18,19 @@ public class UserDto {
 
     private String password;
 
+    private String phoneNumber;
+
     private String addressCode;
 
     private String addressDetail;
 
     @Builder
     public UserDto(String email, String name, String password, String addressCode,
-        String addressDetail) {
+        String addressDetail, String phoneNumber) {
         this.email = email;
         this.name = name;
         this.password = password;
+        this.phoneNumber = phoneNumber;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
     }

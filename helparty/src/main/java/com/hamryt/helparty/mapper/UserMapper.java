@@ -16,5 +16,7 @@ public interface UserMapper {
 
     UserDto findUserById(Long id);
 
+    int deleteUserByEmailAndPassword(String email, String password);
+
     int updateUser(UpdateUserResponse updateUserResponse);
 }
