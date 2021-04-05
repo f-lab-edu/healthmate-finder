@@ -29,8 +29,8 @@ public class UserDTO {
         String addressCode, String addressDetail, String phoneNumber
     ) {
         this.email = email;
-        this.name = name;
         this.password = password;
+        this.name = name;
         this.phoneNumber = phoneNumber;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;

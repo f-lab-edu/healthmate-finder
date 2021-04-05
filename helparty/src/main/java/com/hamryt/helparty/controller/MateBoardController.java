@@ -1,10 +1,10 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.healthmateboard.request.CreateHealthMateBoardRequest;
-import com.hamryt.helparty.dto.healthmateboard.response.CreateHealthMateBoardResponse;
+import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
-import com.hamryt.helparty.service.healthmateboard.HealthMateBoardService;
 import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.mateboard.MateBoardService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("healthmateboards")
-public class HealthMateBoardController {
+@RequestMapping("mateboards")
+public class MateBoardController {
 
-    private final HealthMateBoardService healthMateBoardService;
+    private final MateBoardService mateBoardService;
     private final LoginService loginService;
 
     @LoginValidation
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CreateHealthMateBoardResponse createHealthMateBoard(
-        @Valid @RequestBody CreateHealthMateBoardRequest createHealthMateBoardRequest
+    public CreateMateBoardResponse createMateBoard(
+        @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest
     ) {
         String email = loginService.getSessionEmail();
-        return healthMateBoardService.insertHealthMateBoard(createHealthMateBoardRequest, email);
+        return mateBoardService.insertMateBoard(createMateBoardRequest, email);
     }
 
 }

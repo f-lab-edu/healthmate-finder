@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto.healthmateboard;
+package com.hamryt.helparty.dto.mateboard;
 
 import com.hamryt.helparty.dto.user.UserDTO;
 import java.time.LocalDateTime;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class HealthMateBoardDTO {
+public class MateBoardDTO {
 
     private Long id;
 
@@ -29,7 +29,7 @@ public class HealthMateBoardDTO {
     private UserDTO user;
 
     @Builder
-    public HealthMateBoardDTO(
+    public MateBoardDTO(
         String userEmail, String gym, UserDTO user,
         String content, String startTime, String endTime
     ){

@@ -4,7 +4,6 @@ import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import org.apache.ibatis.annotations.Mapper;
 
-
 @Mapper
 public interface UserMapper {
 

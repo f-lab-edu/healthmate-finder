@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto.healthmateboard.request;
+package com.hamryt.helparty.dto.mateboard.request;
 
 import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateHealthMateBoardRequest {
+public class CreateMateBoardRequest {
 
   @NotEmpty
   private String gym;
@@ -22,7 +22,7 @@ public class CreateHealthMateBoardRequest {
   private String endTime;
 
   @Builder
-  public CreateHealthMateBoardRequest(
+  public CreateMateBoardRequest(
       String gym, String content, String startTime, String endTime
   ){
     this.gym = gym;

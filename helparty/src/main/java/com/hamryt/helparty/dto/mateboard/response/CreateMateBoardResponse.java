@@ -1,6 +1,6 @@
-package com.hamryt.helparty.dto.healthmateboard.response;
+package com.hamryt.helparty.dto.mateboard.response;
 
-import com.hamryt.helparty.dto.healthmateboard.HealthMateBoardDTO;
+import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
 import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class CreateHealthMateBoardResponse {
+public class CreateMateBoardResponse {
 
     @NotEmpty
     private String name;
@@ -29,7 +29,7 @@ public class CreateHealthMateBoardResponse {
     private String endTime;
 
     @Builder
-    public CreateHealthMateBoardResponse(
+    public CreateMateBoardResponse(
         String name, String gym,
         String address, String content,
         String startTime, String endTime
@@ -42,16 +42,16 @@ public class CreateHealthMateBoardResponse {
         this.endTime = endTime;
     }
 
-    public static CreateHealthMateBoardResponse of(
-        HealthMateBoardDTO healthMateBoardDTO
+    public static CreateMateBoardResponse of(
+        MateBoardDTO mateBoardDTO
     ){
-        return CreateHealthMateBoardResponse.builder()
-            .name(healthMateBoardDTO.getUser().getName())
-            .gym(healthMateBoardDTO.getGym())
-            .address(healthMateBoardDTO.getUser().getAddressDetail())
-            .content(healthMateBoardDTO.getContent())
-            .startTime(healthMateBoardDTO.getStartTime())
-            .endTime(healthMateBoardDTO.getEndTime())
+        return CreateMateBoardResponse.builder()
+            .name(mateBoardDTO.getUser().getName())
+            .gym(mateBoardDTO.getGym())
+            .address(mateBoardDTO.getUser().getAddressDetail())
+            .content(mateBoardDTO.getContent())
+            .startTime(mateBoardDTO.getStartTime())
+            .endTime(mateBoardDTO.getEndTime())
             .build();
     }
 

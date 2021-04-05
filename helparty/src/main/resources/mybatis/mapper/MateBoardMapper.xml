@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hamryt.helparty.mapper.mateboard.MateBoardMapper">
+
+<!--  <resultMap id="MateBoardResultMap"-->
+<!--    type="com.hamryt.helparty.dto.mateboard.MateBoardDTO">-->
+<!--    <id property="id" column="id" javaType="Long"/>-->
+<!--    <result property="content" column="content"/>-->
+<!--    <result property="createdAt" column="created_at"/>-->
+<!--    <result property="modifiedAt" column="modified_at"/>-->
+<!--    <association property="user" column="user_id" javaType="com.hamryt.helparty.dto.user.UserDTO"-->
+<!--      select="findUserByEmail"/>-->
+<!--  </resultMap>-->
+
+<!--  <select id="findUserByEmail" resultType="com.hamryt.helparty.dto.user.UserDTO">-->
+<!--    SELECT name name,-->
+<!--           phone_number phoneNumber,-->
+<!--           address_code addressCode,-->
+<!--           address_detail addressDetail-->
+<!--    FROM   user-->
+<!--    WHERE  email = #{userEmail}-->
+<!--  </select>-->
+
+  <insert id="insertMateBaord" useGeneratedKeys="true" keyProperty="id"
+    parameterType="com.hamryt.helparty.dto.mateboard.MateBoardDTO">
+    INSERT INTO mateboard (user_email, gym, content, start_time, end_time, created_at, modified_at)
+    VALUES(#{userEmail}, #{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW())
+  </insert>
+
+</mapper>

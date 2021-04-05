@@ -11,8 +11,10 @@ import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
+import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.mapper.user.UserMapper;
 import com.hamryt.helparty.service.login.Encryptor;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,17 +87,20 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
-        return userMapper.isExistsEmail(email);
+        return Optional.ofNullable(userMapper.isExistsEmail(email))
+            .orElse(false);
     }
 
     @Transactional(readOnly = true)
     public UserDTO findUserByEmail(String email) {
-        return userMapper.findUserByEmail(email);
+        return Optional.ofNullable(userMapper.findUserByEmail(email))
+            .orElseThrow(()->new UserNotFoundException(email));
     }
 
     @Transactional(readOnly = true)
     public UserDTO findUserByEmailAndPassword(String email, String password) {
-        return userMapper.findUserByEmailAndPassword(email, password);
+        return Optional.ofNullable(userMapper.findUserByEmailAndPassword(email, password))
+            .orElseThrow();//todo: fill the exception
     }
 
 }

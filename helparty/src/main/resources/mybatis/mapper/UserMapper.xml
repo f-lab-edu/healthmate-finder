@@ -6,8 +6,8 @@
 
   <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.user.UserDTO">
-    INSERT INTO user (email, name, password, phone_number, address_code, address_detail)
-    VALUES(#{email}, #{name}, #{password},#{phoneNumber}, #{addressCode}, #{addressDetail})
+    INSERT INTO user (email, password, name, phone_number, address_code, address_detail)
+    VALUES(#{email}, #{password}, #{name}, #{phoneNumber}, #{addressCode}, #{addressDetail})
   </insert>
 
   <select id="findUserById" resultType="com.hamryt.helparty.dto.user.UserDTO">
