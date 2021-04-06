@@ -1,6 +1,6 @@
 package com.hamryt.helparty.dto.user.response;
 
-import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.UserDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class SignUpUserResponse {
         this.addressDetail = addressDetail;
     }
 
-    public static SignUpUserResponse of(UserDto user){
+    public static SignUpUserResponse of(UserDTO user){
         return SignUpUserResponse.builder()
             .id(user.getId())
             .email(user.getEmail())

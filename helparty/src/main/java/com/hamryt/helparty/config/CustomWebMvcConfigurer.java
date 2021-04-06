@@ -1,7 +1,7 @@
 package com.hamryt.helparty.config;
 
 import com.hamryt.helparty.interceptor.LoginValidationInterceptor;
-import com.hamryt.helparty.service.LoginService;
+import com.hamryt.helparty.service.login.LoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

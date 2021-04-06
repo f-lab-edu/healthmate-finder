@@ -1,9 +1,9 @@
-package com.hamryt.helparty.service;
+package com.hamryt.helparty.service.user;
 
-import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
-import com.hamryt.helparty.dto.user.UserDto;
+import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.exception.user.EmailExistedException;
@@ -11,7 +11,10 @@ import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
+import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.mapper.UserMapper;
+import com.hamryt.helparty.service.login.Encryptor;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
         String encodedPassword = encryptor.encrypt(signupUserRequest.getPassword());
 
-        UserDto newUser = UserDto.builder()
+        UserDTO newUser = UserDTO.builder()
             .email(signupUserRequest.getEmail())
             .name(signupUserRequest.getName())
             .password(encodedPassword)
@@ -74,21 +77,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDto findUserById(Long id) {
-        UserDto userDto = userMapper.findUserById(id);
-        if (userDto == null) {
+    public UserDTO getUserById(Long id) {
+        UserDTO user = userMapper.findUserById(id);
+        if (user == null) {
             throw new UserNotFoundByIdException(id);
         }
-        return userDto;
+        return user;
     }
 
     @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
+
     }
 
     @Transactional(readOnly = true)
-    public UserDto findUserByEmailAndPassword(String email, String password) {
+    public UserDTO findUserByEmail(String email) {
+        return Optional.ofNullable(userMapper.findUserByEmail(email))
+            .orElseThrow(()->new UserNotFoundException(email));
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO findUserByEmailAndPassword(String email, String password) {
         return userMapper.findUserByEmailAndPassword(email, password);
     }
 

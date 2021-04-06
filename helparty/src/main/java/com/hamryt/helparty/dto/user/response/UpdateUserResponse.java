@@ -21,8 +21,10 @@ public class UpdateUserResponse {
     private String addressDetail;
 
     @Builder
-    public UpdateUserResponse(Long id, String password, String name, String phoneNumber, String addressCode,
-        String addressDetail) {
+    public UpdateUserResponse(
+        Long id, String password, String name, String addressCode,
+        String addressDetail, String phoneNumber
+    ) {
         this.id = id;
         this.password = password;
         this.name = name;

@@ -1,8 +1,8 @@
 package com.hamryt.helparty.controller;
 
 
-import com.hamryt.helparty.dto.user.UserDto;
-import com.hamryt.helparty.service.LoginService;
+import com.hamryt.helparty.dto.user.UserDTO;
+import com.hamryt.helparty.service.login.LoginService;
 import javax.validation.Valid;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,7 +30,7 @@ public class LoginController {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
-        UserDto userDto = loginService.login(email, password);
+        UserDTO userDto = loginService.login(email, password);
 
         return new LoginResponse(userDto);
     }
@@ -53,7 +53,7 @@ public class LoginController {
     private static class LoginResponse {
 
         @NonNull
-        private UserDto userDto;
+        private UserDTO userDto;
 
     }
 
