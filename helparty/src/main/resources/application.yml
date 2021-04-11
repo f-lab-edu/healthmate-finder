@@ -8,6 +8,7 @@ spring:
   redis:
     host: localhost
     port: 6379
+
 mybatis:
   config-location: classpath:mybatis-config.xml
   configuration:
