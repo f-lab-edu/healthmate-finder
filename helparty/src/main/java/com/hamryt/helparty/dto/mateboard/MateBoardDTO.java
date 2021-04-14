@@ -19,7 +19,7 @@ public class MateBoardDTO {
     private String startTime;
     
     private String endTime;
-    
+
     private LocalDateTime createdAt;
     
     private LocalDateTime modifiedAt;

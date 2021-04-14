@@ -1,5 +1,6 @@
 package com.hamryt.helparty.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ public class CacheConfig {
     private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public CacheManager redisCacheManager() {
+    public CacheManager redisCacheManager(ObjectMapper objectMapper) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
             .defaultCacheConfig()
             .serializeKeysWith(
@@ -26,7 +27,7 @@ public class CacheConfig {
                     .fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(
                 RedisSerializationContext.SerializationPair
-                    .fromSerializer(new GenericJackson2JsonRedisSerializer()));
+                    .fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)));
 
         RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder
             .fromConnectionFactory(redisConnectionFactory)
