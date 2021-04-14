@@ -4,6 +4,27 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.MateBoardMapper">
 
+  <resultMap id="getMateResultMap" type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
+    <result property="id" column="id"/>
+    <result property="userName" column="user_name"/>
+    <result property="userAddress" column="user_address"/>
+    <result property="gym" column="gym"/>
+    <result property="content" column="content"/>
+    <result property="startTime" column="start_time"/>
+    <result property="endTime" column="end_time"/>
+    <result property="createdAt" column="created_at"/>
+    <result property="modifiedAt" column="modified_at"/>
+  </resultMap>
+
+  <select id="findMateBoardByPage" resultMap="getMateResultMap">
+    SELECT b.id id, u.name user_name , u.address_detail user_address, b.gym gym,
+           b.content content, b.start_time start_time, b.end_time end_time,
+           b.created_at created_at, b.modified_at modified_at
+
+    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    ORDER BY id DESC LIMIT #{page}, #{size}
+  </select>
+
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.mateboard.MateBoardDTO">
     INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)

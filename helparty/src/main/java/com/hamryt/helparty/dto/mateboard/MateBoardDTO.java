@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class MateBoardDTO {
-
+    
     private Long id;
-
+    
     private String gym;
-
+    
     private String content;
-
+    
     private String startTime;
-
+    
     private String endTime;
-
+    
     private LocalDateTime createdAt;
-
+    
     private LocalDateTime modifiedAt;
-
+    
     private Long userId;
-
+    
     private UserDTO user;
-
+    
     @Builder
     public MateBoardDTO(
         String gym, UserDTO user, String content,
