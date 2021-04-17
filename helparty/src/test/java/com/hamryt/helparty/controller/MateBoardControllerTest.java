@@ -1,23 +1,24 @@
 package com.hamryt.helparty.controller;
 
-import static org.assertj.core.api.BDDAssertions.and;
+import static org.hamcrest.core.StringContains.containsString;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.hamcrest.core.StringContains.containsString;
+
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(MateBoardController.class)
 public class MateBoardControllerTest {
     
@@ -26,6 +27,9 @@ public class MateBoardControllerTest {
     
     @MockBean
     private MateBoardService mateBoardService;
+    
+    @MockBean
+    private LoginService loginService;
     
     @Test
     public void getMateBoard() throws Exception {
