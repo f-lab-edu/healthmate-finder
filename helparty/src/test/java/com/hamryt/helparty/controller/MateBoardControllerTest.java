@@ -147,7 +147,7 @@ public class MateBoardControllerTest {
             .content(request))
             .andExpect(status().isOk());
     
-        verify(mateBoardService).updateMateBoard(eq(1004L), any());
+        verify(mateBoardService).updateMateBoard(eq(1004L), any(), any());
     }
     
     private UpdateMateBoardRequest createUpdateMateBoardRequest(String gym, String content, String startTime,

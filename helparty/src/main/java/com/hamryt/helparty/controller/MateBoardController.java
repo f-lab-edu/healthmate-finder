@@ -63,7 +63,8 @@ public class MateBoardController {
         @PathVariable Long id,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ){
-        return mateBoardService.updateMateBoard(id, updateMateBoardRequest);
+        String email = loginService.getSessionEmail();
+        return mateBoardService.updateMateBoard(id, email, updateMateBoardRequest);
     }
     
     @GetMapping("/{id}")

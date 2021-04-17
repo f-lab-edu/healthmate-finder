@@ -45,16 +45,18 @@ public class MateBoardServiceImplTest {
     public void updateMate() {
         
         UpdateMateBoardRequest updateMateBoardRequest =
-            createUpdateMateBoardRequest("test", "test", "08:00", "10:00");
+            createUpdateMateBoardRequest("test@example.com","test", "test", "08:00", "10:00");
         
         UpdateMateBoardResponse updateMateBoardResponse =
             createUpdateMateBoardResponse(1004L, "test", "test", "08:00", "10:00",
                 LocalDateTime.now());
         
+        given("test@example.com".equals(updateMateBoardRequest.getEmail())).willReturn(true);
+        
         given(mateBoardMapper.updateMateBoard(any())).willReturn(1);
         
         UpdateMateBoardResponse result = mateBoardService
-            .updateMateBoard(1004L, updateMateBoardRequest);
+            .updateMateBoard(1004L, "test@example.com", updateMateBoardRequest);
         
         assertEquals(result.getContent(), updateMateBoardResponse.getContent());
         
@@ -74,10 +76,12 @@ public class MateBoardServiceImplTest {
             .build();
     }
     
-    private UpdateMateBoardRequest createUpdateMateBoardRequest(String gym, String content,
-        String startTime,
-        String endTime) {
+    private UpdateMateBoardRequest createUpdateMateBoardRequest(
+        String email, String gym, String content,
+        String startTime, String endTime
+    ) {
         return UpdateMateBoardRequest.builder()
+            .email(email)
             .gym(gym)
             .content(content)
             .startTime(startTime)

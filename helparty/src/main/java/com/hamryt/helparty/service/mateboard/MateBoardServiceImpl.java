@@ -7,6 +7,7 @@ import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
+import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
@@ -61,9 +62,13 @@ public class MateBoardServiceImpl implements MateBoardService {
     
     @Transactional
     public UpdateMateBoardResponse updateMateBoard(
-        Long id,
+        Long id, String email,
         UpdateMateBoardRequest updateMateBoardRequest
     ) {
+        if (!email.equals(updateMateBoardRequest.getEmail())){
+            throw new LoginUserDoesNotMatchException(updateMateBoardRequest.getEmail());
+        }
+        
         UpdateMateBoardResponse updateMateBoardResponse = UpdateMateBoardResponse
             .of(id, updateMateBoardRequest);
         
