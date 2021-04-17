@@ -6,9 +6,11 @@ import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
+import com.hamryt.helparty.exception.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -45,15 +47,15 @@ public class MateBoardServiceImpl implements MateBoardService {
     }
     
     @Transactional(readOnly = true)
-    @Cacheable(value = "matebaords")
+    @Cacheable(value = "mateboards")
     public List<GetMateBoardResponse> getMates(int page, int size) {
         return mateBoardMapper.findMateBoardByPage(page * size, size);
     }
     
     @Transactional(readOnly = true)
-    @Cacheable(value = "matebaords")
-    public GetMateBoardResponse getMate(Long id){
-        return mateBoardMapper.findMateBoardById(id);
+    public GetMateBoardResponse getMate(Long id) {
+        return Optional.ofNullable(mateBoardMapper.findMateBoardById(id))
+            .orElseThrow(()->new MateBoardNotFoundException(id));
     }
     
 }
