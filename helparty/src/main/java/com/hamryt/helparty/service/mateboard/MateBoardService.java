@@ -15,4 +15,6 @@ public interface MateBoardService {
     List<GetMateBoardResponse> getMates(int page, int size);
     
     UpdateMateBoardResponse updateMateBoard(Long id, UpdateMateBoardRequest updateMateBoardRequest);
+    
+    GetMateBoardResponse getMate(Long id);
 }

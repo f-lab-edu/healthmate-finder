@@ -14,4 +14,6 @@ public interface MateBoardMapper {
     List<GetMateBoardResponse> findMateBoardByPage(int page, int size);
     
     int updateMateBoard(UpdateMateBoardResponse updateMateBoardResponse);
+    
+    GetMateBoardResponse findMateBoardById(Long id);
 }

@@ -65,4 +65,11 @@ public class MateBoardController {
     ){
         return mateBoardService.updateMateBoard(id, updateMateBoardRequest);
     }
+    
+    @GetMapping("/{id}")
+    public GetMateBoardResponse getMate(
+      @PathVariable Long id
+    ){
+        return mateBoardService.getMate(id);
+    }
 }
