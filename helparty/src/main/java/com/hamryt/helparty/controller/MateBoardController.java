@@ -59,7 +59,7 @@ public class MateBoardController {
     
     @LoginValidation
     @PatchMapping("/{id}")
-    public UpdateMateBoardResponse updateMates(
+    public UpdateMateBoardResponse updateMateBoard(
         @PathVariable Long id,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ){
