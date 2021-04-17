@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class GeneralConfiguration {
     
-    @Bean
+    @Bean(name = "redisObjectMapper")
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = JsonMapper.builder()
             .addModule(new ParameterNamesModule())
