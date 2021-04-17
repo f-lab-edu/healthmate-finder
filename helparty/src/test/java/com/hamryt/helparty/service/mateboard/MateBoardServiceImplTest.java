@@ -12,9 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
@@ -23,14 +20,15 @@ public class MateBoardServiceImplTest {
     @InjectMocks
     private MateBoardServiceImpl mateBoardService;
     
-    @MockBean
+    @Mock
     private MateBoardMapper mateBoardMapper;
     
-    @MockBean
+    @Mock
     private UserService userService;
     
     @Test
-    public void getMateBoard(){
+    public void getMateBoard() {
+        
         mockGetMateBoardById();
         
         Long id = 1004L;
@@ -39,7 +37,7 @@ public class MateBoardServiceImplTest {
         assertEquals(getMateBoardResponse.getId(), 1004L);
     }
     
-    private void mockGetMateBoardById(){
+    private void mockGetMateBoardById() {
         GetMateBoardResponse getMateBoardResponse =
             GetMateBoardResponse.builder()
                 .id(1004L)
@@ -53,7 +51,7 @@ public class MateBoardServiceImplTest {
                 .modifiedAt(LocalDateTime.now())
                 .build();
         
-        given(mateBoardService.getMate(eq(1004L))).willReturn(getMateBoardResponse);
+        given(mateBoardMapper.findMateBoardById(eq(1004L))).willReturn(getMateBoardResponse);
     }
-
+    
 }
