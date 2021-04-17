@@ -1,9 +1,12 @@
 package com.hamryt.helparty.service.mateboard;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.time.LocalDateTime;
@@ -36,6 +39,50 @@ public class MateBoardServiceImplTest {
             mateBoardService.getMates(0, 10);
         
         assertEquals(getMateBoardResponses.get(0).getContent(), "test");
+    }
+    
+    @Test
+    public void updateMate() {
+        
+        UpdateMateBoardRequest updateMateBoardRequest =
+            createUpdateMateBoardRequest("test", "test", "08:00", "10:00");
+        
+        UpdateMateBoardResponse updateMateBoardResponse =
+            createUpdateMateBoardResponse(1004L, "test", "test", "08:00", "10:00",
+                LocalDateTime.now());
+        
+        given(mateBoardMapper.updateMateBoard(any())).willReturn(1);
+        
+        UpdateMateBoardResponse result = mateBoardService
+            .updateMateBoard(1004L, updateMateBoardRequest);
+        
+        assertEquals(result.getContent(), updateMateBoardResponse.getContent());
+        
+    }
+    
+    private UpdateMateBoardResponse createUpdateMateBoardResponse(
+        Long id, String gym, String content, String startTime,
+        String endTime, LocalDateTime modifiedAt
+    ) {
+        return UpdateMateBoardResponse.builder()
+            .id(id)
+            .gym(gym)
+            .content(content)
+            .startTime(startTime)
+            .endTime(endTime)
+            .modifiedAt(modifiedAt)
+            .build();
+    }
+    
+    private UpdateMateBoardRequest createUpdateMateBoardRequest(String gym, String content,
+        String startTime,
+        String endTime) {
+        return UpdateMateBoardRequest.builder()
+            .gym(gym)
+            .content(content)
+            .startTime(startTime)
+            .endTime(endTime)
+            .build();
     }
     
     private void mockMateBoardMapper() {

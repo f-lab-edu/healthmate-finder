@@ -1,9 +1,11 @@
 package com.hamryt.helparty.controller;
 
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMatesBoardResponse;
+import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
@@ -14,6 +16,8 @@ import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,5 +55,14 @@ public class MateBoardController {
             .page(page)
             .size(size)
             .build();
+    }
+    
+    @LoginValidation
+    @PatchMapping("/{id}")
+    public UpdateMateBoardResponse updateMates(
+        @PathVariable Long id,
+        @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
+    ){
+        return mateBoardService.updateMateBoard(id, updateMateBoardRequest);
     }
 }

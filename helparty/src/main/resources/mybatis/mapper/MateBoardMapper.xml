@@ -25,6 +25,16 @@
     ORDER BY id DESC LIMIT #{page}, #{size}
   </select>
 
+  <update id="updateMateBoard" parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
+    UPDATE helpartydb.mateboard SET
+    gym = #{gym},
+    content = #{content},
+    start_time = #{startTime},
+    end_time = #{endTime},
+    modified_at = NOW()
+    WHERE id = #{id}
+  </update>
+
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.mateboard.MateBoardDTO">
     INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)

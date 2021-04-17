@@ -2,10 +2,13 @@ package com.hamryt.helparty.service.mateboard;
 
 import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
+import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.util.List;
@@ -48,6 +51,21 @@ public class MateBoardServiceImpl implements MateBoardService {
     @Cacheable(value = "mateboards")
     public List<GetMateBoardResponse> getMates(int page, int size) {
         return mateBoardMapper.findMateBoardByPage(page * size, size);
+    }
+    
+    @Transactional
+    public UpdateMateBoardResponse updateMateBoard(
+        Long id,
+        UpdateMateBoardRequest updateMateBoardRequest
+    ) {
+        UpdateMateBoardResponse updateMateBoardResponse = UpdateMateBoardResponse
+            .of(id, updateMateBoardRequest);
+        
+        if (mateBoardMapper.updateMateBoard(updateMateBoardResponse) != 1){
+            throw new UpdateFailedException(updateMateBoardRequest.toString());
+        }
+        
+        return updateMateBoardResponse;
     }
     
 }

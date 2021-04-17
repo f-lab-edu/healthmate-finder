@@ -1,11 +1,17 @@
 package com.hamryt.helparty.controller;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
@@ -37,7 +43,7 @@ public class MateBoardControllerTest {
     
     @Test
     public void getListMateBoard_Success() throws Exception {
-    
+        
         mockMateBoardMapper();
         
         mvc.perform(get("/mateboards?page=0&size=10"))
@@ -58,7 +64,33 @@ public class MateBoardControllerTest {
             .andExpect(status().isOk());
     }
     
-    private void mockMateBoardMapper(){
+    @Test
+    public void updateMates() throws Exception {
+    
+        UpdateMateBoardRequest updateMateBoardRequest =
+            createUpdateMateBoardRequest("test", "test", "08:00", "10:00");
+    
+        String request = new ObjectMapper().writeValueAsString(updateMateBoardRequest);
+        
+        mvc.perform(patch("/mateboards/1004")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(request))
+            .andExpect(status().isOk());
+    
+        verify(mateBoardService).updateMateBoard(eq(1004L), any());
+    }
+    
+    private UpdateMateBoardRequest createUpdateMateBoardRequest(String gym, String content, String startTime,
+        String endTime) {
+        return UpdateMateBoardRequest.builder()
+            .gym(gym)
+            .content(content)
+            .startTime(startTime)
+            .endTime(endTime)
+            .build();
+    }
+    
+    private void mockMateBoardMapper() {
         GetMateBoardResponse getMateBoardResponse =
             GetMateBoardResponse.builder()
                 .id(1004L)
@@ -71,13 +103,13 @@ public class MateBoardControllerTest {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .build();
-    
+        
         List<GetMateBoardResponse> getMateBoardResponseList = new ArrayList<>(
             Arrays.asList(
                 getMateBoardResponse
             )
         );
-    
+        
         given(mateBoardService.getMates(0, 10)).willReturn(getMateBoardResponseList);
     }
     
