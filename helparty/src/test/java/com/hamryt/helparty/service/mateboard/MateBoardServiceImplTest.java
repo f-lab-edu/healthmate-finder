@@ -1,10 +1,12 @@
 package com.hamryt.helparty.service.mateboard;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.exception.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.time.LocalDateTime;
@@ -12,9 +14,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 public class MateBoardServiceImplTest {
     
     @InjectMocks
@@ -27,8 +29,7 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
-    public void getMateBoard() {
-        
+    public void getMateBoard_Success() {
         mockGetMateBoardById();
         
         Long id = 1004L;
@@ -53,5 +54,7 @@ public class MateBoardServiceImplTest {
         
         given(mateBoardMapper.findMateBoardById(eq(1004L))).willReturn(getMateBoardResponse);
     }
+    
+    
     
 }
