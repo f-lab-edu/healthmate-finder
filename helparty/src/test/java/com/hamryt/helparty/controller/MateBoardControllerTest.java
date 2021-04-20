@@ -10,6 +10,7 @@ import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
 import java.time.LocalDateTime;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class MateBoardControllerTest {
     private LoginService loginService;
     
     @Test
+    @DisplayName("동행 구함 게시물 상세조회 /mateboards/{id}")
     public void getMateBoard() throws Exception {
     
         GetMateBoardResponse getMateBoardResponse =

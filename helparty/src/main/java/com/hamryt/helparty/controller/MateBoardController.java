@@ -56,8 +56,8 @@ public class MateBoardController {
     
     @GetMapping("{id}")
     public GetMateBoardResponse getMate(
-      @PathVariable Long id
-    ){
+        @PathVariable Long id
+    ) {
         return mateBoardService.getMate(id);
     }
 }
