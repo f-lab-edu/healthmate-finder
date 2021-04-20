@@ -12,6 +12,7 @@ import com.hamryt.helparty.service.user.UserService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -31,6 +32,7 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
+    @DisplayName("get MateBoard list Success")
     public void getMates() {
         
         mockMateBoardMapper();
@@ -42,16 +44,15 @@ public class MateBoardServiceImplTest {
     }
     
     @Test
+    @DisplayName("update MateBoard Success")
     public void updateMate() {
         
         UpdateMateBoardRequest updateMateBoardRequest =
-            createUpdateMateBoardRequest("test@example.com","test", "test", "08:00", "10:00");
+            createUpdateMateBoardRequest("test@example.com", "test", "test", "08:00", "10:00");
         
         UpdateMateBoardResponse updateMateBoardResponse =
             createUpdateMateBoardResponse(1004L, "test", "test", "08:00", "10:00",
                 LocalDateTime.now());
-        
-        given("test@example.com".equals(updateMateBoardRequest.getEmail())).willReturn(true);
         
         given(mateBoardMapper.updateMateBoard(any())).willReturn(1);
         
