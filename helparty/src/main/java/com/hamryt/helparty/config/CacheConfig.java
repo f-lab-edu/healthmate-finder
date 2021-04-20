@@ -2,6 +2,7 @@ package com.hamryt.helparty.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +20,7 @@ public class CacheConfig {
     private RedisConnectionFactory redisConnectionFactory;
 
     @Bean
-    public CacheManager redisCacheManager(ObjectMapper objectMapper) {
+    public CacheManager redisCacheManager(@Qualifier("redisObjectMapper") ObjectMapper objectMapper) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
             .defaultCacheConfig()
             .serializeKeysWith(

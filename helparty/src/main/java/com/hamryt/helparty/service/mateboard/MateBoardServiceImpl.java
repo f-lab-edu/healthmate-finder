@@ -44,7 +44,7 @@ public class MateBoardServiceImpl implements MateBoardService {
         return CreateMateBoardResponse.of(mateBoard);
     }
     
-    @Transactional
+    @Transactional(readOnly = true)
     @Cacheable(value = "mateboards")
     public List<GetMateBoardResponse> getMates(int page, int size) {
         return mateBoardMapper.findMateBoardByPage(page * size, size);
