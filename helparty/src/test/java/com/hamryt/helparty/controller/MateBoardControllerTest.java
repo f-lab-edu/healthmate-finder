@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,9 @@ public class MateBoardControllerTest {
     private LoginService loginService;
     
     @Test
+    @DisplayName("get MateBoard list Success GET")
     public void getListMateBoard_Success() throws Exception {
-    
+        
         mockMateBoardMapper();
         
         mvc.perform(get("/mateboards?page=0&size=10"))
@@ -52,13 +54,14 @@ public class MateBoardControllerTest {
     }
     
     @Test
+    @DisplayName("[Integration TEST] get MateBoard list Success GET")
     public void GetLsitMateBaord_Success_integration() throws Exception {
         mvc.perform(get("/mateboards")
             .contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk());
     }
     
-    private void mockMateBoardMapper(){
+    private void mockMateBoardMapper() {
         GetMateBoardResponse getMateBoardResponse =
             GetMateBoardResponse.builder()
                 .id(1004L)
@@ -71,13 +74,13 @@ public class MateBoardControllerTest {
                 .createdAt(LocalDateTime.now())
                 .modifiedAt(LocalDateTime.now())
                 .build();
-    
+        
         List<GetMateBoardResponse> getMateBoardResponseList = new ArrayList<>(
             Arrays.asList(
                 getMateBoardResponse
             )
         );
-    
+        
         given(mateBoardService.getMates(0, 10)).willReturn(getMateBoardResponseList);
     }
     

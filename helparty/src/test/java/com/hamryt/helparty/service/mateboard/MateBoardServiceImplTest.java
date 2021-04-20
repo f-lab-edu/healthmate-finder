@@ -9,6 +9,7 @@ import com.hamryt.helparty.service.user.UserService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +29,7 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
+    @DisplayName("get MateBoard list Success")
     public void getMates() {
         
         mockMateBoardMapper();
