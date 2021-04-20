@@ -22,7 +22,7 @@
            b.created_at created_at, b.modified_at modified_at
 
     FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
-    ORDER BY id DESC LIMIT #{page}, #{size}
+    ORDER BY id DESC LIMIT #{index}, #{size}
   </select>
 
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"

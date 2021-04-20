@@ -1,5 +1,6 @@
 package com.hamryt.helparty.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,12 +22,18 @@ public class RedisConfig {
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(
-        RedisConnectionFactory connectionFactory
+        RedisConnectionFactory connectionFactory,
+        ObjectMapper objectMapper
     ) {
+        GenericJackson2JsonRedisSerializer serializer =
+            new GenericJackson2JsonRedisSerializer(objectMapper);
+    
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         redisTemplate.setConnectionFactory(connectionFactory);
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        redisTemplate.setValueSerializer(serializer);
+        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
+        redisTemplate.setHashValueSerializer(serializer);
         return redisTemplate;
     }
 
@@ -35,8 +42,10 @@ public class RedisConfig {
         RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
         redisStandaloneConfiguration.setHostName(host);
         redisStandaloneConfiguration.setPort(port);
-        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory(
+        LettuceConnectionFactory lettuceConnectionFactory = new LettuceConnectionFactory(
             redisStandaloneConfiguration);
-        return connectionFactory;
+        return lettuceConnectionFactory;
     }
+    
+  
 }

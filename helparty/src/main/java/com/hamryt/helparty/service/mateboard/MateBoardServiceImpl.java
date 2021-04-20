@@ -10,6 +10,7 @@ import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +44,8 @@ public class MateBoardServiceImpl implements MateBoardService {
         return CreateMateBoardResponse.of(mateBoard);
     }
     
-    @Transactional
+    @Transactional(readOnly = true)
+    @Cacheable(value = "mateboards")
     public List<GetMateBoardResponse> getMates(int page, int size) {
         return mateBoardMapper.findMateBoardByPage(page * size, size);
     }

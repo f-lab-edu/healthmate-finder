@@ -10,5 +10,5 @@ public interface MateBoardMapper {
 
     int insertMateBoard(MateBoardDTO mateBoard);
     
-    List<GetMateBoardResponse> findMateBoardByPage(int page, int size);
+    List<GetMateBoardResponse> findMateBoardByPage(int index, int size);
 }

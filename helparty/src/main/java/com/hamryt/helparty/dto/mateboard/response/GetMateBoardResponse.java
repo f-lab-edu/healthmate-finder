@@ -1,6 +1,5 @@
 package com.hamryt.helparty.dto.mateboard.response;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
 import java.time.LocalDateTime;
 import lombok.Builder;
@@ -25,10 +24,8 @@ public class GetMateBoardResponse {
     
     private String endTime;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
     
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime modifiedAt;
     
     @Builder
