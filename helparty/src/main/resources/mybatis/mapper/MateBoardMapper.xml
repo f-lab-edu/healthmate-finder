@@ -25,7 +25,7 @@
   <select id="findMateBoardByPage" resultMap="getMateResultMap">
     <include refid="selectMateBoard"/>
     FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
-    ORDER BY id DESC LIMIT #{page}, #{size}
+    ORDER BY id DESC LIMIT #{index}, #{size}
   </select>
 
   <select id="findMateBoardById" resultMap="getMateResultMap">
