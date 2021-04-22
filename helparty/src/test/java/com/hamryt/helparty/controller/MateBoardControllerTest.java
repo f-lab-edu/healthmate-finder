@@ -33,7 +33,7 @@ public class MateBoardControllerTest {
     private LoginService loginService;
     
     @Test
-    @DisplayName("동행 구함 게시물 상세조회 /mateboards/{id}")
+    @DisplayName("동행 구함 게시물 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
     public void getMateBoard() throws Exception {
     
         GetMateBoardResponse getMateBoardResponse =
