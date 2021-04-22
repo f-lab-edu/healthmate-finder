@@ -29,7 +29,7 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
-    @DisplayName("get MateBoard list Success")
+    @DisplayName("해당 페이지와 사이즈에 맞는 게시글이 존재하면 정상적으로 페이지에 해당하는 게시글 리스트를 조회한다.")
     public void getMates() {
         
         mockMateBoardMapper();

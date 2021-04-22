@@ -37,7 +37,7 @@ public class MateBoardControllerTest {
     private LoginService loginService;
     
     @Test
-    @DisplayName("get MateBoard list Success GET")
+    @DisplayName("동행 구함 게시물 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
     public void getListMateBoard_Success() throws Exception {
         
         mockMateBoardMapper();
@@ -51,14 +51,6 @@ public class MateBoardControllerTest {
                 containsString("\"userName\":\"test\"")
             ));
         
-    }
-    
-    @Test
-    @DisplayName("[Integration TEST] get MateBoard list Success GET")
-    public void GetLsitMateBaord_Success_integration() throws Exception {
-        mvc.perform(get("/mateboards")
-            .contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isOk());
     }
     
     private void mockMateBoardMapper() {
