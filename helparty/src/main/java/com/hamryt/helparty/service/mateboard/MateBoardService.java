@@ -11,4 +11,6 @@ public interface MateBoardService {
         CreateMateBoardRequest createMateBoardRequest, String email);
     
     List<GetMateBoardResponse> getMates(int page, int size);
+    
+    GetMateBoardResponse getMate(Long id);
 }
