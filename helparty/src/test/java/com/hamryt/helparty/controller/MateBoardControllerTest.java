@@ -1,5 +1,6 @@
 package com.hamryt.helparty.controller;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -35,7 +36,7 @@ public class MateBoardControllerTest {
     private LoginService loginService;
     
     @Test
-    @DisplayName("동행 구함 게시물 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
+    @DisplayName("동행 구함 게시물 페이지 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
     public void getListMateBoard_Success() throws Exception {
         
         mockMateBoardMapper();
