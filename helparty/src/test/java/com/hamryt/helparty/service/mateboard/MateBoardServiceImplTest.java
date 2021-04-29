@@ -33,18 +33,7 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
-    @DisplayName("동행 구함 게시물 상세 조회 성공")
-    public void getMateBoard_Success() {
-        mockGetMateBoardById();
-        
-        Long id = 1004L;
-        GetMateBoardResponse getMateBoardResponse = mateBoardService.getMate(id);
-        
-        assertEquals(getMateBoardResponse.getId(), 1004L);
-    }
-    
-    @Test
-    @DisplayName("동행 구함 게시물 페이지 조회 성공")
+    @DisplayName("해당 페이지와 사이즈에 맞는 게시글이 존재하면 정상적으로 페이지에 해당하는 게시글 리스트를 조회한다.")
     public void getMates_Success() {
         
         mockMateBoardMapper();
@@ -53,6 +42,17 @@ public class MateBoardServiceImplTest {
             mateBoardService.getMates(0, 10);
         
         assertEquals(getMateBoardResponses.get(0).getContent(), "test");
+    }
+    
+    @Test
+    @DisplayName("동행 구함 게시물 상세 조회 성공")
+    public void getMateBoard_Success() {
+        mockGetMateBoardById();
+        
+        Long id = 1004L;
+        GetMateBoardResponse getMateBoardResponse = mateBoardService.getMate(id);
+        
+        assertEquals(getMateBoardResponse.getId(), 1004L);
     }
     
     @Test
@@ -136,5 +136,4 @@ public class MateBoardServiceImplTest {
         
         given(mateBoardMapper.findMateBoardByPage(0, 10)).willReturn(getMateBoardResponseInput);
     }
-    
 }
