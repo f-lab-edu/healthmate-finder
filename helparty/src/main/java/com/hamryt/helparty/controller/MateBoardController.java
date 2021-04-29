@@ -39,9 +39,9 @@ public class MateBoardController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMateBoardResponse createMateBoard(
-        @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest
+        @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest,
+        @GetSessionEmail String email
     ) {
-        String email = loginService.getSessionEmail();
         return mateBoardService.addMateBoard(createMateBoardRequest, email);
     }
     
