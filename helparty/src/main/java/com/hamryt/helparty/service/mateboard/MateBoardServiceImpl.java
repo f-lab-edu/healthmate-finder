@@ -14,6 +14,7 @@ import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,18 +50,18 @@ public class MateBoardServiceImpl implements MateBoardService {
     }
     
     @Transactional(readOnly = true)
-    @Cacheable(value = "matebaords")
+    @Cacheable(value = "mateboards")
     public List<GetMateBoardResponse> getMates(int page, int size) {
         return mateBoardMapper.findMateBoardByPage(page * size, size);
     }
     
     @Transactional(readOnly = true)
-    @Cacheable(value = "matebaords")
     public GetMateBoardResponse getMate(Long id){
         return mateBoardMapper.findMateBoardById(id);
     }
     
     @Transactional
+    @CacheEvict(value = "mateboards")
     public UpdateMateBoardResponse updateMateBoard(
         Long id, String email,
         UpdateMateBoardRequest updateMateBoardRequest

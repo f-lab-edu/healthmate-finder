@@ -1,5 +1,6 @@
 package com.hamryt.helparty.controller;
 
+import com.hamryt.helparty.aop.GetSessionEmail;
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
@@ -61,9 +62,9 @@ public class MateBoardController {
     @PatchMapping("/{id}")
     public UpdateMateBoardResponse updateMateBoard(
         @PathVariable Long id,
+        @GetSessionEmail String email,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ){
-        String email = loginService.getSessionEmail();
         return mateBoardService.updateMateBoard(id, email, updateMateBoardRequest);
     }
     
