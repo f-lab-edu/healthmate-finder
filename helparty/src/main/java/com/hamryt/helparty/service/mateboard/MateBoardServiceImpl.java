@@ -9,10 +9,12 @@ import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
+import com.hamryt.helparty.exception.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -56,8 +58,9 @@ public class MateBoardServiceImpl implements MateBoardService {
     }
     
     @Transactional(readOnly = true)
-    public GetMateBoardResponse getMate(Long id){
-        return mateBoardMapper.findMateBoardById(id);
+    public GetMateBoardResponse getMate(Long id) {
+        return Optional.ofNullable(mateBoardMapper.findMateBoardById(id))
+            .orElseThrow(() -> new MateBoardNotFoundException(id));
     }
     
     @Transactional
@@ -66,14 +69,14 @@ public class MateBoardServiceImpl implements MateBoardService {
         Long id, String email,
         UpdateMateBoardRequest updateMateBoardRequest
     ) {
-        if (!email.equals(updateMateBoardRequest.getEmail())){
+        if (!email.equals(updateMateBoardRequest.getEmail())) {
             throw new LoginUserDoesNotMatchException(updateMateBoardRequest.getEmail());
         }
         
         UpdateMateBoardResponse updateMateBoardResponse = UpdateMateBoardResponse
             .of(id, updateMateBoardRequest);
         
-        if (mateBoardMapper.updateMateBoard(updateMateBoardResponse) != 1){
+        if (mateBoardMapper.updateMateBoard(updateMateBoardResponse) != 1) {
             throw new UpdateFailedException(updateMateBoardRequest.toString());
         }
         

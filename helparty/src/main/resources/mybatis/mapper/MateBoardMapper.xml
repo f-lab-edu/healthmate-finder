@@ -4,7 +4,8 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.MateBoardMapper">
 
-  <resultMap id="getMateResultMap" type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
+  <resultMap id="getMateResultMap"
+    type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
     <result property="id" column="id"/>
     <result property="userName" column="user_name"/>
     <result property="userAddress" column="user_address"/>
@@ -25,7 +26,7 @@
   <select id="findMateBoardByPage" resultMap="getMateResultMap">
     <include refid="selectMateBoard"/>
     FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
-    ORDER BY id DESC LIMIT #{page}, #{size}
+    ORDER BY id DESC LIMIT #{index}, #{size}
   </select>
 
   <select id="findMateBoardById" resultMap="getMateResultMap">
@@ -34,7 +35,8 @@
     WHERE b.id = #{id}
   </select>
 
-  <update id="updateMateBoard" parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
+  <update id="updateMateBoard"
+    parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
     UPDATE helpartydb.mateboard SET
     gym = #{gym},
     content = #{content},

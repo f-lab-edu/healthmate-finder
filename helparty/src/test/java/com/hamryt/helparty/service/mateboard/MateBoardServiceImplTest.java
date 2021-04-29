@@ -1,7 +1,8 @@
 package com.hamryt.helparty.service.mateboard;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
@@ -32,8 +33,19 @@ public class MateBoardServiceImplTest {
     private UserService userService;
     
     @Test
-    @DisplayName("get MateBoard list Success")
-    public void getMates() {
+    @DisplayName("동행 구함 게시물 상세 조회 성공")
+    public void getMateBoard_Success() {
+        mockGetMateBoardById();
+        
+        Long id = 1004L;
+        GetMateBoardResponse getMateBoardResponse = mateBoardService.getMate(id);
+        
+        assertEquals(getMateBoardResponse.getId(), 1004L);
+    }
+    
+    @Test
+    @DisplayName("동행 구함 게시물 페이지 조회 성공")
+    public void getMates_Success() {
         
         mockMateBoardMapper();
         
@@ -44,8 +56,8 @@ public class MateBoardServiceImplTest {
     }
     
     @Test
-    @DisplayName("update MateBoard Success")
-    public void updateMate() {
+    @DisplayName("동행 구함 게시물 업데이트 성공")
+    public void updateMate_Success() {
         
         UpdateMateBoardRequest updateMateBoardRequest =
             createUpdateMateBoardRequest("test@example.com", "test", "test", "08:00", "10:00");
@@ -75,6 +87,23 @@ public class MateBoardServiceImplTest {
             .endTime(endTime)
             .modifiedAt(modifiedAt)
             .build();
+    }
+    
+    private void mockGetMateBoardById() {
+        GetMateBoardResponse getMateBoardResponse =
+            GetMateBoardResponse.builder()
+                .id(1004L)
+                .userName("test")
+                .userAddress("test")
+                .gym("test")
+                .content("test")
+                .startTime("08:00")
+                .endTime("10:00")
+                .createdAt(LocalDateTime.now())
+                .modifiedAt(LocalDateTime.now())
+                .build();
+        
+        given(mateBoardMapper.findMateBoardById(eq(1004L))).willReturn(getMateBoardResponse);
     }
     
     private UpdateMateBoardRequest createUpdateMateBoardRequest(

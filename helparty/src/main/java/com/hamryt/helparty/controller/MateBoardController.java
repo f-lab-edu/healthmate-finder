@@ -64,14 +64,14 @@ public class MateBoardController {
         @PathVariable Long id,
         @GetSessionEmail String email,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
-    ){
+    ) {
         return mateBoardService.updateMateBoard(id, email, updateMateBoardRequest);
     }
     
     @GetMapping("/{id}")
     public GetMateBoardResponse getMate(
-      @PathVariable Long id
-    ){
+        @PathVariable Long id
+    ) {
         return mateBoardService.getMate(id);
     }
 }
