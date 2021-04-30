@@ -35,6 +35,12 @@
     WHERE b.id = #{id}
   </select>
 
+  <select id="findMateBoardEmailById" resultType="String">
+    SELECT u.email
+    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    WHERE b.id = #{id}
+  </select>
+
   <update id="updateMateBoard"
     parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
     UPDATE helpartydb.mateboard SET
@@ -51,5 +57,9 @@
     INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)
     VALUES(#{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW(), #{userId})
   </insert>
+
+  <delete id="deleteMateBoardById">
+    DELETE FROM helpartydb.mateboard WHERE id=#{id}
+  </delete>
 
 </mapper>

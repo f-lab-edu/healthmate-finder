@@ -1,5 +1,6 @@
 package com.hamryt.helparty.controller;
 
+
 import com.hamryt.helparty.aop.GetSessionEmail;
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -74,4 +76,14 @@ public class MateBoardController {
     ) {
         return mateBoardService.getMate(id);
     }
+    
+    @LoginValidation
+    @DeleteMapping("/{id}")
+    public void deleteMateBoard(
+        @GetSessionEmail String email,
+        @PathVariable Long id
+    ) {
+        mateBoardService.deleteMateBoard(id, email);
+    }
+    
 }

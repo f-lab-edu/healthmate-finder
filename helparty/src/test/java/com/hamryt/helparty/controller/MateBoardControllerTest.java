@@ -5,6 +5,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -47,7 +48,7 @@ public class MateBoardControllerTest {
     
     @Test
     @DisplayName("동행 구함 게시물 생성에 성공하면 해당 게시물을 반환한다.")
-    public void create() throws Exception {
+    public void create_Success() throws Exception {
         
         // given
         Long id = 1004L;
@@ -98,7 +99,7 @@ public class MateBoardControllerTest {
     
     @Test
     @DisplayName("동행 구함 게시물 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
-    public void getMateBoard() throws Exception {
+    public void getMateBoard_Success() throws Exception {
         
         GetMateBoardResponse getMateBoardResponse =
             GetMateBoardResponse.builder()
@@ -127,7 +128,7 @@ public class MateBoardControllerTest {
     
     @Test
     @DisplayName("동행 구함 게시물 업데이트 성공하면 업데이트 게시물을 반환한다.")
-    public void updateMates() throws Exception {
+    public void updateMates_Success() throws Exception {
         
         // given
         String email = "test@example.com";
@@ -149,6 +150,18 @@ public class MateBoardControllerTest {
         
         // then
         verify(mateBoardService).updateMateBoard(eq(1004L), any(), any());
+    }
+    
+    
+    @Test
+    @DisplayName("동행 구함 게시물 삭제 성공")
+    public void deleteMate_Success() throws Throwable {
+        
+        mvc.perform(delete("/mateboards/1004")
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk());
+        
+        verify(mateBoardService).deleteMateBoard(eq(1004L), any());
     }
     
     private UpdateMateBoardRequest createUpdateMateBoardRequest(String email, String gym,

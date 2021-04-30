@@ -8,6 +8,7 @@ import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
+import com.hamryt.helparty.exception.mateboard.DeleteMateBoardFailedException;
 import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
 import com.hamryt.helparty.exception.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
@@ -61,6 +62,21 @@ public class MateBoardServiceImpl implements MateBoardService {
     public GetMateBoardResponse getMate(Long id) {
         return Optional.ofNullable(mateBoardMapper.findMateBoardById(id))
             .orElseThrow(() -> new MateBoardNotFoundException(id));
+    }
+    
+    @Transactional
+    @CacheEvict(value = "mateboards")
+    public void deleteMateBoard(Long id, String email) {
+        
+        String mateEmail = mateBoardMapper.findMateBoardEmailById(id);
+        
+        if (!mateEmail.equals(email)) {
+            throw new LoginUserDoesNotMatchException(mateEmail);
+        }
+        
+        if (mateBoardMapper.deleteMateBoardById(id) != 1) {
+            throw new DeleteMateBoardFailedException();
+        }
     }
     
     @Transactional

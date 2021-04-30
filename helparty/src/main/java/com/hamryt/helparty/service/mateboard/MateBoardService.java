@@ -14,7 +14,10 @@ public interface MateBoardService {
     
     List<GetMateBoardResponse> getMates(int page, int size);
     
-    UpdateMateBoardResponse updateMateBoard(Long id, String email, UpdateMateBoardRequest updateMateBoardRequest);
+    UpdateMateBoardResponse updateMateBoard(Long id, String email,
+        UpdateMateBoardRequest updateMateBoardRequest);
     
     GetMateBoardResponse getMate(Long id);
+    
+    void deleteMateBoard(Long id, String email);
 }
