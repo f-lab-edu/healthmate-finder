@@ -10,13 +10,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 @RequiredArgsConstructor
 public class CustomWebMvcConfigure extends WebMvcConfigurationSupport {
-
+    
     private final LoginService loginService;
-
+    
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginValidationInterceptor(loginService))
             .addPathPatterns("/users/**");
     }
-
+    
 }

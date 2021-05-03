@@ -4,7 +4,8 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.MateBoardMapper">
 
-  <resultMap id="getMateResultMap" type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
+  <resultMap id="getMateResultMap"
+    type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
     <result property="id" column="id"/>
     <result property="userName" column="user_name"/>
     <result property="userAddress" column="user_address"/>
@@ -34,10 +35,31 @@
     WHERE b.id = #{id}
   </select>
 
+  <select id="findMateBoardEmailById" resultType="String">
+    SELECT u.email
+    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    WHERE b.id = #{id}
+  </select>
+
+  <update id="updateMateBoard"
+    parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
+    UPDATE helpartydb.mateboard SET
+    gym = #{gym},
+    content = #{content},
+    start_time = #{startTime},
+    end_time = #{endTime},
+    modified_at = NOW()
+    WHERE id = #{id}
+  </update>
+
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.mateboard.MateBoardDTO">
     INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)
     VALUES(#{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW(), #{userId})
   </insert>
+
+  <delete id="deleteMateBoardById">
+    DELETE FROM helpartydb.mateboard WHERE id=#{id}
+  </delete>
 
 </mapper>

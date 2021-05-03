@@ -1,14 +1,24 @@
 package com.hamryt.helparty.controller;
 
 import static org.hamcrest.Matchers.containsString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.service.login.LoginService;
-import com.hamryt.helparty.service.mateboard.MateBoardService;
+import com.hamryt.helparty.service.login.LoginServiceImpl;
+import com.hamryt.helparty.service.mateboard.MateBoardServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +29,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,10 +41,44 @@ public class MateBoardControllerTest {
     private MockMvc mvc;
     
     @MockBean
-    private MateBoardService mateBoardService;
+    private MateBoardServiceImpl mateBoardService;
     
     @MockBean
-    private LoginService loginService;
+    private LoginServiceImpl loginService;
+    
+    @Test
+    @DisplayName("동행 구함 게시물 생성에 성공하면 해당 게시물을 반환한다.")
+    public void create_Success() throws Exception {
+        
+        // given
+        Long id = 1004L;
+        String name = "test";
+        String addressDetail = "seoul donjak";
+        String gym = "test gym";
+        String content = "test";
+        String startTime = "18:00";
+        String endTime = "19:00";
+        
+        CreateMateBoardRequest createMateBoardRequest
+            = getCreateRequest(gym, content, startTime, endTime);
+        
+        CreateMateBoardResponse createMateBoardResponse
+            = getCreateResponse(id, name, gym, content, addressDetail, startTime, endTime);
+        
+        String request = new ObjectMapper().writeValueAsString(createMateBoardRequest);
+        
+        given(loginService.getSessionEmail())
+            .willReturn("test@example.com");
+        given(mateBoardService.addMateBoard(createMateBoardRequest, "test@example.com"))
+            .willReturn(createMateBoardResponse);
+        
+        // when, then
+        mvc.perform(post("/mateboards")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(request))
+            .andExpect(status().isCreated());
+    }
+    
     
     @Test
     @DisplayName("동행 구함 게시물 페이지 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
@@ -54,7 +99,7 @@ public class MateBoardControllerTest {
     
     @Test
     @DisplayName("동행 구함 게시물 조회에 성공하면 HTTP 상태코드 200과 게시물 응답 정보를 반환한다.")
-    public void getMateBoard() throws Exception {
+    public void getMateBoard_Success() throws Exception {
         
         GetMateBoardResponse getMateBoardResponse =
             GetMateBoardResponse.builder()
@@ -79,7 +124,56 @@ public class MateBoardControllerTest {
             .andExpect(content().string(
                 containsString("\"userName\":\"test\"")
             ));
+    }
+    
+    @Test
+    @DisplayName("동행 구함 게시물 업데이트 성공하면 업데이트 게시물을 반환한다.")
+    public void updateMates_Success() throws Exception {
         
+        // given
+        String email = "test@example.com";
+        String gym = "test";
+        String content = "test";
+        String startTime = "08:00";
+        String endTime = "10:00";
+        
+        UpdateMateBoardRequest updateMateBoardRequest =
+            createUpdateMateBoardRequest(email, gym, content, startTime, endTime);
+        
+        String request = new ObjectMapper().writeValueAsString(updateMateBoardRequest);
+        
+        // when
+        mvc.perform(patch("/mateboards/1004")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(request))
+            .andExpect(status().isOk());
+        
+        // then
+        verify(mateBoardService).updateMateBoard(eq(1004L), any(), any());
+    }
+    
+    
+    @Test
+    @DisplayName("동행 구함 게시물 삭제 성공")
+    public void deleteMate_Success() throws Throwable {
+        
+        mvc.perform(delete("/mateboards/1004")
+            .contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk());
+        
+        verify(mateBoardService).deleteMateBoard(eq(1004L), any());
+    }
+    
+    private UpdateMateBoardRequest createUpdateMateBoardRequest(String email, String gym,
+        String content, String startTime,
+        String endTime) {
+        return UpdateMateBoardRequest.builder()
+            .email(email)
+            .gym(gym)
+            .content(content)
+            .startTime(startTime)
+            .endTime(endTime)
+            .build();
     }
     
     private void mockMateBoardMapper() {
@@ -103,6 +197,36 @@ public class MateBoardControllerTest {
         );
         
         given(mateBoardService.getMates(0, 10)).willReturn(getMateBoardResponseList);
+    }
+    
+    private CreateMateBoardRequest getCreateRequest(
+        String gym, String content,
+        String startTime, String endTime
+    ) {
+        return CreateMateBoardRequest.builder()
+            .gym(gym)
+            .content(content)
+            .startTime(startTime)
+            .endTime(endTime)
+            .build();
+    }
+    
+    private CreateMateBoardResponse getCreateResponse(
+        Long id, String name, String gym,
+        String content, String addressDetail,
+        String startTime, String endTime
+    ) {
+        return CreateMateBoardResponse.builder()
+            .id(id)
+            .name(name)
+            .gym(gym)
+            .content(content)
+            .addressDetail(addressDetail)
+            .startTime(startTime)
+            .endTime(endTime)
+            .createAt(LocalDateTime.now())
+            .modifiedAt(LocalDateTime.now())
+            .build();
     }
     
 }

@@ -1,9 +1,13 @@
 package com.hamryt.helparty.controller;
 
+
+import com.hamryt.helparty.aop.GetSessionEmail;
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMatesBoardResponse;
+import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
@@ -13,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,9 +41,9 @@ public class MateBoardController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMateBoardResponse createMateBoard(
-        @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest
+        @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest,
+        @GetSessionEmail String email
     ) {
-        String email = loginService.getSessionEmail();
         return mateBoardService.addMateBoard(createMateBoardRequest, email);
     }
     
@@ -54,10 +60,30 @@ public class MateBoardController {
             .build();
     }
     
-    @GetMapping("{id}")
+    @LoginValidation
+    @PatchMapping("/{id}")
+    public UpdateMateBoardResponse updateMateBoard(
+        @PathVariable Long id,
+        @GetSessionEmail String email,
+        @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
+    ) {
+        return mateBoardService.updateMateBoard(id, email, updateMateBoardRequest);
+    }
+    
+    @GetMapping("/{id}")
     public GetMateBoardResponse getMate(
         @PathVariable Long id
     ) {
         return mateBoardService.getMate(id);
     }
+    
+    @LoginValidation
+    @DeleteMapping("/{id}")
+    public void deleteMateBoard(
+        @GetSessionEmail String email,
+        @PathVariable Long id
+    ) {
+        mateBoardService.deleteMateBoard(id, email);
+    }
+    
 }
