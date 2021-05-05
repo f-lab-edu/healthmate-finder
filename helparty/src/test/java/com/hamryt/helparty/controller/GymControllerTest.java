@@ -10,9 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
-import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
-import java.io.File;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,12 +46,13 @@ class GymControllerTest {
         SignUpGymResponse signUpGymResponse =
             getSignGymResponse(1004L, email, gymName, phoneNumber, addressCode, addressDetail,
                 userType);
-    
+        
         SignUpGymRequest signUpGymRequest =
-          getSignGymRequest(email, gymName, password, phoneNumber, addressCode, addressDetail, userType);
-    
+            getSignGymRequest(email, gymName, password, phoneNumber, addressCode, addressDetail,
+                userType);
+        
         ObjectMapper mapper = new ObjectMapper();
-    
+        
         String request = mapper.writeValueAsString(signUpGymRequest);
         given(gymService.insertGym(any())).willReturn(signUpGymResponse);
         
@@ -66,16 +65,16 @@ class GymControllerTest {
     }
     
     private SignUpGymRequest getSignGymRequest(String email, String gymName, String password,
-      String phoneNumber, String addressCode, String addressDetail, UserType userType) {
+        String phoneNumber, String addressCode, String addressDetail, UserType userType) {
         return SignUpGymRequest.builder()
-          .email(email)
-          .gymName(gymName)
-          .password(password)
-          .phoneNumber(phoneNumber)
-          .addressCode(addressCode)
-          .addressDetail(addressDetail)
-          .userType(userType)
-          .build();
+            .email(email)
+            .gymName(gymName)
+            .password(password)
+            .phoneNumber(phoneNumber)
+            .addressCode(addressCode)
+            .addressDetail(addressDetail)
+            .userType(userType)
+            .build();
     }
     
     private SignUpGymResponse getSignGymResponse(Long id, String email, String gymName,
