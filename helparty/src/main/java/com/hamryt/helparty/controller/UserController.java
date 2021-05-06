@@ -6,7 +6,7 @@ import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
-import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.session.SessionService;
 import com.hamryt.helparty.service.user.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users")
 public class UserController {
 
-    private final LoginService loginService;
+    private final SessionService sessionService;
     private final UserService userService;
 
     @PostMapping
@@ -44,7 +44,7 @@ public class UserController {
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.validateUser(id);
+        sessionService.validateUser(id);
         return userService.updateUser(id, updateUserRequest);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
         @PathVariable("id") Long id,
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
-        loginService.validateUser(id);
+        sessionService.validateUser(id);
         userService.deleteUser(userDeleteRequest);
     }
 

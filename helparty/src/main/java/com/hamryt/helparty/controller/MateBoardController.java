@@ -9,7 +9,6 @@ import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMatesBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
-import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
 import java.util.List;
 import javax.validation.Valid;
@@ -35,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MateBoardController {
     
     private final MateBoardService mateBoardService;
-    private final LoginService loginService;
+    
     
     @LoginValidation
     @PostMapping

@@ -1,4 +1,4 @@
-package com.hamryt.helparty.service.login;
+package com.hamryt.helparty.service.session;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

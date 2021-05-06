@@ -9,6 +9,7 @@ import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.exception.common.UserTypeDoesNotMatchException;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
+import com.hamryt.helparty.service.session.Encryptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +19,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mock.web.MockHttpSession;
 
 @ExtendWith(MockitoExtension.class)
-class LoginServiceImplTest {
+class GymLoginServiceImplTest {
     
     @InjectMocks
-    private LoginServiceImpl loginService;
+    private GymLoginServiceImpl loginService;
     
     @Mock
     private GymServiceImpl gymService;
@@ -58,7 +59,7 @@ class LoginServiceImplTest {
         given(gymService.findGymByEmailAndPassword(eq(email), eq(encryptedPassword)))
             .willReturn(mockGym);
         
-        GymDTO gymDTO = loginService.loginGym(email, password);
+        GymDTO gymDTO = loginService.login(email, password);
         
         assertEquals(gymDTO.getEmail(), email);
     }
@@ -87,7 +88,7 @@ class LoginServiceImplTest {
         
         UserTypeDoesNotMatchException userTypeDoesNotMatchException
             = assertThrows(UserTypeDoesNotMatchException.class,
-            () -> loginService.loginGym(email, password));
+            () -> loginService.login(email, password));
         
         assertEquals("userType dose not match does not match with : GYM",
             userTypeDoesNotMatchException.getMessage());

@@ -5,6 +5,7 @@ import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.session.SessionService;
 import javax.validation.Valid;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("login")
 public class LoginController {
     
-    private final LoginService loginService;
+    private final LoginService<UserDTO> userLoginService;
+    private final LoginService<GymDTO> gymLoginService;
     
     @PostMapping("/user")
     @ResponseStatus(HttpStatus.OK)
@@ -33,7 +35,7 @@ public class LoginController {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         
-        UserDTO userDto = loginService.loginUser(email, password);
+        UserDTO userDto = userLoginService.login(email, password);
         
         return new LoginResponse(userDto);
     }
@@ -46,7 +48,7 @@ public class LoginController {
         String email = gymLoginRequest.email;
         String password = gymLoginRequest.password;
         
-        GymDTO gymDTO = loginService.loginGym(email, password);
+        GymDTO gymDTO = gymLoginService.login(email, password);
         
         return GymLoginResponse.builder()
             .id(gymDTO.getId())

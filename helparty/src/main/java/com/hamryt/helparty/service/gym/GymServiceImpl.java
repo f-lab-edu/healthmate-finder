@@ -9,7 +9,7 @@ import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.mapper.GymMapper;
-import com.hamryt.helparty.service.login.Encryptor;
+import com.hamryt.helparty.service.session.Encryptor;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -8,10 +8,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.hamryt.helparty.dto.gym.GymDTO;
-import com.hamryt.helparty.service.login.LoginServiceImpl;
+import com.hamryt.helparty.service.login.GymLoginServiceImpl;
+import com.hamryt.helparty.service.login.UserLoginServiceImpl;
+import com.hamryt.helparty.service.session.SessionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,7 +31,10 @@ class LoginControllerTest {
     private MockMvc mvc;
     
     @MockBean
-    private LoginServiceImpl loginService;
+    private UserLoginServiceImpl userLoginService;
+    
+    @MockBean
+    private GymLoginServiceImpl gymLoginService;
     
     @Test
     @DisplayName("운동시설 관리자 로그인 성공하면 해당 계정 정보를 반환한다.")
@@ -43,14 +50,14 @@ class LoginControllerTest {
             .addressDetail("seoul")
             .build();
         
-        given(loginService.loginGym(any(), any())).willReturn(mockGym);
+        given(gymLoginService.login(any(), any())).willReturn(mockGym);
         
         mvc.perform(post("/login/gym")
             .contentType(MediaType.APPLICATION_JSON)
             .content("{\"email\":\"test@example.com\", \"password\":\"123\"}"))
             .andExpect(status().isOk());
         
-        verify(loginService).loginGym(eq(email), eq(password));
+        verify(gymLoginService).login(eq(email), eq(password));
     }
     
 }
