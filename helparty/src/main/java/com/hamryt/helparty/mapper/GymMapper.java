@@ -7,4 +7,6 @@ public interface GymMapper {
     int insertGym(GymDTO newGym);
     
     boolean isExistsEmail(String email);
+    
+    GymDTO findGymByEmailAndPassword(String email, String password);
 }

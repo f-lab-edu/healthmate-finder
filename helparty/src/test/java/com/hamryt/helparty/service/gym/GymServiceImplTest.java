@@ -3,11 +3,14 @@ package com.hamryt.helparty.service.gym;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 import com.hamryt.helparty.dto.UserType;
+import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
+import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
@@ -156,6 +159,45 @@ class GymServiceImplTest {
         
         assertEquals("Insert Gym failed exception",
             insertGymFailedExcetpion.getMessage());
+    }
+    
+    @Test
+    @DisplayName("Eamil과 Password로 GymDTO 조회 성공")
+    public void findGymByEmailAndPassword_Success() {
+        String email = "test@example.com";
+        String password = "test";
+        String gymName = "test";
+        GymDTO MockGym = GymDTO.builder()
+            .email(email)
+            .gymName(gymName)
+            .password(password)
+            .phoneNumber("01012345678")
+            .addressCode("0123")
+            .addressDetail("seoul")
+            .userType(UserType.GYM)
+            .build();
+        
+        given(gymMapper.findGymByEmailAndPassword(eq(email), eq(password))).willReturn(MockGym);
+        
+        GymDTO gymDTO = gymService.findGymByEmailAndPassword(email, password);
+        
+        assertEquals(gymDTO.getGymName(), gymName);
+    }
+    
+    @Test
+    @DisplayName("Email과 Password로 GymDTO 조회 실패 : 해당 운동시설 관리자 계정 없음 예외")
+    public void findGymByEmailAndPassword_Fail() {
+        String email = "test@example.com";
+        String password = "test";
+        
+        given(gymMapper.findGymByEmailAndPassword(any(), any())).willReturn(null);
+        
+        GymNotFoundException gymNotFoundException
+            = assertThrows(GymNotFoundException.class,
+            () -> gymService.findGymByEmailAndPassword(email, password));
+        
+        assertEquals("This gym does not exists with this email : test@example.com",
+            gymNotFoundException.getMessage());
     }
     
 }

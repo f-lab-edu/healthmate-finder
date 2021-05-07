@@ -4,11 +4,13 @@ import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
+import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.mapper.GymMapper;
 import com.hamryt.helparty.service.login.Encryptor;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +50,12 @@ public class GymServiceImpl implements GymService {
         }
         
         return SignUpGymResponse.of(newGym);
+    }
+    
+    @Transactional(readOnly = true)
+    public GymDTO findGymByEmailAndPassword(String email, String password) {
+        return Optional.ofNullable(gymMapper.findGymByEmailAndPassword(email, password))
+            .orElseThrow(() -> new GymNotFoundException(email));
     }
     
     @Transactional(readOnly = true)
