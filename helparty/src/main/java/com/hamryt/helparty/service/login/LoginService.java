@@ -1,7 +1,9 @@
 package com.hamryt.helparty.service.login;
 
-public interface LoginService<T> {
+import com.hamryt.helparty.dto.login.LoginDTO;
+
+public interface LoginService {
     
-    T login(String email, String password);
+    LoginDTO login(String email, String password);
     
 }

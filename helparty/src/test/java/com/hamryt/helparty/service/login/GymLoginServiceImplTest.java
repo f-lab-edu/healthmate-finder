@@ -1,13 +1,12 @@
 package com.hamryt.helparty.service.login;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
-import com.hamryt.helparty.exception.common.UserTypeDoesNotMatchException;
+import com.hamryt.helparty.dto.login.LoginDTO;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
 import com.hamryt.helparty.service.session.Encryptor;
 import org.junit.jupiter.api.DisplayName;
@@ -59,39 +58,9 @@ class GymLoginServiceImplTest {
         given(gymService.findGymByEmailAndPassword(eq(email), eq(encryptedPassword)))
             .willReturn(mockGym);
         
-        GymDTO gymDTO = loginService.login(email, password);
+        LoginDTO loginDTO = loginService.login(email, password);
         
-        assertEquals(gymDTO.getEmail(), email);
-    }
-    
-    @Test
-    @DisplayName("운동시설 관리자 로그인 실패 : 유저 타입 불일치 예외")
-    public void loginGym_Fail_UserTypeDoesNotMatchException() {
-        
-        String encryptedPassword = encryptor.encrypt(password);
-        String gymName = "test";
-        String phoneNumber = "01012345678";
-        String addressCode = "0123";
-        UserType userType = UserType.USER;
-        
-        GymDTO mockGym = GymDTO.builder()
-            .email(email)
-            .password(encryptedPassword)
-            .gymName(gymName)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .userType(userType)
-            .build();
-        
-        given(gymService.findGymByEmailAndPassword(eq(email), eq(encryptedPassword)))
-            .willReturn(mockGym);
-        
-        UserTypeDoesNotMatchException userTypeDoesNotMatchException
-            = assertThrows(UserTypeDoesNotMatchException.class,
-            () -> loginService.login(email, password));
-        
-        assertEquals("userType dose not match does not match with : GYM",
-            userTypeDoesNotMatchException.getMessage());
+        assertEquals(loginDTO.getEmail(), email);
     }
     
 }

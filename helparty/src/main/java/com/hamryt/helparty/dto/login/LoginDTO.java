@@ -1,43 +1,41 @@
-package com.hamryt.helparty.dto.user;
+package com.hamryt.helparty.dto.login;
 
 import com.hamryt.helparty.dto.UserType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor
-public class UserDTO {
-
+public class LoginDTO {
+    
     private Long id;
-
+    
     private String email;
-
-    private String password;
-
+    
     private String name;
-
+    
     private String phoneNumber;
-
+    
     private String addressCode;
-
+    
     private String addressDetail;
     
     private UserType userType;
-
+    
     @Builder
-    public UserDTO(
-        String email, String name, String password, String addressCode,
-        String addressDetail, String phoneNumber, UserType userType
-    ) {
+    public LoginDTO(
+        Long id, String email, String name,
+        String phoneNumber, String addressDetail,
+        String addressCode, UserType userType
+    ){
+        this.id = id;
         this.email = email;
-        this.password = password;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.addressCode = addressCode;
         this.addressDetail = addressDetail;
+        this.addressCode = addressCode;
         this.userType = userType;
     }
+    
 }

@@ -2,6 +2,7 @@ package com.hamryt.helparty.service.login;
 
 
 
+import com.hamryt.helparty.dto.login.LoginDTO;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.service.session.Encryptor;
@@ -14,24 +15,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-public class UserLoginServiceImpl implements LoginService<UserDTO>{
+public class UserLoginServiceImpl implements LoginService {
     
     private final Encryptor encryptor;
-    private final UserService userService;
     private final HttpSession session;
+    private final UserService userService;
     
     @Transactional(readOnly = true)
-    public UserDTO login(String email, String password) {
-
+    public LoginDTO login(String email, String password) {
+        
         String encryptPassword = encryptor.encrypt(password);
-        UserDTO userDto = userService.findUserByEmailAndPassword(email, encryptPassword);
-
-        if (userDto != null) {
-            session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDto.getEmail());
+        UserDTO userDTO = userService.findUserByEmailAndPassword(email, encryptPassword);
+        
+        if (userDTO != null) {
+            session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDTO.getEmail());
         } else {
             throw new UserNotFoundException(email);
         }
-
-        return userDto;
+        
+        return LoginDTO.builder()
+            .id(userDTO.getId())
+            .email(userDTO.getEmail())
+            .name(userDTO.getName())
+            .phoneNumber(userDTO.getPhoneNumber())
+            .addressCode(userDTO.getAddressCode())
+            .addressDetail(userDTO.getAddressDetail())
+            .userType(userDTO.getUserType())
+            .build();
     }
 }
