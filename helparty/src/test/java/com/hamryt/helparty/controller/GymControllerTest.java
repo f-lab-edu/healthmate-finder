@@ -11,7 +11,7 @@ import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
-import com.hamryt.helparty.service.login.GymLoginServiceImpl;
+import com.hamryt.helparty.service.session.SessionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +33,7 @@ class GymControllerTest {
     private GymServiceImpl gymService;
     
     @MockBean
-    private GymLoginServiceImpl gymLoginService;
+    private SessionService sessionService;
     
     @Test
     @DisplayName("운동시설 관리자 계정 생성 성공하면 해당 계정 정보를 반환한다.")
@@ -61,7 +61,7 @@ class GymControllerTest {
         given(gymService.insertGym(any())).willReturn(signUpGymResponse);
         
         mvc.perform(post("/gyms")
-            .contentType(MediaType.APPLICATION_JSON)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
             .andExpect(status().isCreated());
         

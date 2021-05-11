@@ -1,6 +1,6 @@
 package com.hamryt.helparty.config;
 
-import com.hamryt.helparty.aop.CustomArgumentResolver;
+import com.hamryt.helparty.argumentresolver.CustomArgumentResolver;
 import com.hamryt.helparty.interceptor.LoginValidationInterceptor;
 import com.hamryt.helparty.service.session.SessionService;
 import java.util.List;
@@ -20,7 +20,8 @@ public class CustomWebMvcConfigure extends WebMvcConfigurationSupport {
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginValidationInterceptor(sessionService))
-            .addPathPatterns("/users/**");
+            .addPathPatterns("/users/**")
+            .addPathPatterns("/gyms/**");
     }
     
     @Override

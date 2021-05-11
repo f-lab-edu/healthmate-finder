@@ -1,6 +1,6 @@
 package com.hamryt.helparty.dto.user.response;
 
-import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,14 +34,14 @@ public class UpdateUserResponse {
     }
 
     public static UpdateUserResponse of(Long id, String encodedPassword,
-        UpdateUserReqeust updateUserReqeust) {
+        UpdateUserRequest updateUserRequest) {
         return UpdateUserResponse.builder()
             .id(id)
             .password(encodedPassword)
-            .name(updateUserReqeust.getName())
-            .phoneNumber(updateUserReqeust.getPhoneNumber())
-            .addressCode(updateUserReqeust.getAddressCode())
-            .addressDetail(updateUserReqeust.getAddressDetail())
+            .name(updateUserRequest.getName())
+            .phoneNumber(updateUserRequest.getPhoneNumber())
+            .addressCode(updateUserRequest.getAddressCode())
+            .addressDetail(updateUserRequest.getAddressDetail())
             .build();
     }
 

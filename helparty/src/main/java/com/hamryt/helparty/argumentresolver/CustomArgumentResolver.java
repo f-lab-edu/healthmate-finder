@@ -1,4 +1,4 @@
-package com.hamryt.helparty.aop;
+package com.hamryt.helparty.argumentresolver;
 
 import com.hamryt.helparty.util.SessionKeys;
 import javax.servlet.http.HttpSession;

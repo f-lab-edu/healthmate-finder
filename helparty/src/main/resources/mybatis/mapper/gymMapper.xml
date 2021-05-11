@@ -31,4 +31,18 @@
     AND password=#{password}
   </select>
 
+  <select id="findGymEmailById" resultType="String">
+    SELECT email FROM gym WHERE id=#{id}
+  </select>
+
+  <update id="updateGym" parameterType="com.hamryt.helparty.dto.gym.response.UpdateGymResponse">
+    UPDATE gym SET
+    gym_name = #{gymName},
+    password = #{password},
+    phone_number = #{phoneNumber},
+    address_code = #{addressCode},
+    address_detail = #{addressDetail}
+    WHERE id = #{id}
+  </update>
+
 </mapper>

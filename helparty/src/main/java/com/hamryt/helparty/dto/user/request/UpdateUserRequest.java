@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
-public class UpdateUserReqeust {
+public class UpdateUserRequest {
 
     private Long id;
 
@@ -24,7 +24,7 @@ public class UpdateUserReqeust {
 
     @NotEmpty
     private String addressCode;
-
+    
     @NotEmpty
     private String addressDetail;
 

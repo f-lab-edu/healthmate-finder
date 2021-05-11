@@ -3,7 +3,7 @@ package com.hamryt.helparty.service.user;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
-import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
 import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
@@ -59,15 +59,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public UpdateUserResponse updateUser(Long id, UpdateUserReqeust updateUserReqeust) {
+    public UpdateUserResponse updateUser(Long id, UpdateUserRequest updateUserRequest) {
 
-        String encodedPassword = encryptor.encrypt(updateUserReqeust.getPassword());
+        String encodedPassword = encryptor.encrypt(updateUserRequest.getPassword());
 
         UpdateUserResponse updateUserResponse = UpdateUserResponse
-            .of(id, encodedPassword, updateUserReqeust);
+            .of(id, encodedPassword, updateUserRequest);
 
         if (userMapper.updateUser(updateUserResponse) != 1) {
-            throw new UpdateFailedException(updateUserReqeust.toString());
+            throw new UpdateFailedException(updateUserRequest.getName());
         }
 
         return updateUserResponse;
@@ -91,7 +91,13 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
-
+    
+    @Transactional(readOnly = true)
+    public String findUserEmailById(Long id) {
+        return Optional.ofNullable(userMapper.findUserEmailById(id))
+            .orElseThrow(()-> new UserNotFoundByIdException(id));
+    }
+    
     @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
