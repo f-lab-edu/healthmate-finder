@@ -35,11 +35,7 @@ public class UserLoginServiceImpl implements LoginService {
         
         return LoginDTO.builder()
             .id(userDTO.getId())
-            .email(userDTO.getEmail())
             .name(userDTO.getName())
-            .phoneNumber(userDTO.getPhoneNumber())
-            .addressCode(userDTO.getAddressCode())
-            .addressDetail(userDTO.getAddressDetail())
             .userType(userDTO.getUserType())
             .build();
     }

@@ -30,11 +30,7 @@ public class GymLoginServiceImpl implements LoginService {
         
         return LoginDTO.builder()
             .id(gymDTO.getId())
-            .email(gymDTO.getEmail())
             .name(gymDTO.getGymName())
-            .phoneNumber(gymDTO.getPhoneNumber())
-            .addressCode(gymDTO.getAddressCode())
-            .addressDetail(gymDTO.getAddressDetail())
             .userType(gymDTO.getUserType())
             .build();
     }

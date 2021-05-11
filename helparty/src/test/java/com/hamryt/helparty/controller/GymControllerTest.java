@@ -1,7 +1,6 @@
 package com.hamryt.helparty.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -11,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
-import com.hamryt.helparty.dto.login.LoginDTO;
-import com.hamryt.helparty.dto.login.request.LoginRequest;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
 import com.hamryt.helparty.service.login.GymLoginServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -37,35 +34,6 @@ class GymControllerTest {
     
     @MockBean
     private GymLoginServiceImpl gymLoginService;
-    
-    @Test
-    @DisplayName("운동시설 관리자 로그인 성공하면 해당 계정 정보를 반환한다.")
-    public void login_Success() throws Exception {
-        
-        String email = "test@example.com";
-        String password = "123";
-        
-        LoginDTO mockLogin = LoginDTO.builder()
-            .email(email)
-            .name("test")
-            .addressCode("123")
-            .addressDetail("seoul")
-            .build();
-        
-        LoginRequest mockLoginRequest
-            = getLoginRequest(email, password);
-        
-        String loginRequest = new ObjectMapper().writeValueAsString(mockLoginRequest);
-        
-        given(gymLoginService.login(any(), any())).willReturn(mockLogin);
-        
-        mvc.perform(post("/gyms/login")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(loginRequest))
-            .andExpect(status().isOk());
-        
-        verify(gymLoginService).login(eq(email), eq(password));
-    }
     
     @Test
     @DisplayName("운동시설 관리자 계정 생성 성공하면 해당 계정 정보를 반환한다.")
@@ -98,13 +66,6 @@ class GymControllerTest {
             .andExpect(status().isCreated());
         
         verify(gymService).insertGym(any());
-    }
-    
-    private LoginRequest getLoginRequest(String email, String password) {
-        return LoginRequest.builder()
-            .email(email)
-            .password(password)
-            .build();
     }
     
     private SignUpGymRequest getSignGymRequest(String email, String gymName, String password,
