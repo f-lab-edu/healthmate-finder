@@ -41,20 +41,18 @@ public class UserController {
     }
     
     @LoginValidation
-    @ValidateUser(value = "id", type = UserType.GYM)
     @PutMapping("{id}")
     public UpdateUserResponse updateUser(
-        @PathVariable("id") Long id,
+        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserRequest updateUserRequest
     ) {
         return userService.updateUser(id, updateUserRequest);
     }
     
     @LoginValidation
-    @ValidateUser(value = "id", type = UserType.GYM)
     @DeleteMapping("{id}")
     public void deleteUser(
-        @PathVariable("id") Long id,
+        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id,
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
         userService.deleteUser(userDeleteRequest);

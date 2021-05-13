@@ -1,12 +1,12 @@
 package com.hamryt.helparty.aop;
 
 import com.hamryt.helparty.service.session.factory.UserSessionFactory;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.annotation.Annotation;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.SoftException;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -20,28 +20,48 @@ public class ValidateUserAspect {
     
     private final UserSessionFactory userSessionFactory;
     
-    @Before("@annotation(com.hamryt.helparty.aop.ValidateUser) && @annotation(validateUser)")
-    public void checkUser(JoinPoint jp, ValidateUser validateUser) throws Throwable {
+    @Before("execution(* *(.., @ValidateUser (*), ..))")
+    public void checkUser(JoinPoint jp) throws Throwable {
         log.debug("AOP - Check Login User Authentication Stated");
         
-        Object[] args = jp.getArgs();
-        
         MethodSignature signature = (MethodSignature) jp.getSignature();
-        Method method = signature.getMethod();
-        Parameter[] parameters = method.getParameters();
+        String methodName = signature.getMethod().getName();
+        Class<?>[] parameterTypes = signature.getMethod().getParameterTypes();
         
+        Annotation[][] annotations;
+        
+        try {
+            annotations = jp
+                .getTarget()
+                .getClass()
+                .getMethod(methodName, parameterTypes)
+                .getParameterAnnotations();
+        } catch (Exception e) {
+            throw new SoftException(e);
+        }
+        
+        int argLength = jp.getArgs().length;
         Long userId = null;
         
-        for (int i = 0; i < parameters.length; i++) {
-            String parameterName = parameters[i].getName();
-            if (validateUser.value().equals(parameterName)) {
-                userId = (Long) args[i];
+        ValidateUser validateUser = null;
+        
+        for (int i = 0; i < argLength; ++i) {
+            for (Annotation annotation : annotations[i]) {
+                if (annotation.annotationType() == ValidateUser.class) {
+                    validateUser = (ValidateUser) annotation;
+                    userId = (Long) jp.getArgs()[i];
+                }
             }
         }
         
         if (Objects.isNull(userId)) {
             throw new IllegalArgumentException(
-                "ValidateUser 어노테이션 설정이 잘못되었습니다. value와 변수명을 일치시켜주세요.");
+                "ValidateUser 어노테이션 설정이 잘못되었습니다. Id 값이 null입니다. 변수 타입을 확인해주세요.");
+        }
+        
+        if (Objects.isNull(validateUser.type())) {
+            throw new IllegalArgumentException(
+                "ValidateUser 어노테이션 설정이 잘못되었습니다. validateUser의 필드인 type을 확인해주세요.");
         }
         
         userSessionFactory.createValidateUser(userId, validateUser.type());

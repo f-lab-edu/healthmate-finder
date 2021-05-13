@@ -37,10 +37,9 @@ public class GymController {
     }
     
     @LoginValidation
-    @ValidateUser(value = "id", type = UserType.GYM)
     @PutMapping("{id}")
     public UpdateGymResponse updateGym(
-        @PathVariable("id") Long id,
+        @ValidateUser(type = UserType.GYM) @PathVariable("id") Long id,
         @Valid @RequestBody UpdateGymRequest updateGymRequest
     ) {
         return gymService.updateGym(id, updateGymRequest);

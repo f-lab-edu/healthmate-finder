@@ -16,7 +16,6 @@ public class UserSessionValidateFactory extends UserSessionFactory {
     
     private final UserService userService;
     private final GymService gymService;
-    
     private final HttpSession session;
     
     @Transactional(readOnly = true)

@@ -3,6 +3,7 @@ package com.hamryt.helparty.dto.gym.request;
 import com.hamryt.helparty.dto.UserType;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,5 +29,18 @@ public class UpdateGymRequest {
     
     @NotNull
     private UserType userType;
+    
+    @Builder
+    public UpdateGymRequest(
+        String gymName, String password, String phoneNumber,
+        String addressCode, String addressDetail, UserType userType
+    ) {
+        this.gymName = gymName;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.addressCode = addressCode;
+        this.addressDetail = addressDetail;
+        this.userType = userType;
+    }
     
 }
