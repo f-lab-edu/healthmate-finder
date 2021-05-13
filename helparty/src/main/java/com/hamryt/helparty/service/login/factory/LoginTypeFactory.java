@@ -16,12 +16,17 @@ public class LoginTypeFactory extends LoginFactory {
     
     @Override
     public LoginService createLoginService(UserType userType) {
-        LoginService loginService;
-        if (userType == UserType.USER){
-            loginService = userLoginService;
-        }else{
-            loginService = gymLoginService;
+        LoginService loginService = null;
+        switch(userType){
+            case USER:
+                loginService = userLoginService;
+                break;
+            case GYM:
+                loginService = gymLoginService;
+            default:
+                break;
         }
+        
         return loginService;
     }
     
