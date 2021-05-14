@@ -50,6 +50,7 @@ public class ValidateUserAspect {
                 if (annotation.annotationType() == ValidateUser.class) {
                     validateUser = (ValidateUser) annotation;
                     userId = (Long) jp.getArgs()[i];
+                    break;
                 }
             }
         }
