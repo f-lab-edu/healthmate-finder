@@ -1,6 +1,7 @@
 package com.hamryt.helparty.service.login.factory;
 
 import com.hamryt.helparty.dto.UserType;
+import com.hamryt.helparty.exception.common.UserTypeDoesNotExistException;
 import com.hamryt.helparty.service.login.GymLoginServiceImpl;
 import com.hamryt.helparty.service.login.LoginService;
 import com.hamryt.helparty.service.login.UserLoginServiceImpl;
@@ -16,18 +17,16 @@ public class LoginTypeFactory extends LoginFactory {
     
     @Override
     public LoginService createLoginService(UserType userType) {
-        LoginService loginService = null;
-        switch(userType){
+        
+        switch (userType) {
             case USER:
-                loginService = userLoginService;
-                break;
+                return userLoginService;
             case GYM:
-                loginService = gymLoginService;
+                return gymLoginService;
             default:
-                break;
+                throw new UserTypeDoesNotExistException(userType);
         }
         
-        return loginService;
     }
     
 }
