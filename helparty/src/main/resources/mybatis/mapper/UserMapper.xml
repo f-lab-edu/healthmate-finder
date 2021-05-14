@@ -7,15 +7,18 @@
   <insert id="insertUser" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.user.UserDTO">
     INSERT INTO user (email, password, name, phone_number, address_code, address_detail, user_type)
-    VALUES(#{email}, #{password}, #{name}, #{phoneNumber}, #{addressCode}, #{addressDetail}, #{userType})
+    VALUES(#{email}, #{password}, #{name}, #{phoneNumber}, #{addressCode}, #{addressDetail},
+    #{userType})
   </insert>
 
   <select id="findUserById" resultType="com.hamryt.helparty.dto.user.UserDTO">
-    SELECT id, email, name, password, phone_number, address_code, address_detail FROM user WHERE id=#{id}
+    SELECT id, email, name, password, phone_number, address_code, address_detail FROM user WHERE
+    id=#{id}
   </select>
 
   <select id="findUserByEmail" resultType="com.hamryt.helparty.dto.user.UserDTO">
-    SELECT id, email, name, password, phone_number, address_code, address_detail FROM user WHERE email=#{email}
+    SELECT id, email, name, password, phone_number, address_code, address_detail FROM user WHERE
+    email=#{email}
   </select>
 
   <select id="isExistsEmail" resultType="_boolean">
@@ -38,7 +41,7 @@
   </select>
 
   <select id="findUserEmailById" resultType="String">
-    SELECT email FROM user  WHERE id=#{id}
+    SELECT email FROM user WHERE id=#{id}
   </select>
 
   <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.response.UpdateUserResponse">
@@ -52,7 +55,7 @@
   </update>
 
   <delete id="deleteUserByEmailAndPassword">
-    DELETE FROM user WHERE email=#{email} AND password=#{password}
+    DELETE FROM user WHERE id=#{id}
   </delete>
 
 </mapper>

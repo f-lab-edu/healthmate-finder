@@ -4,7 +4,6 @@ import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
-import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
@@ -24,13 +23,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
-
+    
     private final UserMapper userMapper;
     private final Encryptor encryptor;
-
+    
     @Transactional
     public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
-    
+        
         if (signupUserRequest.getUserType() != UserType.USER) {
             throw new DoesNotMatchUserType(UserType.USER);
         }
@@ -38,9 +37,9 @@ public class UserServiceImpl implements UserService {
         if (isExistsEmail(signupUserRequest.getEmail())) {
             throw new EmailExistedException(signupUserRequest.getEmail());
         }
-
+        
         String encodedPassword = encryptor.encrypt(signupUserRequest.getPassword());
-
+        
         UserDTO newUser = UserDTO.builder()
             .email(signupUserRequest.getEmail())
             .name(signupUserRequest.getName())
@@ -50,39 +49,36 @@ public class UserServiceImpl implements UserService {
             .addressDetail(signupUserRequest.getAddressDetail())
             .userType(signupUserRequest.getUserType())
             .build();
-
+        
         if (userMapper.insertUser(newUser) != 1) {
             throw new InsertUserFailedException(newUser.toString());
         }
-
+        
         return SignUpUserResponse.of(newUser);
     }
-
+    
     @Transactional
     public UpdateUserResponse updateUser(Long id, UpdateUserRequest updateUserRequest) {
-
+        
         String encodedPassword = encryptor.encrypt(updateUserRequest.getPassword());
-
+        
         UpdateUserResponse updateUserResponse = UpdateUserResponse
             .of(id, encodedPassword, updateUserRequest);
-
+        
         if (userMapper.updateUser(updateUserResponse) != 1) {
             throw new UpdateFailedException(updateUserRequest.getName());
         }
-
+        
         return updateUserResponse;
     }
-
+    
     @Transactional
-    public void deleteUser( UserDeleteRequest userDeleteRequest) {
-        String email = userDeleteRequest.getEmail();
-        String encodedPassword = encryptor.encrypt(userDeleteRequest.getPassword());
-
-        if(userMapper.deleteUserByEmailAndPassword(email, encodedPassword) != 1){
-            throw new UserDeleteFailedException(email);
+    public void deleteUser(Long id) {
+        if (userMapper.deleteUserById(id) != 1) {
+            throw new UserDeleteFailedException(id);
         }
     }
-
+    
     @Transactional(readOnly = true)
     public UserDTO getUserById(Long id) {
         UserDTO user = userMapper.findUserById(id);
@@ -95,24 +91,24 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public String findUserEmailById(Long id) {
         return Optional.ofNullable(userMapper.findUserEmailById(id))
-            .orElseThrow(()-> new UserNotFoundByIdException(id));
+            .orElseThrow(() -> new UserNotFoundByIdException(id));
     }
     
     @Transactional(readOnly = true)
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
-
+        
     }
-
+    
     @Transactional(readOnly = true)
     public UserDTO findUserByEmail(String email) {
         return Optional.ofNullable(userMapper.findUserByEmail(email))
-            .orElseThrow(()->new UserNotFoundException(email));
+            .orElseThrow(() -> new UserNotFoundException(email));
     }
-
+    
     @Transactional(readOnly = true)
     public UserDTO findUserByEmailAndPassword(String email, String password) {
         return userMapper.findUserByEmailAndPassword(email, password);
     }
-
+    
 }

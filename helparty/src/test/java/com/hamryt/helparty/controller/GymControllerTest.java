@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -93,6 +94,15 @@ class GymControllerTest {
             .andExpect(status().isOk());
         
         verify(gymService).updateGym(eq(1004L), any());
+    }
+    
+    @Test
+    @DisplayName("운동시설 관리자 계정 삭제 성공시 상태 코드 200을 반환")
+    public void delete_Success() throws Exception {
+        mvc.perform(delete("/gyms/1004"))
+            .andExpect(status().isOk());
+        
+        verify(gymService).deleteGym(1004L);
     }
     
     private UpdateGymRequest getUpdateGymRequest(String gymName, String password,

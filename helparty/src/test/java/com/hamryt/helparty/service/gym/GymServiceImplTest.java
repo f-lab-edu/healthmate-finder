@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
@@ -12,6 +13,7 @@ import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
+import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
@@ -190,6 +192,29 @@ class GymServiceImplTest {
         
         assertEquals("This gym does not exists with this email : test@example.com",
             gymNotFoundException.getMessage());
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 계정 삭제 성공")
+    public void deleteGym_Success() {
+        given(gymMapper.deleteGymById(eq(1004L))).willReturn(1);
+        
+        gymService.deleteGym(1004L);
+        
+        verify(gymMapper).deleteGymById(1004L);
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 계정 삭제 실패")
+    public void deleteGym_Fail() {
+        given(gymMapper.deleteGymById(eq(1004L))).willReturn(0);
+        
+        GymDeleteFailedException gymDeleteFailedException
+            = assertThrows(GymDeleteFailedException.class,
+            () -> gymService.deleteGym(1004L));
+        
+        assertEquals("Delete Gym by ID Failed : 1004",
+            gymDeleteFailedException.getMessage());
     }
     
 }

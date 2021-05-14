@@ -6,6 +6,7 @@ import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
+import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundByIdException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
@@ -80,6 +81,13 @@ public class GymServiceImpl implements GymService {
     public String findGymEmailById(Long id) {
         return Optional.ofNullable(gymMapper.findGymEmailById(id))
             .orElseThrow(() -> new GymNotFoundByIdException(id));
+    }
+    
+    @Transactional
+    public void deleteGym(Long id) {
+        if (gymMapper.deleteGymById(id) != 1) {
+            throw new GymDeleteFailedException(id);
+        }
     }
     
     @Transactional(readOnly = true)

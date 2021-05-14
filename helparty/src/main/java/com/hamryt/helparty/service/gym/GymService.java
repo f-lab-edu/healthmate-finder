@@ -15,4 +15,6 @@ public interface GymService {
     UpdateGymResponse updateGym(Long id, UpdateGymRequest updateGymRequest);
     
     String findGymEmailById(Long id);
+    
+    void deleteGym(Long id);
 }
