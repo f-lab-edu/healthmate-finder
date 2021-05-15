@@ -1,14 +1,18 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
-import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.session.SessionService;
 import com.hamryt.helparty.service.user.UserService;
 import javax.validation.Valid;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,10 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("users")
 public class UserController {
-
-    private final LoginService loginService;
+    
+    private final SessionService sessionService;
     private final UserService userService;
-
+    
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SignUpUserResponse signUpUser(
@@ -37,25 +41,24 @@ public class UserController {
     ) {
         return userService.insertUser(resource);
     }
-
+    
     @LoginValidation
     @PutMapping("{id}")
     public UpdateUserResponse updateUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UpdateUserReqeust updateUserRequest
     ) {
-        loginService.validateUser(id);
+        sessionService.validateUser(id);
         return userService.updateUser(id, updateUserRequest);
     }
-
+    
     @LoginValidation
     @DeleteMapping("{id}")
     public void deleteUser(
         @PathVariable("id") Long id,
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
-        loginService.validateUser(id);
+        sessionService.validateUser(id);
         userService.deleteUser(userDeleteRequest);
     }
-
 }

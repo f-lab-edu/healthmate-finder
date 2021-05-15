@@ -1,5 +1,6 @@
 package com.hamryt.helparty.dto.user.response;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,12 +16,13 @@ public class SignUpUserResponse {
     private String phoneNumber;
     private String addressCode;
     private String addressDetail;
+    private UserType userType;
 
     @Builder
     public SignUpUserResponse(
         Long id, String email, String name,
         String phoneNumber, String addressCode,
-        String addressDetail
+        String addressDetail, UserType userType
     ){
         this.id = id;
         this.email = email;
@@ -28,6 +30,7 @@ public class SignUpUserResponse {
         this.phoneNumber = phoneNumber;
         this.addressCode = addressCode;
         this.addressDetail = addressDetail;
+        this.userType = userType;
     }
 
     public static SignUpUserResponse of(UserDTO user){
@@ -38,6 +41,7 @@ public class SignUpUserResponse {
             .phoneNumber(user.getPhoneNumber())
             .addressCode(user.getAddressCode())
             .addressDetail(user.getAddressDetail())
+            .userType(user.getUserType())
             .build();
     }
 }

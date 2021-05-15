@@ -2,7 +2,7 @@ package com.hamryt.helparty.config;
 
 import com.hamryt.helparty.aop.CustomArgumentResolver;
 import com.hamryt.helparty.interceptor.LoginValidationInterceptor;
-import com.hamryt.helparty.service.login.LoginService;
+import com.hamryt.helparty.service.session.SessionService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -14,12 +14,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @RequiredArgsConstructor
 public class CustomWebMvcConfigure extends WebMvcConfigurationSupport {
     
-    private final LoginService loginService;
+    private final SessionService sessionService;
     private final CustomArgumentResolver customArgumentResolver;
     
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginValidationInterceptor(loginService))
+        registry.addInterceptor(new LoginValidationInterceptor(sessionService))
             .addPathPatterns("/users/**");
     }
     

@@ -1,11 +1,13 @@
 package com.hamryt.helparty.service.user;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
 import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
+import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
@@ -13,7 +15,7 @@ import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
 import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.mapper.UserMapper;
-import com.hamryt.helparty.service.login.Encryptor;
+import com.hamryt.helparty.service.session.Encryptor;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,11 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
-
+    
+        if (signupUserRequest.getUserType() != UserType.USER) {
+            throw new DoesNotMatchUserType(UserType.USER);
+        }
+        
         if (isExistsEmail(signupUserRequest.getEmail())) {
             throw new EmailExistedException(signupUserRequest.getEmail());
         }
@@ -42,6 +48,7 @@ public class UserServiceImpl implements UserService {
             .phoneNumber(signupUserRequest.getPhoneNumber())
             .addressCode(signupUserRequest.getAddressCode())
             .addressDetail(signupUserRequest.getAddressDetail())
+            .userType(signupUserRequest.getUserType())
             .build();
 
         if (userMapper.insertUser(newUser) != 1) {

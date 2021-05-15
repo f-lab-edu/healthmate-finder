@@ -15,7 +15,7 @@ import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.mapper.GymMapper;
-import com.hamryt.helparty.service.login.Encryptor;
+import com.hamryt.helparty.service.session.Encryptor;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

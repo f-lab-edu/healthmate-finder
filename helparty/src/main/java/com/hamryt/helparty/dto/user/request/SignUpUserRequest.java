@@ -1,6 +1,8 @@
 package com.hamryt.helparty.dto.user.request;
 
+import com.hamryt.helparty.dto.UserType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,5 +27,8 @@ public class SignUpUserRequest {
 
     @NotEmpty
     private String addressDetail;
+    
+    @NotNull
+    private UserType userType;
 
 }

@@ -17,8 +17,8 @@ import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.service.login.LoginServiceImpl;
 import com.hamryt.helparty.service.mateboard.MateBoardServiceImpl;
+import com.hamryt.helparty.service.session.SessionServiceImpl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,7 +44,7 @@ public class MateBoardControllerTest {
     private MateBoardServiceImpl mateBoardService;
     
     @MockBean
-    private LoginServiceImpl loginService;
+    private SessionServiceImpl loginService;
     
     @Test
     @DisplayName("동행 구함 게시물 생성에 성공하면 해당 게시물을 반환한다.")
