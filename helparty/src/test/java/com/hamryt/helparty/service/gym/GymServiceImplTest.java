@@ -205,7 +205,7 @@ class GymServiceImplTest {
     }
     
     @Test
-    @DisplayName("운동 시설 관리자 계정 삭제 실패")
+    @DisplayName("운동 시설 관리자 계정 삭제 실패 : 삭제 쿼리 실패")
     public void deleteGym_Fail() {
         given(gymMapper.deleteGymById(eq(1004L))).willReturn(0);
         
