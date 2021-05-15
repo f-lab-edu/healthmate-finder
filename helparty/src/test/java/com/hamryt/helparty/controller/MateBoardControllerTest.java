@@ -13,10 +13,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse;
 import com.hamryt.helparty.service.mateboard.MateBoardServiceImpl;
 import com.hamryt.helparty.service.session.SessionServiceImpl;
 import java.time.LocalDateTime;

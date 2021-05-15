@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hamryt.helparty.mapper.GymBoardMapper">
+  <insert id="insertGymBoard" useGeneratedKeys="true" keyProperty="id"
+    parameterType="com.hamryt.helparty.dto.board.gymboard.SimpleGymBoard">
+    INSERT INTO GYMBOARD (title, content, gym_product_id, gym_id, created_at, modified_at)
+    VALUES(#{title}, #{content}, #{gymProductId}, #{gymId}, NOW(), NOW())
+  </insert>
+</mapper>

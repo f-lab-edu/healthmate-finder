@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hamryt.helparty.mapper.ProductMapper">
+
+  <insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
+    parameterType="com.hamryt.helparty.dto.board.product.request.SimpleProduct">
+    INSERT INTO product (title, content, price, scope, board_type)
+    VALUES(#{title}, #{content}, #{price}, #{scope}, #{boardType})
+    <selectKey resultType="long" keyProperty="id" order="AFTER">
+      SELECT id FROM product ORDER BY id DESC LIMIT 1;
+    </selectKey>
+  </insert>
+
+</mapper>

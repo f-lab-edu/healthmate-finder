@@ -2,12 +2,12 @@ package com.hamryt.helparty.controller;
 
 
 import com.hamryt.helparty.argumentresolver.GetSessionEmail;
-import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.GetMatesBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMatesBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
 import java.util.List;

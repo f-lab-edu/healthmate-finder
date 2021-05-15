@@ -1,20 +1,14 @@
-package com.hamryt.helparty.dto.mateboard.request;
+package com.hamryt.helparty.dto.board.mateboard.request;
 
 import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
-@ToString
-public class UpdateMateBoardRequest {
+public class CreateMateBoardRequest {
     
-    @NotEmpty
-    private String email;
-    
-    @NotEmpty
     private String gym;
     
     @NotEmpty
@@ -27,17 +21,12 @@ public class UpdateMateBoardRequest {
     private String endTime;
     
     @Builder
-    public UpdateMateBoardRequest(
-        String email, String gym, String content,
-        String startTime, String endTime
-    ){
-        this.email = email;
+    public CreateMateBoardRequest(
+        String gym, String content, String startTime, String endTime
+    ) {
         this.gym = gym;
         this.content = content;
         this.startTime = startTime;
         this.endTime = endTime;
     }
-    
 }
-
-

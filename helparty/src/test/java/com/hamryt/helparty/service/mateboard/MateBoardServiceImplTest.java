@@ -7,11 +7,11 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
-import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.UpdateMateBoardResponse;
+import com.hamryt.helparty.exception.board.mateboard.DeleteMateBoardFailedException;
 import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
-import com.hamryt.helparty.exception.mateboard.DeleteMateBoardFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
 import java.time.LocalDateTime;

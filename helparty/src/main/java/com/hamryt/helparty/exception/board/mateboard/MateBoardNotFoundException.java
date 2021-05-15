@@ -1,4 +1,4 @@
-package com.hamryt.helparty.exception.mateboard;
+package com.hamryt.helparty.exception.board.mateboard;
 
 public class MateBoardNotFoundException extends RuntimeException {
     

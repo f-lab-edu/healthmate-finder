@@ -1,6 +1,6 @@
-package com.hamryt.helparty.dto.mateboard.response;
+package com.hamryt.helparty.dto.board.mateboard.response;
 
-import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
+import com.hamryt.helparty.dto.board.mateboard.MateBoardDTO;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;

@@ -16,7 +16,6 @@ import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
 import com.hamryt.helparty.service.gym.GymServiceImpl;
-import com.hamryt.helparty.service.session.SessionService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,8 +36,6 @@ class GymControllerTest {
     @MockBean
     private GymServiceImpl gymService;
     
-    @MockBean
-    private SessionService sessionService;
     
     ObjectMapper mapper = new ObjectMapper();
     

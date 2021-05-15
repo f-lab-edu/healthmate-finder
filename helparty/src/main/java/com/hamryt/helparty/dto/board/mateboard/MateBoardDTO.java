@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto.mateboard;
+package com.hamryt.helparty.dto.board.mateboard;
 
 import com.hamryt.helparty.dto.user.UserDTO;
 import java.time.LocalDateTime;
@@ -19,7 +19,7 @@ public class MateBoardDTO {
     private String startTime;
     
     private String endTime;
-
+    
     private LocalDateTime createdAt;
     
     private LocalDateTime modifiedAt;
