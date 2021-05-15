@@ -9,10 +9,8 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SignUpGymRequest {
+public class UpdateGymRequest {
     
-    @NotEmpty
-    private String email;
     
     @NotEmpty
     private String gymName;
@@ -33,11 +31,10 @@ public class SignUpGymRequest {
     private UserType userType;
     
     @Builder
-    public SignUpGymRequest(
-        String email, String gymName, String password, String phoneNumber,
+    public UpdateGymRequest(
+        String gymName, String password, String phoneNumber,
         String addressCode, String addressDetail, UserType userType
     ) {
-        this.email = email;
         this.gymName = gymName;
         this.password = password;
         this.phoneNumber = phoneNumber;

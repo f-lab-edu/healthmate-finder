@@ -1,8 +1,9 @@
 package com.hamryt.helparty.controller;
 
+import com.hamryt.helparty.aop.ValidateUser;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
-import com.hamryt.helparty.dto.user.request.UpdateUserReqeust;
+import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
 import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
@@ -10,9 +11,6 @@ import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.session.SessionService;
 import com.hamryt.helparty.service.user.UserService;
 import javax.validation.Valid;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -45,20 +43,18 @@ public class UserController {
     @LoginValidation
     @PutMapping("{id}")
     public UpdateUserResponse updateUser(
-        @PathVariable("id") Long id,
-        @Valid @RequestBody UpdateUserReqeust updateUserRequest
+        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id,
+        @Valid @RequestBody UpdateUserRequest updateUserRequest
     ) {
-        sessionService.validateUser(id);
         return userService.updateUser(id, updateUserRequest);
     }
     
     @LoginValidation
     @DeleteMapping("{id}")
     public void deleteUser(
-        @PathVariable("id") Long id,
+        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id,
         @Valid @RequestBody UserDeleteRequest userDeleteRequest
     ) {
-        sessionService.validateUser(id);
         userService.deleteUser(userDeleteRequest);
     }
 }

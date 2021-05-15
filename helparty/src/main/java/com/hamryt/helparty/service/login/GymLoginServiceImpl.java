@@ -25,7 +25,7 @@ public class GymLoginServiceImpl implements LoginService {
         GymDTO gymDTO = gymService.findGymByEmailAndPassword(email, encryptPassword);
         
         if (gymDTO != null) {
-            session.setAttribute(SessionKeys.LOGIN_GYM_EMAIL, gymDTO.getEmail());
+            session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, gymDTO.getEmail());
         }
         
         return LoginDTO.builder()

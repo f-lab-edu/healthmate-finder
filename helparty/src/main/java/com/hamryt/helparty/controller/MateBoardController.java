@@ -1,7 +1,7 @@
 package com.hamryt.helparty.controller;
 
 
-import com.hamryt.helparty.aop.GetSessionEmail;
+import com.hamryt.helparty.argumentresolver.GetSessionEmail;
 import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;

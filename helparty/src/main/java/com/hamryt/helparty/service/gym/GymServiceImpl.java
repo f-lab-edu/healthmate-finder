@@ -3,11 +3,15 @@ package com.hamryt.helparty.service.gym;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
+import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
+import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
+import com.hamryt.helparty.exception.gym.GymNotFoundByIdException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
+import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
 import com.hamryt.helparty.service.session.Encryptor;
 import java.util.Optional;
@@ -56,6 +60,26 @@ public class GymServiceImpl implements GymService {
     public GymDTO findGymByEmailAndPassword(String email, String password) {
         return Optional.ofNullable(gymMapper.findGymByEmailAndPassword(email, password))
             .orElseThrow(() -> new GymNotFoundException(email));
+    }
+    
+    @Transactional
+    public UpdateGymResponse updateGym(Long id, UpdateGymRequest updateGymRequest) {
+        
+        String encodedPassword = encryptor.encrypt(updateGymRequest.getPassword());
+        
+        UpdateGymResponse updateGymResponse = UpdateGymResponse
+            .of(id, encodedPassword, updateGymRequest);
+        
+        if (gymMapper.updateGym(updateGymResponse) != 1) {
+            throw new UpdateFailedException(updateGymRequest.getGymName());
+        }
+        return updateGymResponse;
+    }
+    
+    @Transactional(readOnly = true)
+    public String findGymEmailById(Long id) {
+        return Optional.ofNullable(gymMapper.findGymEmailById(id))
+            .orElseThrow(() -> new GymNotFoundByIdException(id));
     }
     
     @Transactional(readOnly = true)

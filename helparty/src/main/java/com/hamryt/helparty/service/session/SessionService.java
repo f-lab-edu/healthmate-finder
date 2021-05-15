@@ -4,7 +4,5 @@ public interface SessionService {
     
     void sessionValidate();
     
-    void validateUser(Long id);
-    
     String getSessionEmail();
 }

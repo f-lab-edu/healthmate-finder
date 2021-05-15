@@ -9,11 +9,14 @@ import static org.mockito.BDDMockito.given;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
+import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
+import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
+import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
 import com.hamryt.helparty.service.session.Encryptor;
 import org.junit.jupiter.api.DisplayName;
@@ -35,127 +38,118 @@ class GymServiceImplTest {
     @Mock
     private Encryptor encryptor;
     
+    String email = "test@example.com";
+    String gymName = "test";
+    String password = "123";
+    String phoneNumber = "01012345678";
+    String addressCode = "1234";
+    String addressDetail = "seoul";
+    UserType userTypeGym = UserType.GYM;
+    UserType userTypeUser = UserType.USER;
+    
+    SignUpGymRequest signUpGymRequestGym = SignUpGymRequest.builder()
+        .email(email)
+        .gymName(gymName)
+        .password(password)
+        .phoneNumber(phoneNumber)
+        .addressCode(addressCode)
+        .addressDetail(addressDetail)
+        .userType(userTypeGym)
+        .build();
+    
+    SignUpGymRequest signUpGymRequestUser = SignUpGymRequest.builder()
+        .email(email)
+        .gymName(gymName)
+        .password(password)
+        .phoneNumber(phoneNumber)
+        .addressCode(addressCode)
+        .addressDetail(addressDetail)
+        .userType(userTypeUser)
+        .build();
+    
+    UpdateGymRequest updateGymRequest = UpdateGymRequest.builder()
+        .gymName(gymName)
+        .password(password)
+        .phoneNumber(phoneNumber)
+        .addressCode(addressCode)
+        .addressDetail(addressDetail)
+        .userType(userTypeGym)
+        .build();
+    
     @Test
-    @DisplayName("운동 시설 업주 회원가입 성공")
+    @DisplayName("운동 시설 관리자 계정정보 수정 성공")
+    public void updateGym_Success() {
+        
+        given(gymMapper.updateGym(any())).willReturn(1);
+        
+        UpdateGymResponse updateGymResponse = gymService.updateGym(1004L, updateGymRequest);
+        
+        assertEquals(updateGymResponse.getGymName(), gymName);
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 계정정보 수정 실패 : 수정 쿼리 실패")
+    public void updateGym_Fail() {
+        
+        given(gymMapper.updateGym(any())).willReturn(2);
+        
+        UpdateFailedException updateFailedException
+            = assertThrows(UpdateFailedException.class,
+            () -> gymService.updateGym(1004L, updateGymRequest));
+        
+        assertEquals("Update did not happened with this model : " + gymName,
+            updateFailedException.getMessage());
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 회원가입 성공")
     public void createGym_Success() {
         
-        String email = "test@example.com";
-        String gymName = "test";
-        String password = "123";
-        String phoneNumber = "01012345678";
-        String addressCode = "1234";
-        String addressDetail = "seoul";
-        UserType userType = UserType.GYM;
-        
-        SignUpGymRequest signUpGymRequest = SignUpGymRequest.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
-        
         given(gymMapper.isExistsEmail(any())).willReturn(false);
-        
         given(gymMapper.insertGym(any())).willReturn(1);
         
-        SignUpGymResponse signUpGymResponse = gymService.insertGym(signUpGymRequest);
+        SignUpGymResponse signUpGymResponse = gymService.insertGym(signUpGymRequestGym);
         
         assertEquals(signUpGymResponse.getGymName(), gymName);
         
     }
     
     @Test
-    @DisplayName("운동 시설 업주 회원 가입 실패 : 회원 타입 불일치")
+    @DisplayName("운동 시설 관리자 회원 가입 실패 : 회원 타입 불일치")
     public void createGym_Fail_DoesNotMatchUserType() {
-        
-        String email = "test@example.com";
-        String gymName = "test";
-        String password = "123";
-        String phoneNumber = "01012345678";
-        String addressCode = "1234";
-        String addressDetail = "seoul";
-        UserType userType = UserType.USER;
-        
-        SignUpGymRequest signUpGymRequest = SignUpGymRequest.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
         
         DoesNotMatchUserType doesNotMatchUserType
             = assertThrows(DoesNotMatchUserType.class,
-            () -> gymService.insertGym(signUpGymRequest));
+            () -> gymService.insertGym(signUpGymRequestUser));
         
         assertEquals("UserType does not match. It Must be : GYM",
             doesNotMatchUserType.getMessage());
     }
     
     @Test
-    @DisplayName("운동 시설 업주 회원 가입 실패 : 이미 존재하는 이메일")
+    @DisplayName("운동 시설 관리자 회원 가입 실패 : 이미 존재하는 이메일")
     public void createGym_Fail_EmailExistedException() {
-        
-        String email = "test@example.com";
-        String gymName = "test";
-        String password = "123";
-        String phoneNumber = "01012345678";
-        String addressCode = "1234";
-        String addressDetail = "seoul";
-        UserType userType = UserType.GYM;
-        
-        SignUpGymRequest signUpGymRequest = SignUpGymRequest.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
         
         given(gymMapper.isExistsEmail(any())).willReturn(true);
         
         EmailExistedException emailExistedException
             = assertThrows(EmailExistedException.class,
-            () -> gymService.insertGym(signUpGymRequest));
+            () -> gymService.insertGym(signUpGymRequestGym));
         
         assertEquals("Email is already registered: test@example.com",
             emailExistedException.getMessage());
     }
     
     @Test
-    @DisplayName("운동 시설 업주 회원 가입 실패 : 삽입 쿼리 실패")
+    @DisplayName("운동 시설 관리자 회원 가입 실패 : 삽입 쿼리 실패")
     public void createGym_Fail_InsertGymFailException() {
-        String email = "test@example.com";
-        String gymName = "test";
-        String password = "123";
-        String phoneNumber = "01012345678";
-        String addressCode = "1234";
-        String addressDetail = "seoul";
-        UserType userType = UserType.GYM;
-        
-        SignUpGymRequest signUpGymRequest = SignUpGymRequest.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
         
         given(gymMapper.isExistsEmail(any())).willReturn(false);
         given(gymMapper.insertGym(any())).willReturn(0);
         
         InsertGymFailedExcetpion insertGymFailedExcetpion
             = assertThrows(InsertGymFailedExcetpion.class,
-            () -> gymService.insertGym(signUpGymRequest));
+            () -> gymService.insertGym(signUpGymRequestGym));
         
         assertEquals("Insert Gym failed exception",
             insertGymFailedExcetpion.getMessage());
@@ -164,9 +158,7 @@ class GymServiceImplTest {
     @Test
     @DisplayName("Eamil과 Password로 GymDTO 조회 성공")
     public void findGymByEmailAndPassword_Success() {
-        String email = "test@example.com";
-        String password = "test";
-        String gymName = "test";
+        
         GymDTO MockGym = GymDTO.builder()
             .email(email)
             .gymName(gymName)

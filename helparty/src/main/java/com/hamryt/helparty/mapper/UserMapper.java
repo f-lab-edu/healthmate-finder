@@ -20,4 +20,6 @@ public interface UserMapper {
     int updateUser(UpdateUserResponse updateUserResponse);
 
     UserDTO findUserByEmail(String email);
+    
+    String findUserEmailById(Long id);
 }

@@ -37,6 +37,10 @@
     AND password=#{password}
   </select>
 
+  <select id="findUserEmailById" resultType="String">
+    SELECT email FROM user  WHERE id=#{id}
+  </select>
+
   <update id="updateUser" parameterType="com.hamryt.helparty.dto.user.response.UpdateUserResponse">
     UPDATE user SET
     name = #{name},
