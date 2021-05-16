@@ -13,7 +13,7 @@ public class SessionServiceImpl implements SessionService {
     private final HttpSession session;
     
     public void sessionValidate() {
-        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_ID);
         
         if (userEmail == null) {
             throw new NoLoginAuthException();
@@ -21,7 +21,7 @@ public class SessionServiceImpl implements SessionService {
     }
     
     public String getSessionEmail() {
-        return (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        return (String) session.getAttribute(SessionKeys.LOGIN_USER_ID);
     }
     
 }

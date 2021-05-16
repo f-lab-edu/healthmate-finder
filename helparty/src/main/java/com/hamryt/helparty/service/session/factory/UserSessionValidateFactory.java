@@ -20,7 +20,7 @@ public class UserSessionValidateFactory extends UserSessionFactory {
     
     @Transactional(readOnly = true)
     public void createValidateUser(Long id, UserType userType) {
-        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_ID);
         String checkEmail = null;
         
         switch (userType) {

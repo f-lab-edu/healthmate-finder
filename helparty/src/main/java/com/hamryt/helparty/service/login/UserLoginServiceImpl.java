@@ -28,7 +28,7 @@ public class UserLoginServiceImpl implements LoginService {
         UserDTO userDTO = userService.findUserByEmailAndPassword(email, encryptPassword);
         
         if (userDTO != null) {
-            session.setAttribute(SessionKeys.LOGIN_USER_EMAIL, userDTO.getEmail());
+            session.setAttribute(SessionKeys.LOGIN_USER_ID, userDTO.getId());
         } else {
             throw new UserNotFoundException(email);
         }

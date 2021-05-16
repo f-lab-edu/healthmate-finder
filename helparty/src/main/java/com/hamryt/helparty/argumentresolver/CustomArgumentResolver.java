@@ -24,6 +24,6 @@ public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return httpSession.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        return httpSession.getAttribute(SessionKeys.LOGIN_USER_ID);
     }
 }
