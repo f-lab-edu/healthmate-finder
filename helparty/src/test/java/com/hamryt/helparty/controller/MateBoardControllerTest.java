@@ -67,9 +67,9 @@ public class MateBoardControllerTest {
         
         String request = new ObjectMapper().writeValueAsString(createMateBoardRequest);
         
-        given(loginService.getSessionEmail())
-            .willReturn("test@example.com");
-        given(mateBoardService.addMateBoard(createMateBoardRequest, "test@example.com"))
+        given(loginService.getSessionId())
+            .willReturn(1L);
+        given(mateBoardService.addMateBoard(createMateBoardRequest, 1004L))
             .willReturn(createMateBoardResponse);
         
         // when, then
@@ -149,7 +149,7 @@ public class MateBoardControllerTest {
             .andExpect(status().isOk());
         
         // then
-        verify(mateBoardService).updateMateBoard(eq(1004L), any(), any());
+        verify(mateBoardService).updateMateBoard(any(), eq(1004L), any());
     }
     
     

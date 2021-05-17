@@ -26,12 +26,12 @@ public class SimpleGymBoard {
         this.gymId = gymId;
     }
     
-    public static SimpleGymBoard of(CreateGymBoardRequest createGymBoardRequest) {
+    public static SimpleGymBoard of(CreateGymBoardRequest createGymBoardRequest, Long sessionId) {
         return SimpleGymBoard.builder()
             .title(createGymBoardRequest.getTitle())
             .content(createGymBoardRequest.getContent())
             .gymProductId(createGymBoardRequest.getSimpleProduct().getId())
-            .gymId(createGymBoardRequest.getGymId())
+            .gymId(sessionId)
             .build();
     }
     

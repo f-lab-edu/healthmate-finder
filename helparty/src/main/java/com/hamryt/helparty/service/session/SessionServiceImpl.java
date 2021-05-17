@@ -13,15 +13,15 @@ public class SessionServiceImpl implements SessionService {
     private final HttpSession session;
     
     public void sessionValidate() {
-        String userEmail = (String) session.getAttribute(SessionKeys.LOGIN_USER_ID);
+        Long userId = (Long) session.getAttribute(SessionKeys.LOGIN_USER_ID);
         
-        if (userEmail == null) {
+        if (userId == null) {
             throw new NoLoginAuthException();
         }
     }
     
-    public String getSessionEmail() {
-        return (String) session.getAttribute(SessionKeys.LOGIN_USER_ID);
+    public Long getSessionId() {
+        return (Long) session.getAttribute(SessionKeys.LOGIN_USER_ID);
     }
     
 }

@@ -20,17 +20,13 @@ public class CreateGymBoardRequest {
     @NotNull
     private SimpleProduct simpleProduct;
     
-    @NotNull
-    private Long gymId;
-    
     @Builder
     public CreateGymBoardRequest(
-        String title, String content, SimpleProduct simpleProduct, Long gymId
+        String title, String content, SimpleProduct simpleProduct
     ) {
         this.title = title;
         this.content = content;
         this.simpleProduct = simpleProduct;
-        this.gymId = gymId;
     }
     
 }

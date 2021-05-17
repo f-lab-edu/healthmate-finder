@@ -99,7 +99,7 @@ class GymServiceImplTest {
             = assertThrows(UpdateFailedException.class,
             () -> gymService.updateGym(1004L, updateGymRequest));
         
-        assertEquals("Update did not happened with this model : " + gymName,
+        assertEquals("Update did not happened with this id : " + 1004,
             updateFailedException.getMessage());
     }
     

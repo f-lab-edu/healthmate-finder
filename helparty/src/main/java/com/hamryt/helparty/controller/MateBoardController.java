@@ -1,7 +1,7 @@
 package com.hamryt.helparty.controller;
 
 
-import com.hamryt.helparty.argumentresolver.GetSessionEmail;
+import com.hamryt.helparty.argumentresolver.GetSessionId;
 import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
@@ -41,9 +41,16 @@ public class MateBoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMateBoardResponse createMateBoard(
         @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest,
-        @GetSessionEmail String email
+        @GetSessionId Long id
     ) {
-        return mateBoardService.addMateBoard(createMateBoardRequest, email);
+        return mateBoardService.addMateBoard(createMateBoardRequest, id);
+    }
+    
+    @GetMapping("/{id}")
+    public GetMateBoardResponse getMate(
+        @PathVariable Long id
+    ) {
+        return mateBoardService.getMate(id);
     }
     
     @GetMapping
@@ -62,27 +69,20 @@ public class MateBoardController {
     @LoginValidation
     @PatchMapping("/{id}")
     public UpdateMateBoardResponse updateMateBoard(
-        @PathVariable Long id,
-        @GetSessionEmail String email,
+        @PathVariable("id") Long userId,
+        @GetSessionId Long sessionId,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ) {
-        return mateBoardService.updateMateBoard(id, email, updateMateBoardRequest);
-    }
-    
-    @GetMapping("/{id}")
-    public GetMateBoardResponse getMate(
-        @PathVariable Long id
-    ) {
-        return mateBoardService.getMate(id);
+        return mateBoardService.updateMateBoard(sessionId, userId, updateMateBoardRequest);
     }
     
     @LoginValidation
     @DeleteMapping("/{id}")
     public void deleteMateBoard(
-        @GetSessionEmail String email,
-        @PathVariable Long id
+        @PathVariable("id") Long userId,
+        @GetSessionId Long sessionId
     ) {
-        mateBoardService.deleteMateBoard(id, email);
+        mateBoardService.deleteMateBoard(userId, sessionId);
     }
     
 }

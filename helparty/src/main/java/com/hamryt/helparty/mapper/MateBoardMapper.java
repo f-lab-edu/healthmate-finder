@@ -17,7 +17,8 @@ public interface MateBoardMapper {
     
     List<GetMateBoardResponse> findMateBoardByPage(int index, int size);
     
-    String findMateBoardEmailById(Long id);
+    Long findUserIdByMateBoardId(Long boardId);
     
     int deleteMateBoardById(Long id);
+    
 }

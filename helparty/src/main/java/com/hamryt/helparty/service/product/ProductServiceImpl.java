@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class productServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService {
     
     private final ProductMapper productMapper;
     

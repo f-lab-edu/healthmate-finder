@@ -12,7 +12,6 @@ import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
-import com.hamryt.helparty.exception.user.UserNotFoundException;
 import com.hamryt.helparty.mapper.UserMapper;
 import com.hamryt.helparty.service.session.Encryptor;
 import java.util.Optional;
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService {
             .of(id, encodedPassword, updateUserRequest);
         
         if (userMapper.updateUser(updateUserResponse) != 1) {
-            throw new UpdateFailedException(updateUserRequest.getName());
+            throw new UpdateFailedException(id);
         }
         
         return updateUserResponse;
@@ -80,17 +79,8 @@ public class UserServiceImpl implements UserService {
     }
     
     @Transactional(readOnly = true)
-    public UserDTO getUserById(Long id) {
-        UserDTO user = userMapper.findUserById(id);
-        if (user == null) {
-            throw new UserNotFoundByIdException(id);
-        }
-        return user;
-    }
-    
-    @Transactional(readOnly = true)
-    public String findUserEmailById(Long id) {
-        return Optional.ofNullable(userMapper.findUserEmailById(id))
+    public UserDTO findUserById(Long id) {
+        return Optional.ofNullable(userMapper.findUserById(id))
             .orElseThrow(() -> new UserNotFoundByIdException(id));
     }
     
@@ -98,12 +88,6 @@ public class UserServiceImpl implements UserService {
     public boolean isExistsEmail(String email) {
         return userMapper.isExistsEmail(email);
         
-    }
-    
-    @Transactional(readOnly = true)
-    public UserDTO findUserByEmail(String email) {
-        return Optional.ofNullable(userMapper.findUserByEmail(email))
-            .orElseThrow(() -> new UserNotFoundException(email));
     }
     
     @Transactional(readOnly = true)

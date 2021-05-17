@@ -1,6 +1,6 @@
 package com.hamryt.helparty.config;
 
-import com.hamryt.helparty.argumentresolver.CustomArgumentResolver;
+import com.hamryt.helparty.argumentresolver.GetSessionIdArgumentResolver;
 import com.hamryt.helparty.interceptor.LoginValidationInterceptor;
 import com.hamryt.helparty.service.session.SessionService;
 import java.util.List;
@@ -15,18 +15,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 public class CustomWebMvcConfigure extends WebMvcConfigurationSupport {
     
     private final SessionService sessionService;
-    private final CustomArgumentResolver customArgumentResolver;
+    private final GetSessionIdArgumentResolver getSessionIdArgumentResolver;
     
     @Override
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginValidationInterceptor(sessionService))
+            .addPathPatterns("/gymboards/**")
+            .addPathPatterns("/mateboards/**")
             .addPathPatterns("/users/**")
             .addPathPatterns("/gyms/**");
+        
     }
     
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(customArgumentResolver);
+        argumentResolvers.add(getSessionIdArgumentResolver);
+     
     }
     
 }

@@ -23,7 +23,7 @@ public class SimpleProduct {
     
     @Builder
     public SimpleProduct(
-        String title, String content, String price,
+        Long id, String title, String content, String price,
         String scope, BoardType boardType
     ) {
         this.title = title;

@@ -13,15 +13,11 @@ public interface UserService {
     
     boolean isExistsEmail(String email);
     
-    UserDTO findUserByEmail(String email);
-    
     UserDTO findUserByEmailAndPassword(String email, String password);
     
-    void deleteUser(Long id);
+    void deleteUser(Long sessionId);
     
-    UpdateUserResponse updateUser(Long id, UpdateUserRequest updateUserRequest);
+    UpdateUserResponse updateUser(Long SessionId, UpdateUserRequest updateUserRequest);
     
-    UserDTO getUserById(Long id);
-    
-    String findUserEmailById(Long id);
+    UserDTO findUserById(Long id);
 }
