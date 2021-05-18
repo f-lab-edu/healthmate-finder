@@ -66,23 +66,8 @@ public class MateBoardServiceImpl implements MateBoardService {
     
     @Transactional
     @CacheEvict(value = "mateboards")
-    public void deleteMateBoard(Long boardId, Long sessionId) {
-        
-        Long boardUserId = mateBoardMapper.findUserIdByMateBoardId(boardId);
-        
-        if (!boardUserId.equals(sessionId)) {
-            throw new LoginUserDoesNotMatchException(sessionId);
-        }
-        
-        if (mateBoardMapper.deleteMateBoardById(boardId) != 1) {
-            throw new DeleteMateBoardFailedException();
-        }
-    }
-    
-    @Transactional
-    @CacheEvict(value = "mateboards")
     public UpdateMateBoardResponse updateMateBoard(
-        Long sessionId, Long boardId,
+        Long sessionId, long boardId,
         UpdateMateBoardRequest updateMateBoardRequest
     ) {
         Long userId = mateBoardMapper.findUserIdByMateBoardId(boardId);
@@ -99,6 +84,21 @@ public class MateBoardServiceImpl implements MateBoardService {
         }
         
         return updateMateBoardResponse;
+    }
+    
+    @Transactional
+    @CacheEvict(value = "mateboards")
+    public void deleteMateBoard(long boardId, Long sessionId) {
+        
+        Long boardUserId = mateBoardMapper.findUserIdByMateBoardId(boardId);
+        
+        if (!boardUserId.equals(sessionId)) {
+            throw new LoginUserDoesNotMatchException(sessionId);
+        }
+        
+        if (mateBoardMapper.deleteMateBoardById(boardId) != 1) {
+            throw new DeleteMateBoardFailedException();
+        }
     }
     
 }

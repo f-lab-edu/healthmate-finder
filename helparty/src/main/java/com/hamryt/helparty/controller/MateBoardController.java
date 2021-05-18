@@ -69,20 +69,20 @@ public class MateBoardController {
     @LoginValidation
     @PatchMapping("/{id}")
     public UpdateMateBoardResponse updateMateBoard(
-        @PathVariable("id") Long userId,
+        @PathVariable("id") long boardId,
         @GetSessionId Long sessionId,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ) {
-        return mateBoardService.updateMateBoard(sessionId, userId, updateMateBoardRequest);
+        return mateBoardService.updateMateBoard(sessionId, boardId, updateMateBoardRequest);
     }
     
     @LoginValidation
     @DeleteMapping("/{id}")
     public void deleteMateBoard(
-        @PathVariable("id") Long userId,
+        @PathVariable("id") long boardId,
         @GetSessionId Long sessionId
     ) {
-        mateBoardService.deleteMateBoard(userId, sessionId);
+        mateBoardService.deleteMateBoard(boardId, sessionId);
     }
     
 }

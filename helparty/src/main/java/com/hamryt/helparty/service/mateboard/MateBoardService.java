@@ -14,10 +14,10 @@ public interface MateBoardService {
     
     List<GetMateBoardResponse> getMates(int page, int size);
     
-    UpdateMateBoardResponse updateMateBoard(Long sessionId, Long boardId,
+    UpdateMateBoardResponse updateMateBoard(Long sessionId, long boardId,
         UpdateMateBoardRequest updateMateBoardRequest);
     
     GetMateBoardResponse getMate(Long id);
     
-    void deleteMateBoard(Long boardId, Long sessionId);
+    void deleteMateBoard(long boardId, Long sessionId);
 }
