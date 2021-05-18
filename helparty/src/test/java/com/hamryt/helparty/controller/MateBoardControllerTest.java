@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
@@ -58,18 +59,17 @@ public class MateBoardControllerTest {
         String content = "test";
         String startTime = "18:00";
         String endTime = "19:00";
+        UserType userType = UserType.USER;
         
         CreateMateBoardRequest createMateBoardRequest
-            = getCreateRequest(gym, content, startTime, endTime);
+            = getCreateRequest(gym, content, userType, startTime, endTime);
         
         CreateMateBoardResponse createMateBoardResponse
             = getCreateResponse(id, name, gym, content, addressDetail, startTime, endTime);
         
         String request = new ObjectMapper().writeValueAsString(createMateBoardRequest);
         
-        given(loginService.getSessionId())
-            .willReturn(1L);
-        given(mateBoardService.addMateBoard(createMateBoardRequest, 1004L))
+        given(mateBoardService.addMateBoard(eq(createMateBoardRequest), any()))
             .willReturn(createMateBoardResponse);
         
         // when, then
@@ -200,12 +200,13 @@ public class MateBoardControllerTest {
     }
     
     private CreateMateBoardRequest getCreateRequest(
-        String gym, String content,
+        String gym, String content, UserType userType,
         String startTime, String endTime
     ) {
         return CreateMateBoardRequest.builder()
             .gym(gym)
             .content(content)
+            .userType(userType)
             .startTime(startTime)
             .endTime(endTime)
             .build();

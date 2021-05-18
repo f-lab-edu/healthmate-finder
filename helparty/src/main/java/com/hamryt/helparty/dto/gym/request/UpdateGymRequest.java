@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateGymRequest {
     
-    
     @NotEmpty
     private String gymName;
     

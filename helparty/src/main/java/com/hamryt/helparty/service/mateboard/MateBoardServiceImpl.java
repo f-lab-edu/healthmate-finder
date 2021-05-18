@@ -1,5 +1,6 @@
 package com.hamryt.helparty.service.mateboard;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.mateboard.MateBoardDTO;
 import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
@@ -34,6 +35,7 @@ public class MateBoardServiceImpl implements MateBoardService {
         CreateMateBoardRequest createMateBoardRequest,
         Long id
     ) {
+        UserType.checkUserType(createMateBoardRequest.getUserType(), UserType.USER);
         UserDTO user = userService.findUserById(id);
         
         MateBoardDTO mateBoard

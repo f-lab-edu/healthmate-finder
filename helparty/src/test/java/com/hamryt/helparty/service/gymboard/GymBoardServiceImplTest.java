@@ -7,10 +7,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
+import com.hamryt.helparty.exception.common.UserTypeDoesNotMatchException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -37,17 +39,18 @@ class GymBoardServiceImplTest {
     String price = "test";
     String scope = "test";
     
+    SimpleProduct mockSimpleProduct =
+        getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
+    
+    CreateGymBoardRequest createGymBoardRequest =
+        getCreateGymBoardRequest(title, content, UserType.GYM, mockSimpleProduct);
+    
     @Test
     @DisplayName("운동 시설 게시물 추가 로직 성공")
-    public void insertGymBoard_Success(){
+    public void insertGymBoard_Success() {
         
-        SimpleProduct mockSimpleProduct =
-            getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
-        
-        CreateGymBoardRequest createGymBoardRequest =
-            getCreateGymBoardRequest(title, content, mockSimpleProduct);
-    
-        doNothing().when(productService).insertProduct(eq(createGymBoardRequest.getSimpleProduct()));
+        doNothing().when(productService)
+            .insertProduct(eq(createGymBoardRequest.getSimpleProduct()), eq(BoardType.GYM));
         
         given(gymBoardMapper.insertGymBoard(any())).willReturn(1);
         
@@ -57,33 +60,46 @@ class GymBoardServiceImplTest {
     
     @Test
     @DisplayName("운동 시설 게시물 추가 로직 실패 : 데이터베이스 insert 명령에 실패하면 InsertGymBoardFailedException을 발생시킨다.")
-    public void insertGymBoard_Fail_InsertGymBoardFailedException(){
-    
-        SimpleProduct mockSimpleProduct =
-            getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
-    
-        CreateGymBoardRequest createGymBoardRequest =
-            getCreateGymBoardRequest(title, content, mockSimpleProduct);
-    
-        doNothing().when(productService).insertProduct(eq(createGymBoardRequest.getSimpleProduct()));
+    public void insertGymBoard_Fail_InsertGymBoardFailedException() {
+        
+        doNothing().when(productService)
+            .insertProduct(eq(createGymBoardRequest.getSimpleProduct()), eq(BoardType.GYM));
         
         given(gymBoardMapper.insertGymBoard(any())).willReturn(0);
-    
+        
         InsertGymBoardFailedException insertGymBoardFailedExcetpion
             = assertThrows(InsertGymBoardFailedException.class,
             () -> gymBoardService.insertGymBoard(createGymBoardRequest, 1004L));
         
-        assertEquals("Insert GymBoard Failed Exception.", insertGymBoardFailedExcetpion.getMessage());
+        assertEquals("Insert GymBoard Failed Exception.",
+            insertGymBoardFailedExcetpion.getMessage());
+        
+    }
     
+    @Test
+    @DisplayName("운동 시설 게시물 추가 로직 실패 : UserType 불일치로 인한 권한 없음 예외")
+    public void insertGymBoard_Fail_UserTypeDoesNotMatchException() {
+        
+        CreateGymBoardRequest createFailGymBoardRequest =
+            getCreateGymBoardRequest(title, content, UserType.USER, mockSimpleProduct);
+        
+        UserTypeDoesNotMatchException userTypeDoesNotMatchException
+            = assertThrows(UserTypeDoesNotMatchException.class,
+            () -> gymBoardService.insertGymBoard(createFailGymBoardRequest, 1004L));
+        
+        assertEquals("UserType dose not match with : GYM",
+            userTypeDoesNotMatchException.getMessage());
+        
     }
     
     private CreateGymBoardRequest getCreateGymBoardRequest(
-        String title, String content,
+        String title, String content, UserType userType,
         SimpleProduct simpleProduct
     ) {
         return CreateGymBoardRequest.builder()
             .title(title)
             .content(content)
+            .userType(userType)
             .simpleProduct(simpleProduct)
             .build();
     }

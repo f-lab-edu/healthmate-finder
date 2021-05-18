@@ -1,7 +1,9 @@
 package com.hamryt.helparty.service.gymboard;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.SimpleGymBoard;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
+import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductService;
@@ -20,8 +22,9 @@ public class GymBoardServiceImpl implements GymBoardService {
     
     @Transactional
     public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long sessionId) {
+        UserType.checkUserType(createGymBoardRequest.getUserType(), UserType.GYM);
         
-        productService.insertProduct(createGymBoardRequest.getSimpleProduct());
+        productService.insertProduct(createGymBoardRequest.getSimpleProduct(), BoardType.GYM);
         
         SimpleGymBoard simpleGymBoard = SimpleGymBoard.of(createGymBoardRequest, sessionId);
         

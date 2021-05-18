@@ -1,9 +1,12 @@
 package com.hamryt.helparty.controller;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
@@ -28,7 +31,7 @@ class GymBoardControllerTest {
     @MockBean
     private GymBoardServiceImpl gymBoardService;
     
-    String title ="test";
+    String title = "test";
     String content = "test";
     String price = "test";
     String scope = "test";
@@ -40,12 +43,14 @@ class GymBoardControllerTest {
     public void create_Success() throws Exception {
         
         SimpleProduct mockSimpleProduct =
-        getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
+            getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
         
-        CreateGymBoardRequest mockCreateGymBoardReqeust =
+        CreateGymBoardRequest mockCreateGymBoardRequest =
             getCreateGymBoardRequest(title, content, mockSimpleProduct);
         
-        String request = mapper.writeValueAsString(mockCreateGymBoardReqeust);
+        String request = mapper.writeValueAsString(mockCreateGymBoardRequest);
+        
+        doNothing().when(gymBoardService).insertGymBoard(any(), any());
         
         mvc.perform(post("/gymboards")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -58,6 +63,7 @@ class GymBoardControllerTest {
         return CreateGymBoardRequest.builder()
             .title(title)
             .content(content)
+            .userType(UserType.GYM)
             .simpleProduct(simpleProduct)
             .build();
     }

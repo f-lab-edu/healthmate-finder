@@ -10,7 +10,6 @@ import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundByIdException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
-import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
@@ -30,9 +29,7 @@ public class GymServiceImpl implements GymService {
     @Transactional
     public SignUpGymResponse insertGym(SignUpGymRequest signUpGymRequest) {
         
-        if (signUpGymRequest.getUserType() != UserType.GYM) {
-            throw new DoesNotMatchUserType(UserType.GYM);
-        }
+        UserType.checkUserType(signUpGymRequest.getUserType(), UserType.GYM);
         
         if (isExistsEmail(signUpGymRequest.getEmail())) {
             throw new EmailExistedException(signUpGymRequest.getEmail());
