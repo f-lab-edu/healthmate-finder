@@ -1,8 +1,8 @@
 package com.hamryt.helparty.exception.gym;
 
-public class InsertGymFailedExcetpion extends RuntimeException {
+public class InsertGymFailedException extends RuntimeException {
     
-    public InsertGymFailedExcetpion() {
+    public InsertGymFailedException() {
         super("Insert Gym failed exception");
     }
     
