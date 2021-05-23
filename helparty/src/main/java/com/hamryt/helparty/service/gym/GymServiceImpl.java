@@ -14,6 +14,7 @@ import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
 import com.hamryt.helparty.service.session.Encryptor;
+import com.hamryt.helparty.util.UserTypeUtil;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class GymServiceImpl implements GymService {
     @Transactional
     public SignUpGymResponse insertGym(SignUpGymRequest signUpGymRequest) {
         
-        UserType.checkUserType(signUpGymRequest.getUserType(), UserType.GYM);
+        UserTypeUtil.validateUserType(signUpGymRequest.getUserType(), UserType.GYM);
         
         if (isExistsEmail(signUpGymRequest.getEmail())) {
             throw new EmailExistedException(signUpGymRequest.getEmail());

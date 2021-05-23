@@ -7,6 +7,7 @@ import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductService;
+import com.hamryt.helparty.util.UserTypeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class GymBoardServiceImpl implements GymBoardService {
     
     @Transactional
     public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long sessionId) {
-        UserType.checkUserType(createGymBoardRequest.getUserType(), UserType.GYM);
+        UserTypeUtil.validateUserType(createGymBoardRequest.getUserType(), UserType.GYM);
         
         productService.insertProduct(createGymBoardRequest.getSimpleProduct(), BoardType.GYM);
         

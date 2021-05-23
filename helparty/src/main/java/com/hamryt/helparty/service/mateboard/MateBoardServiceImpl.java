@@ -15,6 +15,7 @@ import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;
+import com.hamryt.helparty.util.UserTypeUtil;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +36,7 @@ public class MateBoardServiceImpl implements MateBoardService {
         CreateMateBoardRequest createMateBoardRequest,
         Long id
     ) {
-        UserType.checkUserType(createMateBoardRequest.getUserType(), UserType.USER);
+        UserTypeUtil.validateUserType(createMateBoardRequest.getUserType(), UserType.USER);
         UserDTO user = userService.findUserById(id);
         
         MateBoardDTO mateBoard

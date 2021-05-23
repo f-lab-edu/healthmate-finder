@@ -13,10 +13,10 @@ import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
+import com.hamryt.helparty.exception.common.UserTypeDoesNotMatchException;
 import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
 import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
-import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
@@ -120,12 +120,12 @@ class GymServiceImplTest {
     @DisplayName("운동 시설 관리자 회원 가입 실패 : 회원 타입 불일치")
     public void createGym_Fail_DoesNotMatchUserType() {
         
-        DoesNotMatchUserType doesNotMatchUserType
-            = assertThrows(DoesNotMatchUserType.class,
+        UserTypeDoesNotMatchException userTypeDoesNotMatchException
+            = assertThrows(UserTypeDoesNotMatchException.class,
             () -> gymService.insertGym(signUpGymRequestUser));
         
-        assertEquals("UserType does not match. It Must be : GYM",
-            doesNotMatchUserType.getMessage());
+        assertEquals("UserType dose not match with : GYM",
+            userTypeDoesNotMatchException.getMessage());
     }
     
     @Test
