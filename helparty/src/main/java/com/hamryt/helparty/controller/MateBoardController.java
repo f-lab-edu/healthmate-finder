@@ -1,7 +1,7 @@
 package com.hamryt.helparty.controller;
 
 
-import com.hamryt.helparty.argumentresolver.GetSessionId;
+import com.hamryt.helparty.argumentresolver.GetLoginId;
 import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
@@ -41,7 +41,7 @@ public class MateBoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMateBoardResponse createMateBoard(
         @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest,
-        @GetSessionId Long loginId
+        @GetLoginId Long loginId
     ) {
         return mateBoardService.addMateBoard(createMateBoardRequest, loginId);
     }
@@ -70,7 +70,7 @@ public class MateBoardController {
     @PatchMapping("/{id}")
     public UpdateMateBoardResponse updateMateBoard(
         @PathVariable("id") long boardId,
-        @GetSessionId Long loginId,
+        @GetLoginId Long loginId,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ) {
         return mateBoardService.updateMateBoard(loginId, boardId, updateMateBoardRequest);
@@ -80,7 +80,7 @@ public class MateBoardController {
     @DeleteMapping("/{id}")
     public void deleteMateBoard(
         @PathVariable("id") long boardId,
-        @GetSessionId Long loginId
+        @GetLoginId Long loginId
     ) {
         mateBoardService.deleteMateBoard(boardId, loginId);
     }

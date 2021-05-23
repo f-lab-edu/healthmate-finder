@@ -1,6 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.argumentresolver.GetSessionId;
+import com.hamryt.helparty.argumentresolver.GetLoginId;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.gymboard.GymBoardService;
@@ -25,7 +25,7 @@ public class GymBoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createGymBoard(
         @Valid @RequestBody CreateGymBoardRequest createGymBoardRequest,
-        @GetSessionId Long loginId
+        @GetLoginId Long loginId
     ) {
         gymBoardService.insertGymBoard(createGymBoardRequest, loginId);
     }
