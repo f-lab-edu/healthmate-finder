@@ -25,8 +25,8 @@ public class GymBoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public void createGymBoard(
         @Valid @RequestBody CreateGymBoardRequest createGymBoardRequest,
-        @GetSessionId Long sessionId
+        @GetSessionId Long loginId
     ) {
-        gymBoardService.insertGymBoard(createGymBoardRequest, sessionId);
+        gymBoardService.insertGymBoard(createGymBoardRequest, loginId);
     }
 }

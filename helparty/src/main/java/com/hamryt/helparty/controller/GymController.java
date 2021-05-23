@@ -36,18 +36,18 @@ public class GymController {
     @LoginValidation
     @PutMapping
     public UpdateGymResponse updateGym(
-        @GetSessionId Long sessionId,
+        @GetSessionId Long loginId,
         @Valid @RequestBody UpdateGymRequest updateGymRequest
     ) {
-        return gymService.updateGym(sessionId, updateGymRequest);
+        return gymService.updateGym(loginId, updateGymRequest);
     }
     
     @LoginValidation
     @DeleteMapping
     public void deleteGym(
-        @GetSessionId Long sessionId
+        @GetSessionId Long loginId
     ) {
-        gymService.deleteGym(sessionId);
+        gymService.deleteGym(loginId);
     }
     
 }

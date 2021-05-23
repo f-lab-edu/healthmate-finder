@@ -40,17 +40,17 @@ public class UserController {
     @LoginValidation
     @PutMapping
     public UpdateUserResponse updateUser(
-        @GetSessionId Long sessionId,
+        @GetSessionId Long loginId,
         @Valid @RequestBody UpdateUserRequest updateUserRequest
     ) {
-        return userService.updateUser(sessionId, updateUserRequest);
+        return userService.updateUser(loginId, updateUserRequest);
     }
     
     @LoginValidation
     @DeleteMapping
     public void deleteUser(
-        @GetSessionId Long sessionId
+        @GetSessionId Long loginId
     ) {
-        userService.deleteUser(sessionId);
+        userService.deleteUser(loginId);
     }
 }

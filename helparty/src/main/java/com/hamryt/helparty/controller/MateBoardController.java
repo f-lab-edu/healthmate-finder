@@ -41,9 +41,9 @@ public class MateBoardController {
     @ResponseStatus(HttpStatus.CREATED)
     public CreateMateBoardResponse createMateBoard(
         @Valid @RequestBody CreateMateBoardRequest createMateBoardRequest,
-        @GetSessionId Long id
+        @GetSessionId Long loginId
     ) {
-        return mateBoardService.addMateBoard(createMateBoardRequest, id);
+        return mateBoardService.addMateBoard(createMateBoardRequest, loginId);
     }
     
     @GetMapping("/{id}")
@@ -70,19 +70,19 @@ public class MateBoardController {
     @PatchMapping("/{id}")
     public UpdateMateBoardResponse updateMateBoard(
         @PathVariable("id") long boardId,
-        @GetSessionId Long sessionId,
+        @GetSessionId Long loginId,
         @Valid @RequestBody UpdateMateBoardRequest updateMateBoardRequest
     ) {
-        return mateBoardService.updateMateBoard(sessionId, boardId, updateMateBoardRequest);
+        return mateBoardService.updateMateBoard(loginId, boardId, updateMateBoardRequest);
     }
     
     @LoginValidation
     @DeleteMapping("/{id}")
     public void deleteMateBoard(
         @PathVariable("id") long boardId,
-        @GetSessionId Long sessionId
+        @GetSessionId Long loginId
     ) {
-        mateBoardService.deleteMateBoard(boardId, sessionId);
+        mateBoardService.deleteMateBoard(boardId, loginId);
     }
     
 }
