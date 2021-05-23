@@ -12,6 +12,7 @@ import com.hamryt.helparty.service.session.SessionService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -43,6 +44,14 @@ public class GymController {
         @Valid @RequestBody UpdateGymRequest updateGymRequest
     ) {
         return gymService.updateGym(id, updateGymRequest);
+    }
+    
+    @LoginValidation
+    @DeleteMapping("{id}")
+    public void deleteGym(
+        @ValidateUser(type = UserType.GYM) @PathVariable("id") Long id
+    ) {
+        gymService.deleteGym(id);
     }
     
 }

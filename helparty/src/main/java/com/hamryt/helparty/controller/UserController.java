@@ -4,7 +4,6 @@ import com.hamryt.helparty.aop.ValidateUser;
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
-import com.hamryt.helparty.dto.user.request.UserDeleteRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
@@ -52,9 +51,8 @@ public class UserController {
     @LoginValidation
     @DeleteMapping("{id}")
     public void deleteUser(
-        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id,
-        @Valid @RequestBody UserDeleteRequest userDeleteRequest
+        @ValidateUser(type = UserType.USER) @PathVariable("id") Long id
     ) {
-        userService.deleteUser(userDeleteRequest);
+        userService.deleteUser(id);
     }
 }

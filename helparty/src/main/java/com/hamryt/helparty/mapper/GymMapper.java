@@ -14,4 +14,6 @@ public interface GymMapper {
     int updateGym(UpdateGymResponse updateGymResponse);
     
     String findGymEmailById(Long id);
+    
+    int deleteGymById(Long id);
 }

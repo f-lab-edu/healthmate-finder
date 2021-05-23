@@ -45,4 +45,8 @@
     WHERE id = #{id}
   </update>
 
+  <delete id="deleteGymById">
+    DELETE FROM gym WHERE id=#{id}
+  </delete>
+
 </mapper>

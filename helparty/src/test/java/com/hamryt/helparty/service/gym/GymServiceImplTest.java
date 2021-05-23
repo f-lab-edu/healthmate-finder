@@ -1,10 +1,11 @@
 package com.hamryt.helparty.service.gym;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
@@ -12,8 +13,9 @@ import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
+import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
-import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
+import com.hamryt.helparty.exception.gym.InsertGymFailedException;
 import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
@@ -88,7 +90,7 @@ class GymServiceImplTest {
     }
     
     @Test
-    @DisplayName("운동 시설 관리자 계정정보 수정 실패 : 수정 쿼리 실패")
+    @DisplayName("운동 시설 관리자 계정정보 수정 실패 : 데이터베이스 수정 명령에 실패하면 UpdateFailedException을 발생시킨다.")
     public void updateGym_Fail() {
         
         given(gymMapper.updateGym(any())).willReturn(2);
@@ -127,7 +129,7 @@ class GymServiceImplTest {
     }
     
     @Test
-    @DisplayName("운동 시설 관리자 회원 가입 실패 : 이미 존재하는 이메일")
+    @DisplayName("운동 시설 관리자 회원 가입 실패 : 이미 존재하는 이메일 예외")
     public void createGym_Fail_EmailExistedException() {
         
         given(gymMapper.isExistsEmail(any())).willReturn(true);
@@ -141,18 +143,18 @@ class GymServiceImplTest {
     }
     
     @Test
-    @DisplayName("운동 시설 관리자 회원 가입 실패 : 삽입 쿼리 실패")
+    @DisplayName("운동 시설 관리자 회원 가입 실패 : 데이터베이스 삽입 명령에 실패하면 InsertGymFailedExcetpion을 발생시킨다.")
     public void createGym_Fail_InsertGymFailException() {
         
         given(gymMapper.isExistsEmail(any())).willReturn(false);
         given(gymMapper.insertGym(any())).willReturn(0);
         
-        InsertGymFailedExcetpion insertGymFailedExcetpion
-            = assertThrows(InsertGymFailedExcetpion.class,
+        InsertGymFailedException insertGymFailedException
+            = assertThrows(InsertGymFailedException.class,
             () -> gymService.insertGym(signUpGymRequestGym));
         
         assertEquals("Insert Gym failed exception",
-            insertGymFailedExcetpion.getMessage());
+            insertGymFailedException.getMessage());
     }
     
     @Test
@@ -177,7 +179,7 @@ class GymServiceImplTest {
     }
     
     @Test
-    @DisplayName("Email과 Password로 GymDTO 조회 실패 : 해당 운동시설 관리자 계정 없음 예외")
+    @DisplayName("Email과 Password로 GymDTO 조회 실패 : 해당 운동시설 관리자 계정 없음 예외 발생")
     public void findGymByEmailAndPassword_Fail() {
         String email = "test@example.com";
         String password = "test";
@@ -190,6 +192,29 @@ class GymServiceImplTest {
         
         assertEquals("This gym does not exists with this email : test@example.com",
             gymNotFoundException.getMessage());
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 계정 삭제 성공")
+    public void deleteGym_Success() {
+        given(gymMapper.deleteGymById(eq(1004L))).willReturn(1);
+        
+        gymService.deleteGym(1004L);
+        
+        verify(gymMapper).deleteGymById(1004L);
+    }
+    
+    @Test
+    @DisplayName("운동 시설 관리자 계정 삭제 실패 : 데이터 베이스 명령에 실패하면 GymDeleteFailedException을 발생시킨다.")
+    public void deleteGym_Fail() {
+        given(gymMapper.deleteGymById(eq(1004L))).willReturn(0);
+        
+        GymDeleteFailedException gymDeleteFailedException
+            = assertThrows(GymDeleteFailedException.class,
+            () -> gymService.deleteGym(1004L));
+        
+        assertEquals("Delete Gym by ID Failed : 1004",
+            gymDeleteFailedException.getMessage());
     }
     
 }
