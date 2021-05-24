@@ -8,7 +8,6 @@ import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
 import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.gym.GymService;
-import com.hamryt.helparty.service.session.SessionService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class GymController {
     
     private final GymService gymService;
-    private final SessionService sessionService;
     
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

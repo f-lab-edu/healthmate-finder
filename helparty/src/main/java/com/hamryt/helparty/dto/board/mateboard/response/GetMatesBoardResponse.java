@@ -1,4 +1,4 @@
-package com.hamryt.helparty.dto.mateboard.response;
+package com.hamryt.helparty.dto.board.mateboard.response;
 
 import java.util.List;
 import lombok.Builder;
@@ -16,10 +16,10 @@ public class GetMatesBoardResponse {
     private int size;
     
     @Builder
-    public GetMatesBoardResponse(List<GetMateBoardResponse> mateBoardList, int page, int size){
+    public GetMatesBoardResponse(List<GetMateBoardResponse> mateBoardList, int page, int size) {
         this.mateBoardList = mateBoardList;
         this.page = page;
         this.size = size;
     }
-
+    
 }

@@ -1,16 +1,16 @@
 package com.hamryt.helparty.service.mateboard;
 
-import com.hamryt.helparty.dto.mateboard.MateBoardDTO;
-import com.hamryt.helparty.dto.mateboard.request.CreateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
-import com.hamryt.helparty.dto.mateboard.response.CreateMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.dto.mateboard.response.UpdateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.MateBoardDTO;
+import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
+import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.dto.user.UserDTO;
+import com.hamryt.helparty.exception.board.mateboard.DeleteMateBoardFailedException;
+import com.hamryt.helparty.exception.board.mateboard.InsertMateBoardFailedException;
+import com.hamryt.helparty.exception.board.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.exception.login.LoginUserDoesNotMatchException;
-import com.hamryt.helparty.exception.mateboard.DeleteMateBoardFailedException;
-import com.hamryt.helparty.exception.mateboard.InsertMateBoardFailedException;
-import com.hamryt.helparty.exception.mateboard.MateBoardNotFoundException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.MateBoardMapper;
 import com.hamryt.helparty.service.user.UserService;

@@ -5,7 +5,7 @@
 <mapper namespace="com.hamryt.helparty.mapper.MateBoardMapper">
 
   <resultMap id="getMateResultMap"
-    type="com.hamryt.helparty.dto.mateboard.response.GetMateBoardResponse">
+    type="com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse">
     <result property="id" column="id"/>
     <result property="userName" column="user_name"/>
     <result property="userAddress" column="user_address"/>
@@ -42,7 +42,7 @@
   </select>
 
   <update id="updateMateBoard"
-    parameterType="com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest">
+    parameterType="com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest">
     UPDATE helpartydb.mateboard SET
     gym = #{gym},
     content = #{content},
@@ -53,7 +53,7 @@
   </update>
 
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"
-    parameterType="com.hamryt.helparty.dto.mateboard.MateBoardDTO">
+    parameterType="com.hamryt.helparty.dto.board.mateboard.MateBoardDTO">
     INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)
     VALUES(#{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW(), #{userId})
   </insert>

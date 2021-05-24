@@ -1,8 +1,7 @@
-package com.hamryt.helparty.dto.mateboard.response;
+package com.hamryt.helparty.dto.board.mateboard.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.hamryt.helparty.dto.mateboard.request.UpdateMateBoardRequest;
-import java.time.LocalDate;
+import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,7 +29,7 @@ public class UpdateMateBoardResponse {
         Long id, String gym, String content,
         String startTime, String endTime,
         LocalDateTime modifiedAt
-    ){
+    ) {
         this.id = id;
         this.gym = gym;
         this.content = content;
