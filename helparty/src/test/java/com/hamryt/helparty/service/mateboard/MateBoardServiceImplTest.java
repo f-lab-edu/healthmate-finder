@@ -109,7 +109,7 @@ public class MateBoardServiceImplTest {
     }
     
     @Test
-    @DisplayName("동행구함 게시물 삭제 실패 : DB에서 삭제 실패 예외")
+    @DisplayName("동행구함 게시물 삭제 실패 : 데이터베이스 삭제 명령에 실패하면 DeleteMateBoardFailedException을 발생시킨다.")
     public void deleteMate_Fail_DeleteMateBoardFailedException() {
         String email = "test@example.com";
         
