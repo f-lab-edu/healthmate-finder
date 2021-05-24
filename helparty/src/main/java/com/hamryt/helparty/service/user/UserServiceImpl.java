@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
         
-        UserTypeUtil.validateUserType(signupUserRequest.getUserType(), UserType.USER);
+        UserTypeUtil.validateUserTypePermissions(signupUserRequest.getUserType(), UserType.USER);
         
         if (isExistsEmail(signupUserRequest.getEmail())) {
             throw new EmailExistedException(signupUserRequest.getEmail());

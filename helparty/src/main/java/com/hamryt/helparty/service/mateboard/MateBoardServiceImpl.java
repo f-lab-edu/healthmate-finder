@@ -36,7 +36,7 @@ public class MateBoardServiceImpl implements MateBoardService {
         CreateMateBoardRequest createMateBoardRequest,
         Long id
     ) {
-        UserTypeUtil.validateUserType(createMateBoardRequest.getUserType(), UserType.USER);
+        UserTypeUtil.validateUserTypePermissions(createMateBoardRequest.getUserType(), UserType.USER);
         UserDTO user = userService.findUserById(id);
         
         MateBoardDTO mateBoard

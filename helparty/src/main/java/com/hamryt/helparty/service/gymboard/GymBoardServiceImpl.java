@@ -23,7 +23,7 @@ public class GymBoardServiceImpl implements GymBoardService {
     
     @Transactional
     public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long sessionId) {
-        UserTypeUtil.validateUserType(createGymBoardRequest.getUserType(), UserType.GYM);
+        UserTypeUtil.validateUserTypePermissions(createGymBoardRequest.getUserType(), UserType.GYM);
         
         productService.insertProduct(createGymBoardRequest.getSimpleProduct(), BoardType.GYM);
         

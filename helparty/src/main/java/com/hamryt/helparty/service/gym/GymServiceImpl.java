@@ -30,7 +30,7 @@ public class GymServiceImpl implements GymService {
     @Transactional
     public SignUpGymResponse insertGym(SignUpGymRequest signUpGymRequest) {
         
-        UserTypeUtil.validateUserType(signUpGymRequest.getUserType(), UserType.GYM);
+        UserTypeUtil.validateUserTypePermissions(signUpGymRequest.getUserType(), UserType.GYM);
         
         if (isExistsEmail(signUpGymRequest.getEmail())) {
             throw new EmailExistedException(signUpGymRequest.getEmail());

@@ -12,7 +12,7 @@ import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
-import com.hamryt.helparty.exception.common.UserTypeDoesNotMatchException;
+import com.hamryt.helparty.exception.common.PermissionException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -83,12 +83,12 @@ class GymBoardServiceImplTest {
         CreateGymBoardRequest createFailGymBoardRequest =
             getCreateGymBoardRequest(title, content, UserType.USER, mockSimpleProduct);
         
-        UserTypeDoesNotMatchException userTypeDoesNotMatchException
-            = assertThrows(UserTypeDoesNotMatchException.class,
+        PermissionException permissionException
+            = assertThrows(PermissionException.class,
             () -> gymBoardService.insertGymBoard(createFailGymBoardRequest, 1004L));
         
-        assertEquals("UserType dose not match with : GYM",
-            userTypeDoesNotMatchException.getMessage());
+        assertEquals("403 FORBIDDEN \"This UserType does not permission \"",
+            permissionException.getMessage());
         
     }
     
