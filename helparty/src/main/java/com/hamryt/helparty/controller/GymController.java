@@ -1,6 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.argumentresolver.GetLoginId;
+import com.hamryt.helparty.argumentresolver.LoginId;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
@@ -36,7 +36,7 @@ public class GymController {
     @LoginValidation
     @PutMapping
     public UpdateGymResponse updateGym(
-        @GetLoginId Long loginId,
+        @LoginId Long loginId,
         @Valid @RequestBody UpdateGymRequest updateGymRequest
     ) {
         return gymService.updateGym(loginId, updateGymRequest);
@@ -45,7 +45,7 @@ public class GymController {
     @LoginValidation
     @DeleteMapping
     public void deleteGym(
-        @GetLoginId Long loginId
+        @LoginId Long loginId
     ) {
         gymService.deleteGym(loginId);
     }

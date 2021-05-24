@@ -18,7 +18,7 @@ public class GetLoginIdArgumentResolver implements HandlerMethodArgumentResolver
     
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(GetLoginId.class);
+        return parameter.hasParameterAnnotation(LoginId.class);
     }
     
     @Override
