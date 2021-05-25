@@ -1,10 +1,15 @@
 package com.hamryt.helparty.controller;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
+import com.hamryt.helparty.dto.board.gymboard.response.GetGymBoardResponse;
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.service.gymboard.GymBoardServiceImpl;
@@ -34,8 +39,26 @@ class GymBoardControllerTest {
     String content = "test";
     String price = "test";
     String scope = "test";
+    String gymName = "test";
+    String gymAddress = "test";
     
     ObjectMapper mapper = new ObjectMapper();
+    List<GetGymBoardResponse> mockGymBoardList = new ArrayList<>();
+    
+    
+    
+    @Test
+    @DisplayName("운동시설 게시물 조회 성공하면 게시물 정보를 page, size에 따라 보여준다.")
+    public void getList_Success() throws Exception {
+        
+        mockGetGymBoards();
+        
+        mvc.perform(get("/gymboards?page=0&size=10"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(
+                containsString("\"gymName\":\"test\"")
+            ));
+    }
     
     @Test
     @DisplayName("운동시설 게시물 생성 성공하면 해당 계정 정보를 반환한다.")
@@ -57,6 +80,24 @@ class GymBoardControllerTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
             .andExpect(status().isCreated());
+    }
+    
+    private void mockGetGymBoards() {
+        GetGymBoardResponse getGymBoardResponse = getMockGymBoardResponse(gymName, gymAddress,
+            content);
+        mockGymBoardList.add(getGymBoardResponse);
+        
+        given(gymBoardService.getGymBoards(0, 10)).willReturn(mockGymBoardList);
+    }
+    
+    private GetGymBoardResponse getMockGymBoardResponse(String gymName, String gymAddress,
+        String content) {
+        return GetGymBoardResponse.builder()
+            .gymName(gymName)
+            .gymAddress(gymAddress)
+            .content(content)
+            .build();
+        
     }
     
     private CreateGymBoardRequest getCreateGymBoardRequest(String title, String content,

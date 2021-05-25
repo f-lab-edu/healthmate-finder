@@ -7,9 +7,12 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
+import com.hamryt.helparty.dto.board.gymboard.GymBoardDTO;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
+import com.hamryt.helparty.dto.board.gymboard.response.GetGymBoardResponse;
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
+import com.hamryt.helparty.dto.gym.SimpleGymInfo;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductServiceImpl;
@@ -38,6 +41,18 @@ class GymBoardServiceImplTest {
     String content = "test";
     String price = "test";
     String scope = "test";
+    
+    @Test
+    @DisplayName("운동 시설 게시물 리스트 조회 성공")
+    public void getGymBoards_Success() {
+        
+        mockFindGymBoardsByPage();
+        
+        List<GetGymBoardResponse> getGymBoardsResponse =
+            gymBoardService.getGymBoards(0, 10);
+        
+        assertEquals(getGymBoardsResponse.get(0).getContent(), "test");
+    }
     
     @Test
     @DisplayName("운동 시설 게시물 추가 로직 성공")
@@ -83,6 +98,25 @@ class GymBoardServiceImplTest {
         assertEquals("Insert GymBoard Failed Exception.",
             insertGymBoardFailedExcetpion.getMessage());
         
+    }
+    
+    private void mockFindGymBoardsByPage() {
+        SimpleGymInfo mockSimpleGymInfo = SimpleGymInfo.builder()
+            .gymName("test")
+            .phoneNumber("test")
+            .addressDetail("test")
+            .addressCode("test")
+            .build();
+        
+        GymBoardDTO mockGymboard = GymBoardDTO.builder()
+            .title("test")
+            .gymInfo(mockSimpleGymInfo)
+            .content("test")
+            .build();
+        List<GymBoardDTO> getGymBoardList = new ArrayList<>();
+        getGymBoardList.add(mockGymboard);
+        
+        given(gymBoardMapper.findGymBoardsByPage(0, 10)).willReturn(getGymBoardList);
     }
     
     private CreateGymBoardRequest getCreateGymBoardRequest(
