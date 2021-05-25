@@ -5,9 +5,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
+import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
-import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
 import com.hamryt.helparty.service.gymboard.GymBoardServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,7 +30,7 @@ class GymBoardControllerTest {
     @MockBean
     private GymBoardServiceImpl gymBoardService;
     
-    String title ="test";
+    String title = "test";
     String content = "test";
     String price = "test";
     String scope = "test";
@@ -39,13 +41,17 @@ class GymBoardControllerTest {
     @DisplayName("운동시설 게시물 생성 성공하면 해당 계정 정보를 반환한다.")
     public void create_Success() throws Exception {
         
-        SimpleProduct mockSimpleProduct =
-        getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
+        ProductDTO mockProduct =
+            getProductDTO(1L, title, content, price, scope, BoardType.GYM);
         
-        CreateGymBoardRequest mockCreateGymBoardReqeust =
-            getCreateGymBoardRequest(title, content, mockSimpleProduct);
+        List<ProductDTO> mockProductList = new ArrayList<>();
         
-        String request = mapper.writeValueAsString(mockCreateGymBoardReqeust);
+        mockProductList.add(mockProduct);
+        
+        CreateGymBoardRequest mockCreateGymBoardRequest =
+            getCreateGymBoardRequest(title, content, mockProductList);
+        
+        String request = mapper.writeValueAsString(mockCreateGymBoardRequest);
         
         mvc.perform(post("/gymboards")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -54,17 +60,17 @@ class GymBoardControllerTest {
     }
     
     private CreateGymBoardRequest getCreateGymBoardRequest(String title, String content,
-        SimpleProduct simpleProduct) {
+        List<ProductDTO> productDTOList) {
         return CreateGymBoardRequest.builder()
             .title(title)
             .content(content)
-            .simpleProduct(simpleProduct)
+            .productList(productDTOList)
             .build();
     }
     
-    private SimpleProduct getSimpleProduct(Long id, String title, String content, String price,
+    private ProductDTO getProductDTO(Long id, String title, String content, String price,
         String scope, BoardType gym) {
-        return SimpleProduct.builder()
+        return ProductDTO.builder()
             .id(1L)
             .title(title)
             .content(content)

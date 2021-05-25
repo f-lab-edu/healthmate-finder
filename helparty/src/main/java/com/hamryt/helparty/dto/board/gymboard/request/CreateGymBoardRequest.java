@@ -1,8 +1,8 @@
 package com.hamryt.helparty.dto.board.gymboard.request;
 
-import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
+import com.hamryt.helparty.dto.board.product.ProductDTO;
+import java.util.List;
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,16 +17,15 @@ public class CreateGymBoardRequest {
     @NotEmpty
     private String content;
     
-    @NotNull
-    private SimpleProduct simpleProduct;
+    private List<ProductDTO> productList;
     
     @Builder
     public CreateGymBoardRequest(
-        String title, String content, SimpleProduct simpleProduct
+        String title, String content, List<ProductDTO> productList
     ) {
         this.title = title;
         this.content = content;
-        this.simpleProduct = simpleProduct;
+        this.productList = productList;
     }
     
 }

@@ -1,8 +1,9 @@
 package com.hamryt.helparty.service.product;
 
-import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
+import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.exception.product.InsertProductFailedException;
 import com.hamryt.helparty.mapper.ProductMapper;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,11 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
     
     @Transactional
-    public void insertProduct(SimpleProduct simpleProduct) {
+    public void insertProduct(List<ProductDTO> productList, Long gymBoardId) {
         
-        if (productMapper.insertProduct(simpleProduct) != 1) {
-            log.error("Insert Product query failed : " + simpleProduct);
+        if (productMapper.insertProductList(productList, gymBoardId) != productList.size()) {
+            System.out.println();
+            log.error("Insert Product query failed ");
             throw new InsertProductFailedException();
         }
     }
