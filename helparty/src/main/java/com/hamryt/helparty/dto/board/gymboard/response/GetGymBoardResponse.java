@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetGymBoardResponse {
     
+    private Long id;
     private String gymName;
     private String gymAddress;
     private String content;
@@ -18,9 +19,10 @@ public class GetGymBoardResponse {
     
     @Builder
     public GetGymBoardResponse(
-        String gymName, String gymAddress, String content,
-        List<ProductDTO> productList
+        Long id, String gymName, String gymAddress,
+        String content, List<ProductDTO> productList
     ) {
+        this.id = id;
         this.gymName = gymName;
         this.gymAddress = gymAddress;
         this.content = content;
@@ -29,6 +31,7 @@ public class GetGymBoardResponse {
     
     public static GetGymBoardResponse of(GymBoardDTO gymBoardDTO) {
         return GetGymBoardResponse.builder()
+            .id(gymBoardDTO.getId())
             .gymName(gymBoardDTO.getGymInfo().getGymName())
             .gymAddress(gymBoardDTO.getGymInfo().getAddressDetail())
             .content(gymBoardDTO.getContent())

@@ -13,6 +13,7 @@ import com.hamryt.helparty.dto.board.gymboard.response.GetGymBoardResponse;
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.dto.gym.SimpleGymInfo;
+import com.hamryt.helparty.exception.board.gymboard.GymBoardNotFoundException;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductServiceImpl;
@@ -41,6 +42,31 @@ class GymBoardServiceImplTest {
     String content = "test";
     String price = "test";
     String scope = "test";
+    
+    @Test
+    @DisplayName("운동 시설 게시물 상세 조회 성공")
+    public void getGymBoard_Success() {
+        
+        mockFindGymBoardById();
+        
+        GetGymBoardResponse getGymBoardResponse = gymBoardService.getGymBoard(1004L);
+        
+        assertEquals(getGymBoardResponse.getGymName(), "test");
+    }
+    
+    @Test
+    @DisplayName("운동 시설 게시물 상세조회 실패 : 데이터베이스 select 명령시 null을 반환하면 GymBoardNotFoundException를 던진다. ")
+    public void getGymBoard_Fail_GymBoardNotFoundException() {
+        
+        given(gymBoardMapper.findGymBoardById(eq(1004L))).willReturn(null);
+        
+        GymBoardNotFoundException gymBoardNotFoundException
+            = assertThrows(GymBoardNotFoundException.class,
+            () -> gymBoardService.getGymBoard(1004L));
+        
+        assertEquals("404 NOT_FOUND \"Not found Gymboard. \"",
+            gymBoardNotFoundException.getMessage());
+    }
     
     @Test
     @DisplayName("운동 시설 게시물 리스트 조회 성공")
@@ -100,7 +126,20 @@ class GymBoardServiceImplTest {
         
     }
     
+    private void mockFindGymBoardById() {
+        
+        given(gymBoardMapper.findGymBoardById(eq(1004L))).willReturn(createGymBoardDTO());
+    }
+    
     private void mockFindGymBoardsByPage() {
+        
+        List<GymBoardDTO> getGymBoardList = new ArrayList<>();
+        getGymBoardList.add(createGymBoardDTO());
+        
+        given(gymBoardMapper.findGymBoardsByPage(0, 10)).willReturn(getGymBoardList);
+    }
+    
+    private GymBoardDTO createGymBoardDTO() {
         SimpleGymInfo mockSimpleGymInfo = SimpleGymInfo.builder()
             .gymName("test")
             .phoneNumber("test")
@@ -108,15 +147,11 @@ class GymBoardServiceImplTest {
             .addressCode("test")
             .build();
         
-        GymBoardDTO mockGymboard = GymBoardDTO.builder()
+        return GymBoardDTO.builder()
             .title("test")
             .gymInfo(mockSimpleGymInfo)
             .content("test")
             .build();
-        List<GymBoardDTO> getGymBoardList = new ArrayList<>();
-        getGymBoardList.add(mockGymboard);
-        
-        given(gymBoardMapper.findGymBoardsByPage(0, 10)).willReturn(getGymBoardList);
     }
     
     private CreateGymBoardRequest getCreateGymBoardRequest(

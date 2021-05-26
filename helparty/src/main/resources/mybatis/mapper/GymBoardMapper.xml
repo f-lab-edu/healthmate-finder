@@ -4,7 +4,7 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.GymBoardMapper">
 
-  <resultMap id="getGymBoardResponse"
+  <resultMap id="gymBoardDTO"
     type="com.hamryt.helparty.dto.board.gymboard.GymBoardDTO">
     <id property="id" column="id"/>
     <result property="title" column="title"/>
@@ -27,7 +27,7 @@
     </collection>
   </resultMap>
 
-  <select id="findGymBoardsByPage" resultMap="getGymBoardResponse">
+  <sql id="selectGymBoardDTO">
     SELECT gb.id id,
     gb.title title,
     gb.content content,
@@ -43,7 +43,16 @@
     p.scope scope
     FROM helpartydb.gymboard gb LEFT OUTER JOIN helpartydb.product p ON (gb.id = p.gym_board_id)
     LEFT OUTER JOIN helpartydb.gym g ON (gb.gym_id = g.id)
+  </sql>
+
+  <select id="findGymBoardsByPage" resultMap="gymBoardDTO">
+    <include refid="selectGymBoardDTO"/>
     ORDER BY id DESC LIMIT #{index}, #{size}
+  </select>
+
+  <select id="findGymBoardById" resultMap="gymBoardDTO">
+    <include refid="selectGymBoardDTO"/>
+    WHERE gb.id = #{id}
   </select>
 
   <insert id="insertGymBoard" useGeneratedKeys="true" keyProperty="id"

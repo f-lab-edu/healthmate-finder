@@ -9,4 +9,6 @@ public interface GymBoardService {
     void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long loginId);
     
     List<GetGymBoardResponse> getGymBoards(int page, int size);
+    
+    GetGymBoardResponse getGymBoard(Long id);
 }

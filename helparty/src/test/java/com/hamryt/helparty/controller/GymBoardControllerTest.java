@@ -45,11 +45,22 @@ class GymBoardControllerTest {
     ObjectMapper mapper = new ObjectMapper();
     List<GetGymBoardResponse> mockGymBoardList = new ArrayList<>();
     
-    
+    @Test
+    @DisplayName("운동시설 게시물 상세 조회 성공하면 id에 해당하는 게시물을 보여준다.")
+    public void getGymBoard_Success() throws Exception {
+        
+        mockGetGymBoard();
+        
+        mvc.perform(get("/gymboards/1004"))
+            .andExpect(status().isOk())
+            .andExpect(content().string(
+                containsString("\"gymName\":\"test\"")
+            ));
+    }
     
     @Test
-    @DisplayName("운동시설 게시물 조회 성공하면 게시물 정보를 page, size에 따라 보여준다.")
-    public void getList_Success() throws Exception {
+    @DisplayName("운동시설 게시물 리스트 조회 성공하면 게시물 정보를 page, size에 따라 보여준다.")
+    public void getGymBoardList_Success() throws Exception {
         
         mockGetGymBoards();
         
@@ -80,6 +91,13 @@ class GymBoardControllerTest {
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
             .andExpect(status().isCreated());
+    }
+    
+    private void mockGetGymBoard() {
+        GetGymBoardResponse getGymBoardResponse = getMockGymBoardResponse(gymName, gymAddress,
+            content);
+        
+        given(gymBoardService.getGymBoard(1004L)).willReturn(getGymBoardResponse);
     }
     
     private void mockGetGymBoards() {

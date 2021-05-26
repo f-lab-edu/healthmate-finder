@@ -11,4 +11,6 @@ public interface GymBoardMapper {
     int insertGymBoard(SimpleGymBoard simpleGymBoard);
     
     List<GymBoardDTO> findGymBoardsByPage(int index, int size);
+    
+    GymBoardDTO findGymBoardById(Long id);
 }
