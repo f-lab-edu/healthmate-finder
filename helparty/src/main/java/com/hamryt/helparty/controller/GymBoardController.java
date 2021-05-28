@@ -61,7 +61,6 @@ public class GymBoardController {
     public GetGymBoardResponse getGymBoard(
         @PathVariable("id") Long id
     ) {
-        log.info("]-----] GymBoardController::getGymBoard [-----[ id : {}", id);
         
         return gymBoardService.getGymBoard(id);
     }

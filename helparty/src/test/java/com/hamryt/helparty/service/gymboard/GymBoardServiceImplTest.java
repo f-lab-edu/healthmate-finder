@@ -69,7 +69,7 @@ class GymBoardServiceImplTest {
     }
     
     @Test
-    @DisplayName("운동 시설 게시물 리스트 조회 성공")
+    @DisplayName("운동 시설 게시물 리스트 조회 성공하면 List<GetGymBoardResponse>를 반환한다. ")
     public void getGymBoards_Success() {
         
         mockFindGymBoardsByPage();

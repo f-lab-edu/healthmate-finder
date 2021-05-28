@@ -59,7 +59,7 @@ class GymBoardControllerTest {
     }
     
     @Test
-    @DisplayName("운동시설 게시물 리스트 조회 성공하면 게시물 정보를 page, size에 따라 보여준다.")
+    @DisplayName("운동시설 게시물 리스트 조회 성공하면 해당 페이지에 있는 게시물들을 size의 크기만큼 보여준다.")
     public void getGymBoardList_Success() throws Exception {
         
         mockGetGymBoards();
