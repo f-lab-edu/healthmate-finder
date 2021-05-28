@@ -6,4 +6,8 @@ public class InsertProductFailedException extends RuntimeException {
         super("Insert Product failed exception");
     }
     
+    public InsertProductFailedException(String message) {
+        super(message);
+    }
+    
 }

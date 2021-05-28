@@ -20,9 +20,9 @@ public class ProductServiceImpl implements ProductService {
     public void insertProduct(List<ProductDTO> productList, Long gymBoardId) {
         
         if (productMapper.insertProductList(productList, gymBoardId) != productList.size()) {
-            System.out.println();
-            log.error("Insert Product query failed ");
-            throw new InsertProductFailedException();
+            
+            log.error("] Insert Product query failed [ GymBoardId : {}", gymBoardId);
+            throw new InsertProductFailedException("데이터베이스에 상품 리스트 insert 실패. ");
         }
     }
 }
