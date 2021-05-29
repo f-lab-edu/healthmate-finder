@@ -37,7 +37,6 @@ public class GymBoardServiceImpl implements GymBoardService {
         
         productService
             .insertProduct(createGymBoardRequest.getProductList(), simpleGymBoard.getId());
-        
     }
     
     @Transactional(readOnly = true)
