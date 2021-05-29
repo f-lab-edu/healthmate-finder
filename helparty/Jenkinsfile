@@ -20,7 +20,8 @@ pipeline
         stage ('Build') 
         { 
             steps { 
-                bat "./gradlew.bat build" 
+                //bat "./gradlew.bat build" 
+                sh "gradlew clean package -DskipTests=true"
                 
             } 
             
@@ -29,6 +30,7 @@ pipeline
         stage('JUnit Test')
         { 
             steps{ 
+                sh 'gradlew surefire:test'
                 junit '**/build/test-results/test/*.xml' 
                 
             } 
