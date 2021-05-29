@@ -44,8 +44,6 @@ public class GymBoardController {
         @RequestParam(defaultValue = "0") @Range(min = 0, max = Integer.MAX_VALUE) int page,
         @RequestParam(defaultValue = "10") @Range(min = 1, max = 10) int size
     ) {
-        log.info("]-----] GymBoardController::getGymBoards [-----[ page : {}, size : {}", page,
-            size);
         
         List<GetGymBoardResponse> getGymBoardResponseList = gymBoardService
             .getGymBoards(page, size);
