@@ -1,7 +1,6 @@
 # healthmate-finder
 헬스 같이 할 동네 친구 매칭 시켜주는 서비스
- 
- #sdf
+젠킨스 테스트
 
 # 화면설계
 kakao oven -https://ovenapp.io/view/ZmMg4lnHw2iVSxfO0UwY1NzTOkWoNsiZ/liSyR
