@@ -1,0 +1,40 @@
+pipeline 
+{ 
+    agent any 
+    
+    tools { 
+        gradle 'gradle'
+    } 
+    
+    stages 
+    { 
+        stage ('Checkout') 
+        { 
+            steps { 
+                git credentialsId: 'github_credentials', url: 'https://github.com/f-lab-edu/healthmate-finder.git' 
+                
+            } 
+            
+        } 
+        
+        stage ('Build') 
+        { 
+            steps { 
+                bat "./gradlew.bat build" 
+                
+            } 
+            
+        } 
+        
+        stage('JUnit Test')
+        { 
+            steps{ 
+                junit '**/build/test-results/test/*.xml' 
+                
+            } 
+            
+        } 
+        
+    } 
+    
+}
