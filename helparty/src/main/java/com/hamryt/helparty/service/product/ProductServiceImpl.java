@@ -21,8 +21,8 @@ public class ProductServiceImpl implements ProductService {
         
         if (productMapper.insertProductList(productList, gymBoardId) != productList.size()) {
             
-            log.error("] Insert Product query failed [ GymBoardId : {}", gymBoardId);
-            throw new InsertProductFailedException("데이터베이스에 상품 리스트 insert 실패. ");
+            throw new InsertProductFailedException(
+                "데이터베이스에 상품 리스트 insert 실패. gymBoardId: " + gymBoardId);
         }
     }
 }

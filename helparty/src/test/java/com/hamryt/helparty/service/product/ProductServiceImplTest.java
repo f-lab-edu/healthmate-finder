@@ -60,7 +60,8 @@ class ProductServiceImplTest {
             = assertThrows(InsertProductFailedException.class,
             () -> productService.insertProduct(mockProductList, 1004L));
         
-        assertEquals("데이터베이스에 상품 리스트 insert 실패. ", insertProductFailedException.getMessage());
+        assertEquals("데이터베이스에 상품 리스트 insert 실패. gymBoardId: " + 1004,
+            insertProductFailedException.getMessage());
     }
     
     private ProductDTO getSimpleProduct(
