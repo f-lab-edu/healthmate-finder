@@ -17,8 +17,7 @@ public enum UserType {
     
     public void validEqualUserType(String authType){
         if (!name.equals(authType)){
-            log.error("UserType of request does not match with UserType of board! userTypeRequest: {}, userTypeBoard: [}", name, authType);
-            throw new PermissionException("This UserType does not appropriate for the board ");
+            throw new PermissionException("This UserType does not appropriate for the board. this.userType: " + name + ", AuthType: " + authType);
         }
     }
     
