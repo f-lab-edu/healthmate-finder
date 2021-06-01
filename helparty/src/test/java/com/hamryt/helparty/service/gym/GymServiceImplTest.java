@@ -124,7 +124,7 @@ class GymServiceImplTest {
             = assertThrows(PermissionException.class,
             () -> gymService.insertGym(signUpGymRequestUser));
         
-        assertEquals("403 FORBIDDEN \"This UserType does not permission \"",
+        assertEquals("403 FORBIDDEN \"This UserType does not appropriate for the board. this.userType: USER, AuthType: GYM\"",
             permissionException.getMessage());
     }
     

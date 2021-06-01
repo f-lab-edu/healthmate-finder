@@ -1,6 +1,5 @@
 package com.hamryt.helparty.service.user;
 
-import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
@@ -13,7 +12,6 @@ import com.hamryt.helparty.exception.user.UserDeleteFailedException;
 import com.hamryt.helparty.exception.user.UserNotFoundByIdException;
 import com.hamryt.helparty.mapper.UserMapper;
 import com.hamryt.helparty.service.session.Encryptor;
-import com.hamryt.helparty.util.UserTypeUtil;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
         
-        UserTypeUtil.validateUserTypePermissions(signupUserRequest.getUserType(), UserType.USER);
+        signupUserRequest.getUserType().validEqualUserType("USER");
         
         if (isExistsEmail(signupUserRequest.getEmail())) {
             throw new EmailExistedException(signupUserRequest.getEmail());
