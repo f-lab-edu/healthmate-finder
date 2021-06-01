@@ -48,11 +48,7 @@ public class GymBoardController {
         List<GetGymBoardResponse> getGymBoardResponseList = gymBoardService
             .getGymBoards(page, size);
         
-        return GetGymBoardsResponse.builder()
-            .getGymBoardResponseList(getGymBoardResponseList)
-            .page(page)
-            .size(size)
-            .build();
+        return GetGymBoardsResponse.of(getGymBoardResponseList, page, size);
     }
     
     @GetMapping("/{id}")

@@ -22,4 +22,19 @@ public class GetGymBoardsResponse {
         this.page = page;
         this.size = size;
     }
+    
+    public static GetGymBoardsResponse of(List<GetGymBoardResponse> paramGymBoardList, int page,
+        int size) {
+        List<GetGymBoardResponse> gymBoardList = null;
+        
+        if (paramGymBoardList.size() != 0) {
+            gymBoardList = paramGymBoardList;
+        }
+        
+        return GetGymBoardsResponse.builder()
+            .getGymBoardResponseList(gymBoardList)
+            .page(page)
+            .size(size)
+            .build();
+    }
 }
