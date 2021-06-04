@@ -1,8 +1,0 @@
-[INFO ] 2021-06-04 20:38:06.212 [background-preinit] Version - HV000001: Hibernate Validator 6.1.7.Final
-[INFO ] 2021-06-04 20:38:06.278 [Test worker] MateBoardControllerTest - Starting MateBoardControllerTest using Java 11.0.10 on LAPTOP-VB9R5SQG with PID 14400 (started by rkdl0 in C:\Users\rkdl0\f-lab\Project\healthmate-finder\helparty)
-[INFO ] 2021-06-04 20:38:06.282 [Test worker] MateBoardControllerTest - The following profiles are active: dev
-[INFO ] 2021-06-04 20:38:08.907 [Test worker] ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
-[INFO ] 2021-06-04 20:38:09.334 [Test worker] SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-[INFO ] 2021-06-04 20:38:09.334 [Test worker] TestDispatcherServlet - Initializing Servlet ''
-[INFO ] 2021-06-04 20:38:09.336 [Test worker] TestDispatcherServlet - Completed initialization in 1 ms
-[INFO ] 2021-06-04 20:38:09.374 [Test worker] MateBoardControllerTest - Started MateBoardControllerTest in 3.645 seconds (JVM running for 8.024)
