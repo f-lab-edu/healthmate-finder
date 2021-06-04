@@ -10,14 +10,14 @@ import java.util.List;
 public interface MateBoardService {
     
     CreateMateBoardResponse addMateBoard(
-        CreateMateBoardRequest createMateBoardRequest, String email);
+        CreateMateBoardRequest createMateBoardRequest, Long id);
     
     List<GetMateBoardResponse> getMates(int page, int size);
     
-    UpdateMateBoardResponse updateMateBoard(Long id, String email,
+    UpdateMateBoardResponse updateMateBoard(Long loginId, long boardId,
         UpdateMateBoardRequest updateMateBoardRequest);
     
     GetMateBoardResponse getMate(Long id);
     
-    void deleteMateBoard(Long id, String email);
+    void deleteMateBoard(long boardId, Long loginId);
 }

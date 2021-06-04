@@ -5,6 +5,6 @@ public class SessionKeys {
     private SessionKeys() {
     }
     
-    public static final String LOGIN_USER_EMAIL = "LOGIN_USER_EMAIL";
+    public static final String LOGIN_USER_ID = "LOGIN_USER_ID";
     
 }

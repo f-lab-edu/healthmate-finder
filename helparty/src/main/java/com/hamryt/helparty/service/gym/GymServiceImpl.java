@@ -72,7 +72,7 @@ public class GymServiceImpl implements GymService {
             .of(id, encodedPassword, updateGymRequest);
         
         if (gymMapper.updateGym(updateGymResponse) != 1) {
-            throw new UpdateFailedException(updateGymRequest.getGymName());
+            throw new UpdateFailedException(id);
         }
         return updateGymResponse;
     }

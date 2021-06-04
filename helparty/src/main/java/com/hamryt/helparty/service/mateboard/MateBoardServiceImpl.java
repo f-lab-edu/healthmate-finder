@@ -32,9 +32,9 @@ public class MateBoardServiceImpl implements MateBoardService {
     @Transactional
     public CreateMateBoardResponse addMateBoard(
         CreateMateBoardRequest createMateBoardRequest,
-        String email
+        Long id
     ) {
-        UserDTO user = userService.findUserByEmail(email);
+        UserDTO user = userService.findUserById(id);
         
         MateBoardDTO mateBoard
             = MateBoardDTO.builder()
@@ -47,7 +47,7 @@ public class MateBoardServiceImpl implements MateBoardService {
             .build();
         
         if (mateBoardMapper.insertMateBoard(mateBoard) != 1) {
-            throw new InsertMateBoardFailedException(mateBoard.toString());
+            throw new InsertMateBoardFailedException();
         }
         return CreateMateBoardResponse.of(mateBoard);
     }
@@ -66,37 +66,39 @@ public class MateBoardServiceImpl implements MateBoardService {
     
     @Transactional
     @CacheEvict(value = "mateboards")
-    public void deleteMateBoard(Long id, String email) {
+    public UpdateMateBoardResponse updateMateBoard(
+        Long loginId, long boardId,
+        UpdateMateBoardRequest updateMateBoardRequest
+    ) {
+        Long userId = mateBoardMapper.findUserIdByMateBoardId(boardId);
         
-        String mateEmail = mateBoardMapper.findMateBoardEmailById(id);
-        
-        if (!mateEmail.equals(email)) {
-            throw new LoginUserDoesNotMatchException(mateEmail);
+        if (!loginId.equals(userId)) {
+            throw new LoginUserDoesNotMatchException(loginId);
         }
         
-        if (mateBoardMapper.deleteMateBoardById(id) != 1) {
-            throw new DeleteMateBoardFailedException();
+        UpdateMateBoardResponse updateMateBoardResponse = UpdateMateBoardResponse
+            .of(boardId, updateMateBoardRequest);
+        
+        if (mateBoardMapper.updateMateBoard(updateMateBoardResponse) != 1) {
+            throw new UpdateFailedException(boardId);
         }
+        
+        return updateMateBoardResponse;
     }
     
     @Transactional
     @CacheEvict(value = "mateboards")
-    public UpdateMateBoardResponse updateMateBoard(
-        Long id, String email,
-        UpdateMateBoardRequest updateMateBoardRequest
-    ) {
-        if (!email.equals(updateMateBoardRequest.getEmail())) {
-            throw new LoginUserDoesNotMatchException(updateMateBoardRequest.getEmail());
+    public void deleteMateBoard(long boardId, Long loginId) {
+        
+        Long boardUserId = mateBoardMapper.findUserIdByMateBoardId(boardId);
+        
+        if (!boardUserId.equals(loginId)) {
+            throw new LoginUserDoesNotMatchException(loginId);
         }
         
-        UpdateMateBoardResponse updateMateBoardResponse = UpdateMateBoardResponse
-            .of(id, updateMateBoardRequest);
-        
-        if (mateBoardMapper.updateMateBoard(updateMateBoardResponse) != 1) {
-            throw new UpdateFailedException(updateMateBoardRequest.toString());
+        if (mateBoardMapper.deleteMateBoardById(boardId) != 1) {
+            throw new DeleteMateBoardFailedException();
         }
-        
-        return updateMateBoardResponse;
     }
     
 }

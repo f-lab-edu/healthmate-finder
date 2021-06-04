@@ -83,7 +83,7 @@ class GymControllerTest {
             getUpdateGymResponse(1004L, password, phoneNumber, addressCode, addressDetail);
         
         String request = mapper.writeValueAsString(updateGymRequest);
-        given(gymService.updateGym(any(), any())).willReturn(updateGymResponse);
+        given(gymService.updateGym(eq(1004L), any())).willReturn(updateGymResponse);
         
         mvc.perform(put("/gyms/1004")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -99,7 +99,7 @@ class GymControllerTest {
         mvc.perform(delete("/gyms/1004"))
             .andExpect(status().isOk());
         
-        verify(gymService).deleteGym(1004L);
+        verify(gymService).deleteGym(eq(1004L));
     }
     
     private UpdateGymRequest getUpdateGymRequest(String gymName, String password,

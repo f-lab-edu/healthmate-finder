@@ -1,7 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.aop.ValidateUser;
-import com.hamryt.helparty.dto.UserType;
+import com.hamryt.helparty.argumentresolver.LoginId;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
 import com.hamryt.helparty.dto.gym.response.SignUpGymResponse;
@@ -12,7 +11,6 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,20 +34,20 @@ public class GymController {
     }
     
     @LoginValidation
-    @PutMapping("{id}")
+    @PutMapping
     public UpdateGymResponse updateGym(
-        @ValidateUser(type = UserType.GYM) @PathVariable("id") Long id,
+        @LoginId Long loginId,
         @Valid @RequestBody UpdateGymRequest updateGymRequest
     ) {
-        return gymService.updateGym(id, updateGymRequest);
+        return gymService.updateGym(loginId, updateGymRequest);
     }
     
     @LoginValidation
-    @DeleteMapping("{id}")
+    @DeleteMapping
     public void deleteGym(
-        @ValidateUser(type = UserType.GYM) @PathVariable("id") Long id
+        @LoginId Long loginId
     ) {
-        gymService.deleteGym(id);
+        gymService.deleteGym(loginId);
     }
     
 }

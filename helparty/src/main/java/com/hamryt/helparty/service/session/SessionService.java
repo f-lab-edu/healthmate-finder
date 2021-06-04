@@ -4,5 +4,5 @@ public interface SessionService {
     
     void sessionValidate();
     
-    String getSessionEmail();
+    Long getLoginId();
 }

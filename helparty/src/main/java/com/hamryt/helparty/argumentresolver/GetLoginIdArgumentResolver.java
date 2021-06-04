@@ -12,18 +12,18 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 @RequiredArgsConstructor
-public class CustomArgumentResolver implements HandlerMethodArgumentResolver {
+public class GetLoginIdArgumentResolver implements HandlerMethodArgumentResolver {
     
     private final HttpSession httpSession;
     
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(GetSessionEmail.class);
+        return parameter.hasParameterAnnotation(LoginId.class);
     }
     
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
-        return httpSession.getAttribute(SessionKeys.LOGIN_USER_EMAIL);
+        return httpSession.getAttribute(SessionKeys.LOGIN_USER_ID);
     }
 }

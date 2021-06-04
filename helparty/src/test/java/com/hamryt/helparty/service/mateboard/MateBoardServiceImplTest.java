@@ -70,10 +70,11 @@ public class MateBoardServiceImplTest {
             createUpdateMateBoardResponse(1004L, "test", "test", "08:00", "10:00",
                 LocalDateTime.now());
         
+        given(mateBoardMapper.findUserIdByMateBoardId(1)).willReturn(1004L);
         given(mateBoardMapper.updateMateBoard(any())).willReturn(1);
         
         UpdateMateBoardResponse result = mateBoardService
-            .updateMateBoard(1004L, "test@example.com", updateMateBoardRequest);
+            .updateMateBoard(1004L, 1, updateMateBoardRequest);
         
         assertEquals(result.getContent(), updateMateBoardResponse.getContent());
         
@@ -84,12 +85,12 @@ public class MateBoardServiceImplTest {
     public void deleteMate_Success() {
         String email = "test@example.com";
         
-        given(mateBoardMapper.findMateBoardEmailById(eq(1004L))).willReturn(email);
-        given(mateBoardMapper.deleteMateBoardById(eq(1004L))).willReturn(1);
+        given(mateBoardMapper.findUserIdByMateBoardId(1004)).willReturn(1L);
+        given(mateBoardMapper.deleteMateBoardById(1004)).willReturn(1);
         
-        mateBoardService.deleteMateBoard(1004L, email);
+        mateBoardService.deleteMateBoard(1004, 1L);
         
-        verify(mateBoardMapper).deleteMateBoardById(eq(1004L));
+        verify(mateBoardMapper).deleteMateBoardById(1004);
     }
     
     @Test
@@ -98,13 +99,13 @@ public class MateBoardServiceImplTest {
         String email = "kevin@example.com";
         String loginEmail = "alex@example.com";
         
-        given(mateBoardMapper.findMateBoardEmailById(eq(1004L))).willReturn(email);
+        given(mateBoardMapper.findUserIdByMateBoardId(eq(1004L))).willReturn(1L);
         
         LoginUserDoesNotMatchException loginUserDoesNotMatchException
             = assertThrows(LoginUserDoesNotMatchException.class,
-            () -> mateBoardService.deleteMateBoard(1004L, loginEmail));
+            () -> mateBoardService.deleteMateBoard(1004, 2L));
         
-        assertEquals("Login user dose not match with : " + email,
+        assertEquals("Login user dose not match with : " + 2,
             loginUserDoesNotMatchException.getMessage());
     }
     
@@ -113,12 +114,12 @@ public class MateBoardServiceImplTest {
     public void deleteMate_Fail_DeleteMateBoardFailedException() {
         String email = "test@example.com";
         
-        given(mateBoardMapper.findMateBoardEmailById(eq(1004L))).willReturn(email);
+        given(mateBoardMapper.findUserIdByMateBoardId(eq(1004L))).willReturn(1L);
         given(mateBoardMapper.deleteMateBoardById(eq(1004L))).willReturn(0);
         
         DeleteMateBoardFailedException deleteMateBoardFailedException
             = assertThrows(DeleteMateBoardFailedException.class,
-            () -> mateBoardService.deleteMateBoard(1004L, email));
+            () -> mateBoardService.deleteMateBoard(1004, 1L));
         
         assertEquals("Delete MateBoard Failed Exception",
             deleteMateBoardFailedException.getMessage());

@@ -35,8 +35,8 @@
     WHERE b.id = #{id}
   </select>
 
-  <select id="findMateBoardEmailById" resultType="String">
-    SELECT u.email
+  <select id="findUserIdByMateBoardId" resultType="long">
+    SELECT u.id
     FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
     WHERE b.id = #{id}
   </select>
