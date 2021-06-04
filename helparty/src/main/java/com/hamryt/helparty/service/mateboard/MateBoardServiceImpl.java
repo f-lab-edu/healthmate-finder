@@ -34,6 +34,7 @@ public class MateBoardServiceImpl implements MateBoardService {
         CreateMateBoardRequest createMateBoardRequest,
         Long id
     ) {
+        createMateBoardRequest.getUserType().validEqualUserType("USER");
         UserDTO user = userService.findUserById(id);
         
         MateBoardDTO mateBoard

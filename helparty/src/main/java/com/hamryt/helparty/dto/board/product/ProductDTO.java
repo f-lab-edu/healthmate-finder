@@ -1,5 +1,6 @@
 package com.hamryt.helparty.dto.board.product;
 
+import com.hamryt.helparty.exception.board.BoardTypeDoesNotMatchException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,5 +39,11 @@ public class ProductDTO {
         this.scope = scope;
         this.boardType = boardType;
         this.gymBoardId = gymBoardId;
+    }
+    
+    public static void checkBoardType(BoardType boardType, BoardType authType){
+        if(!boardType.equals(authType)){
+            throw new BoardTypeDoesNotMatchException(authType);
+        }
     }
 }
