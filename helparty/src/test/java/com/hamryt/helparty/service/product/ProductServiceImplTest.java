@@ -7,6 +7,7 @@ import static org.mockito.BDDMockito.given;
 
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
+import com.hamryt.helparty.exception.board.BoardTypeDoesNotMatchException;
 import com.hamryt.helparty.exception.product.InsertProductFailedException;
 import com.hamryt.helparty.mapper.ProductMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -39,8 +40,22 @@ class ProductServiceImplTest {
         
         given(productMapper.insertProduct(any())).willReturn(1L);
         
-        productService.insertProduct(mockSimpleProduct);
+        productService.insertProduct(mockSimpleProduct, BoardType.GYM);
         
+    }
+    
+    @Test
+    @DisplayName("상품 생성 실패 : 게시판 타입 일치하지 않음 예외")
+    public void insertProduct_Fail_BoardTypeDoesNotMatchException(){
+    
+        SimpleProduct mockFailSimpleProduct =
+            getSimpleProduct(1L, title, content, price, scope, BoardType.PT);
+        
+        BoardTypeDoesNotMatchException boardTypeDoesNotMatchException
+            = assertThrows(BoardTypeDoesNotMatchException.class,
+            () -> productService.insertProduct(mockFailSimpleProduct, BoardType.GYM));
+        
+        assertEquals("BoardType does not match with : GYM", boardTypeDoesNotMatchException.getMessage());
     }
     
     @Test
@@ -51,7 +66,7 @@ class ProductServiceImplTest {
     
         InsertProductFailedException insertProductFailedException
             = assertThrows(InsertProductFailedException.class,
-            () -> productService.insertProduct(mockSimpleProduct));
+            () -> productService.insertProduct(mockSimpleProduct, BoardType.GYM));
         
         assertEquals("Insert Product failed exception", insertProductFailedException.getMessage());
     }

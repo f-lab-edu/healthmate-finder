@@ -1,7 +1,6 @@
 package com.hamryt.helparty.controller;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -83,23 +82,23 @@ class GymControllerTest {
             getUpdateGymResponse(1004L, password, phoneNumber, addressCode, addressDetail);
         
         String request = mapper.writeValueAsString(updateGymRequest);
-        given(gymService.updateGym(eq(1004L), any())).willReturn(updateGymResponse);
+        given(gymService.updateGym(any(), any())).willReturn(updateGymResponse);
         
-        mvc.perform(put("/gyms/1004")
+        mvc.perform(put("/gyms")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
             .andExpect(status().isOk());
         
-        verify(gymService).updateGym(eq(1004L), any());
+        verify(gymService).updateGym(any(), any());
     }
     
     @Test
     @DisplayName("운동시설 관리자 계정 삭제 성공시 상태 코드 200을 반환")
     public void delete_Success() throws Exception {
-        mvc.perform(delete("/gyms/1004"))
+        mvc.perform(delete("/gyms"))
             .andExpect(status().isOk());
         
-        verify(gymService).deleteGym(eq(1004L));
+        verify(gymService).deleteGym(any());
     }
     
     private UpdateGymRequest getUpdateGymRequest(String gymName, String password,

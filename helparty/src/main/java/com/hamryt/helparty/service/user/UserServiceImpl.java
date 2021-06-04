@@ -1,12 +1,10 @@
 package com.hamryt.helparty.service.user;
 
-import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.user.UserDTO;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
 import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
-import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.InsertUserFailedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
@@ -29,9 +27,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public SignUpUserResponse insertUser(SignUpUserRequest signupUserRequest) {
         
-        if (signupUserRequest.getUserType() != UserType.USER) {
-            throw new DoesNotMatchUserType(UserType.USER);
-        }
+        signupUserRequest.getUserType().validEqualUserType("USER");
         
         if (isExistsEmail(signupUserRequest.getEmail())) {
             throw new EmailExistedException(signupUserRequest.getEmail());
