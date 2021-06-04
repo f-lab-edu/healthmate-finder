@@ -23,13 +23,8 @@ public class GetGymBoardsResponse {
         this.size = size;
     }
     
-    public static GetGymBoardsResponse of(List<GetGymBoardResponse> paramGymBoardList, int page,
+    public static GetGymBoardsResponse of(List<GetGymBoardResponse> gymBoardList, int page,
         int size) {
-        List<GetGymBoardResponse> gymBoardList = null;
-        
-        if (paramGymBoardList.size() != 0) {
-            gymBoardList = paramGymBoardList;
-        }
         
         return GetGymBoardsResponse.builder()
             .getGymBoardResponseList(gymBoardList)
