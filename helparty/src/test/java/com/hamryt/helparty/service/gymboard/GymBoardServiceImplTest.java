@@ -9,12 +9,13 @@ import static org.mockito.Mockito.doNothing;
 
 import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
+import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
-import com.hamryt.helparty.dto.board.product.request.SimpleProduct;
 import com.hamryt.helparty.exception.board.gymboard.InsertGymBoardFailedException;
-import com.hamryt.helparty.exception.common.PermissionException;
 import com.hamryt.helparty.mapper.GymBoardMapper;
 import com.hamryt.helparty.service.product.ProductServiceImpl;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,18 +40,21 @@ class GymBoardServiceImplTest {
     String price = "test";
     String scope = "test";
     
-    SimpleProduct mockSimpleProduct =
-        getSimpleProduct(1L, title, content, price, scope, BoardType.GYM);
-    
-    CreateGymBoardRequest createGymBoardRequest =
-        getCreateGymBoardRequest(title, content, UserType.GYM, mockSimpleProduct);
-    
     @Test
     @DisplayName("운동 시설 게시물 추가 로직 성공")
     public void insertGymBoard_Success() {
         
+        ProductDTO mockSimpleProduct =
+            getProductDTO(1L, title, content, price, scope, BoardType.GYM);
+        
+        List<ProductDTO> mockProductList = new ArrayList<>();
+        mockProductList.add(mockSimpleProduct);
+        
+        CreateGymBoardRequest createGymBoardRequest =
+            getCreateGymBoardRequest(title, content, mockProductList);
+        
         doNothing().when(productService)
-            .insertProduct(eq(createGymBoardRequest.getSimpleProduct()), eq(BoardType.GYM));
+            .insertProduct(eq(createGymBoardRequest.getProductList()), any());
         
         given(gymBoardMapper.insertGymBoard(any())).willReturn(1);
         
@@ -62,8 +66,14 @@ class GymBoardServiceImplTest {
     @DisplayName("운동 시설 게시물 추가 로직 실패 : 데이터베이스 insert 명령에 실패하면 InsertGymBoardFailedException을 발생시킨다.")
     public void insertGymBoard_Fail_InsertGymBoardFailedException() {
         
-        doNothing().when(productService)
-            .insertProduct(eq(createGymBoardRequest.getSimpleProduct()), eq(BoardType.GYM));
+        ProductDTO mockProduct =
+            getProductDTO(1L, title, content, price, scope, BoardType.GYM);
+        
+        List<ProductDTO> mockProductList = new ArrayList<>();
+        mockProductList.add(mockProduct);
+        
+        CreateGymBoardRequest createGymBoardRequest =
+            getCreateGymBoardRequest(title, content, mockProductList);
         
         given(gymBoardMapper.insertGymBoard(any())).willReturn(0);
         
@@ -76,39 +86,23 @@ class GymBoardServiceImplTest {
         
     }
     
-    @Test
-    @DisplayName("운동 시설 게시물 추가 로직 실패 : UserType 불일치로 인한 권한 없음 예외")
-    public void insertGymBoard_Fail_UserTypeDoesNotMatchException() {
-        
-        CreateGymBoardRequest createFailGymBoardRequest =
-            getCreateGymBoardRequest(title, content, UserType.USER, mockSimpleProduct);
-        
-        PermissionException permissionException
-            = assertThrows(PermissionException.class,
-            () -> gymBoardService.insertGymBoard(createFailGymBoardRequest, 1004L));
-        
-        assertEquals("403 FORBIDDEN \"This UserType does not appropriate for the board. this.userType: USER, AuthType: GYM\"",
-            permissionException.getMessage());
-        
-    }
-    
     private CreateGymBoardRequest getCreateGymBoardRequest(
-        String title, String content, UserType userType,
-        SimpleProduct simpleProduct
+        String title, String content,
+        List<ProductDTO> productDTOList
     ) {
         return CreateGymBoardRequest.builder()
             .title(title)
             .content(content)
-            .userType(userType)
-            .simpleProduct(simpleProduct)
+            .userType(UserType.GYM)
+            .productList(productDTOList)
             .build();
     }
     
-    private SimpleProduct getSimpleProduct(
+    private ProductDTO getProductDTO(
         Long id, String title, String content, String price,
         String scope, BoardType gym
     ) {
-        return SimpleProduct.builder()
+        return ProductDTO.builder()
             .id(id)
             .title(title)
             .content(content)

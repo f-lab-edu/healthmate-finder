@@ -4,13 +4,13 @@
 
 <mapper namespace="com.hamryt.helparty.mapper.ProductMapper">
 
-  <insert id="insertProduct" useGeneratedKeys="true" keyProperty="id" keyColumn="id"
-    parameterType="com.hamryt.helparty.dto.board.product.request.SimpleProduct">
-    INSERT INTO product (title, content, price, scope, board_type)
-    VALUES(#{title}, #{content}, #{price}, #{scope}, #{boardType})
-    <selectKey resultType="long" keyProperty="id" order="AFTER">
-      SELECT id FROM product ORDER BY id DESC LIMIT 1;
-    </selectKey>
+  <insert id="insertProductList" parameterType="java.util.List">
+    INSERT INTO product (title, content, price, scope, board_type, gym_board_id)
+    VALUES
+    <foreach collection="productList" item="product" separator=",">
+      (#{product.title}, #{product.content}, #{product.price}, #{product.scope},
+      #{product.boardType}, #{gymBoardId})
+    </foreach>
   </insert>
 
 </mapper>

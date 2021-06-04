@@ -12,17 +12,15 @@ public class SimpleGymBoard {
     private Long id;
     private String title;
     private String content;
-    private Long gymProductId;
     private Long gymId;
     
     @Builder
     public SimpleGymBoard(
         String title, String content,
-        Long gymProductId, Long gymId
+        Long gymId
     ) {
         this.title = title;
         this.content = content;
-        this.gymProductId = gymProductId;
         this.gymId = gymId;
     }
     
@@ -30,7 +28,6 @@ public class SimpleGymBoard {
         return SimpleGymBoard.builder()
             .title(createGymBoardRequest.getTitle())
             .content(createGymBoardRequest.getContent())
-            .gymProductId(createGymBoardRequest.getSimpleProduct().getId())
             .gymId(loginId)
             .build();
     }
