@@ -12,13 +12,13 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 @RequiredArgsConstructor
-public class GetSessionIdArgumentResolver implements HandlerMethodArgumentResolver {
+public class GetLoginIdArgumentResolver implements HandlerMethodArgumentResolver {
     
     private final HttpSession httpSession;
     
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(GetSessionId.class);
+        return parameter.hasParameterAnnotation(LoginId.class);
     }
     
     @Override

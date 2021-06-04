@@ -12,9 +12,9 @@ public interface GymService {
     
     GymDTO findGymByEmailAndPassword(String email, String encryptPassword);
     
-    UpdateGymResponse updateGym(Long id, UpdateGymRequest updateGymRequest);
+    UpdateGymResponse updateGym(Long loginId, UpdateGymRequest updateGymRequest);
     
     String findGymEmailById(Long id);
     
-    void deleteGym(Long id);
+    void deleteGym(Long loginId);
 }

@@ -1,6 +1,6 @@
 package com.hamryt.helparty.controller;
 
-import com.hamryt.helparty.argumentresolver.GetSessionId;
+import com.hamryt.helparty.argumentresolver.LoginId;
 import com.hamryt.helparty.dto.user.request.SignUpUserRequest;
 import com.hamryt.helparty.dto.user.request.UpdateUserRequest;
 import com.hamryt.helparty.dto.user.response.SignUpUserResponse;
@@ -40,17 +40,17 @@ public class UserController {
     @LoginValidation
     @PutMapping
     public UpdateUserResponse updateUser(
-        @GetSessionId Long sessionId,
+        @LoginId Long loginId,
         @Valid @RequestBody UpdateUserRequest updateUserRequest
     ) {
-        return userService.updateUser(sessionId, updateUserRequest);
+        return userService.updateUser(loginId, updateUserRequest);
     }
     
     @LoginValidation
     @DeleteMapping
     public void deleteUser(
-        @GetSessionId Long sessionId
+        @LoginId Long loginId
     ) {
-        userService.deleteUser(sessionId);
+        userService.deleteUser(loginId);
     }
 }

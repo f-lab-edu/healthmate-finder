@@ -15,9 +15,9 @@ public interface UserService {
     
     UserDTO findUserByEmailAndPassword(String email, String password);
     
-    void deleteUser(Long sessionId);
+    void deleteUser(Long loginId);
     
-    UpdateUserResponse updateUser(Long sessionId, UpdateUserRequest updateUserRequest);
+    UpdateUserResponse updateUser(Long loginId, UpdateUserRequest updateUserRequest);
     
     UserDTO findUserById(Long id);
 }

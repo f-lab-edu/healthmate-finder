@@ -20,7 +20,7 @@ public class SessionServiceImpl implements SessionService {
         }
     }
     
-    public Long getSessionId() {
+    public Long getLoginId() {
         return (Long) session.getAttribute(SessionKeys.LOGIN_USER_ID);
     }
     

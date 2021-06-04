@@ -20,12 +20,12 @@ public class GymBoardServiceImpl implements GymBoardService {
     private final ProductService productService;
     
     @Transactional
-    public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long sessionId) {
+    public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long loginId) {
         createGymBoardRequest.getUserType().validEqualUserType("GYM");
         
         productService.insertProduct(createGymBoardRequest.getSimpleProduct(), BoardType.GYM);
         
-        SimpleGymBoard simpleGymBoard = SimpleGymBoard.of(createGymBoardRequest, sessionId);
+        SimpleGymBoard simpleGymBoard = SimpleGymBoard.of(createGymBoardRequest, loginId);
         
         if (gymBoardMapper.insertGymBoard(simpleGymBoard) != 1) {
             log.error("Insert GymBoard query failed : " + simpleGymBoard);
