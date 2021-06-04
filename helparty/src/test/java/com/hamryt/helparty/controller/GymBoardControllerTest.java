@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
@@ -65,6 +66,7 @@ class GymBoardControllerTest {
             .title(title)
             .content(content)
             .productList(productDTOList)
+            .userType(UserType.GYM)
             .build();
     }
     

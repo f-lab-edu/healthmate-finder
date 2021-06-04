@@ -69,9 +69,7 @@ public class MateBoardControllerTest {
         
         String request = new ObjectMapper().writeValueAsString(createMateBoardRequest);
         
-        given(loginService.getLoginId())
-            .willReturn(1L);
-        given(mateBoardService.addMateBoard(createMateBoardRequest, any()))
+        given(mateBoardService.addMateBoard(any(), any()))
             .willReturn(createMateBoardResponse);
         
         // when, then

@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
+import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.board.gymboard.request.CreateGymBoardRequest;
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
@@ -92,6 +93,7 @@ class GymBoardServiceImplTest {
         return CreateGymBoardRequest.builder()
             .title(title)
             .content(content)
+            .userType(UserType.GYM)
             .productList(productDTOList)
             .build();
     }
