@@ -1,6 +1,5 @@
 package com.hamryt.helparty.service.gym;
 
-import com.hamryt.helparty.dto.UserType;
 import com.hamryt.helparty.dto.gym.GymDTO;
 import com.hamryt.helparty.dto.gym.request.SignUpGymRequest;
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
@@ -9,8 +8,7 @@ import com.hamryt.helparty.dto.gym.response.UpdateGymResponse;
 import com.hamryt.helparty.exception.gym.GymDeleteFailedException;
 import com.hamryt.helparty.exception.gym.GymNotFoundByIdException;
 import com.hamryt.helparty.exception.gym.GymNotFoundException;
-import com.hamryt.helparty.exception.gym.InsertGymFailedExcetpion;
-import com.hamryt.helparty.exception.user.DoesNotMatchUserType;
+import com.hamryt.helparty.exception.gym.InsertGymFailedException;
 import com.hamryt.helparty.exception.user.EmailExistedException;
 import com.hamryt.helparty.exception.user.UpdateFailedException;
 import com.hamryt.helparty.mapper.GymMapper;
@@ -30,9 +28,7 @@ public class GymServiceImpl implements GymService {
     @Transactional
     public SignUpGymResponse insertGym(SignUpGymRequest signUpGymRequest) {
         
-        if (signUpGymRequest.getUserType() != UserType.GYM) {
-            throw new DoesNotMatchUserType(UserType.GYM);
-        }
+        signUpGymRequest.getUserType().validEqualUserType("GYM");
         
         if (isExistsEmail(signUpGymRequest.getEmail())) {
             throw new EmailExistedException(signUpGymRequest.getEmail());
@@ -51,7 +47,7 @@ public class GymServiceImpl implements GymService {
             .build();
         
         if (gymMapper.insertGym(newGym) != 1) {
-            throw new InsertGymFailedExcetpion();
+            throw new InsertGymFailedException();
         }
         
         return SignUpGymResponse.of(newGym);

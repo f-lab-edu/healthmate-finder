@@ -27,6 +27,7 @@ public class GymBoardServiceImpl implements GymBoardService {
     
     @Transactional
     public void insertGymBoard(CreateGymBoardRequest createGymBoardRequest, Long loginId) {
+        createGymBoardRequest.getUserType().validEqualUserType("GYM");
         
         SimpleGymBoard simpleGymBoard = SimpleGymBoard.of(createGymBoardRequest, loginId);
         
