@@ -6,7 +6,7 @@ import com.hamryt.helparty.dto.board.mateboard.request.CreateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest;
 import com.hamryt.helparty.dto.board.mateboard.response.CreateMateBoardResponse;
 import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardResponse;
-import com.hamryt.helparty.dto.board.mateboard.response.GetMatesBoardResponse;
+import com.hamryt.helparty.dto.board.mateboard.response.GetMateBoardsResponse;
 import com.hamryt.helparty.dto.board.mateboard.response.UpdateMateBoardResponse;
 import com.hamryt.helparty.interceptor.LoginValidation;
 import com.hamryt.helparty.service.mateboard.MateBoardService;
@@ -54,12 +54,12 @@ public class MateBoardController {
     }
     
     @GetMapping
-    public GetMatesBoardResponse getMates(
+    public GetMateBoardsResponse getMateBoards(
         @RequestParam(defaultValue = "0") @Range(min = 0, max = Integer.MAX_VALUE) int page,
         @RequestParam(defaultValue = "10") @Range(min = 1, max = 10) int size
     ) {
         List<GetMateBoardResponse> getMateResponseList = mateBoardService.getMates(page, size);
-        return GetMatesBoardResponse.builder()
+        return GetMateBoardsResponse.builder()
             .mateBoardList(getMateResponseList)
             .page(page)
             .size(size)
