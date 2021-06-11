@@ -25,25 +25,25 @@
 
   <select id="findMateBoardByPage" resultMap="getMateResultMap">
     <include refid="selectMateBoard"/>
-    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    FROM mateboard b JOIN user u ON (b.user_id = u.id)
     ORDER BY id DESC LIMIT #{index}, #{size}
   </select>
 
   <select id="findMateBoardById" resultMap="getMateResultMap">
     <include refid="selectMateBoard"/>
-    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    FROM mateboard b JOIN user u ON (b.user_id = u.id)
     WHERE b.id = #{id}
   </select>
 
   <select id="findUserIdByMateBoardId" resultType="long">
     SELECT u.id
-    FROM helpartydb.mateboard b JOIN helpartydb.user u ON (b.user_id = u.id)
+    FROM mateboard b JOIN user u ON (b.user_id = u.id)
     WHERE b.id = #{id}
   </select>
 
   <update id="updateMateBoard"
     parameterType="com.hamryt.helparty.dto.board.mateboard.request.UpdateMateBoardRequest">
-    UPDATE helpartydb.mateboard SET
+    UPDATE mateboard SET
     gym = #{gym},
     content = #{content},
     start_time = #{startTime},
@@ -59,7 +59,7 @@
   </insert>
 
   <delete id="deleteMateBoardById">
-    DELETE FROM helpartydb.mateboard WHERE id=#{id}
+    DELETE FROM mateboard WHERE id=#{id}
   </delete>
 
 </mapper>
