@@ -41,8 +41,8 @@
     p.content product_content,
     p.price price,
     p.scope scope
-    FROM helpartydb.gymboard gb LEFT OUTER JOIN helpartydb.product p ON (gb.id = p.gym_board_id)
-    LEFT OUTER JOIN helpartydb.gym g ON (gb.gym_id = g.id)
+    FROM gymboard gb LEFT OUTER JOIN product p ON (gb.id = p.gym_board_id)
+    LEFT OUTER JOIN gym g ON (gb.gym_id = g.id)
   </sql>
 
   <select id="findGymBoardsByPage" resultMap="gymBoardDTO">
