@@ -58,7 +58,7 @@ kakao oven -https://ovenapp.io/view/ZmMg4lnHw2iVSxfO0UwY1NzTOkWoNsiZ/liSyR
 ![Helparty 프로토타입](https://user-images.githubusercontent.com/25305130/117656221-0bda3e00-b1d3-11eb-8bd4-5db2c9d44879.png)   
    
 # 기능 정의
-- [위키를 통해 확인하기](https://github.com/f-lab-edu/healthmate-finder/wiki/UserCase)
+- [위키를 통해 확인하기](https://github.com/f-lab-edu/healthmate-finder/wiki/UseCase)
 
 # 깃헙 플로우
 - [위키를 통해 확인하기](https://github.com/f-lab-edu/healthmate-finder/wiki/Git-Flow)
