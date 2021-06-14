@@ -35,6 +35,7 @@
 
 # 프로젝트 중점 사항
 - GitFlow를 이용한 병렬적 개발 방식
+- 다른 사람이 쉽게 알아볼 수 있는 메서드 네이밍
 - 객체지향 코드 작성법으로 확장성 유지
 - 작성된 Layer에 고립시켜 의존적이지 않은 단위 테스트 작성
 - 반복되는 로직을 핵심 로직으로부터 분리 (feat. AOP, ArgumentHandlerResolver, Interceptor)
