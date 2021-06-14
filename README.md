@@ -33,19 +33,23 @@
 8. Naver Cloud 
 
 # 이슈 해결 과정
+- [#8] Ngrinder를 이용하여 성능테스트하기   
+
+- [#7] 젠킨스를 이용한 CI/CD 환경 구축   
+  
 - [#6] 쿼리의 성능 튜닝   
-https://hamryt.tistory.com/10?category=961846
+https://hamryt.tistory.com/10?category=961846   
 - [#5] 프로젝트에는 어떤 Log 라이브러리를 사용할까? LogBack vs Log4J2   
-https://hamryt.tistory.com/9?category=961846
+https://hamryt.tistory.com/9?category=961846   
 - [#4] 세션 정보를 받아오는 로직을 HandleMethodArgumentResolver를 통해 효율적으로 처리하는 과정   
-https://hamryt.tistory.com/8?category=961846
+https://hamryt.tistory.com/8?category=961846   
 - [#3] 로그인을 검사하는 부가 로직은 어떻게 핵심로직에서 분리할까?    
-https://hamryt.tistory.com/7?category=961846
+https://hamryt.tistory.com/7?category=961846   
 - [#2] Scale Out을 통한 서버 증설 과정에서 발생하는 세션 정합성 문제는 어떻게 해결할까? - Sticky Session, Session Clustering, Session Storage   
 https://hamryt.tistory.com/4?category=961846        
-https://hamryt.tistory.com/3?category=961846
+https://hamryt.tistory.com/3?category=961846   
 - [#1] 서버 증설은 어떤 방식으로 구현해야 할까? - Scale out vs Scale Up       
-https://hamryt.tistory.com/1?category=961846
+https://hamryt.tistory.com/1?category=961846   
 
 # 화면설계
 kakao oven -https://ovenapp.io/view/ZmMg4lnHw2iVSxfO0UwY1NzTOkWoNsiZ/liSyR
