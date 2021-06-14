@@ -33,6 +33,21 @@
 7. Jenkins
 8. Naver Cloud 
 
+# 프로젝트 중점 사항
+- GitFlow를 이용한 병렬적 개발 방식
+- 객체지향 코드 작성법으로 확장성 유지
+- 작성된 Layer에 고립시켜 의존적이지 않은 단위 테스트 작성
+- 반복되는 로직을 핵심 로직으로부터 분리 (feat. AOP, ArgumentHandlerResolver, Interceptor)
+- 젠킨스를 사용한 CI/CD 환경 구축
+- 하나의 클라우드 서버에 하나의 어플리케이션을 사용하여 높은 확장성 유지
+- 많은 사람들에 의해 중복될 페이지 조회에 Redis cache를 사용하여 성능 개선
+- Redis의 Session Server를 사용하여 Session 정합성 유지
+- Log4J2를 로그로 사용하여 서버의 부담 최소화
+- NginX의 Reverse-Proxy를 이용한 로드밸런싱 구현
+- DB Replication을 구현하여 DB 성능 향상
+- MySql쿼리의 실행계획 분석 후 쿼리튜닝을 통한 성능 향상
+
+
 # 이슈 해결 과정
 - [#8] Ngrinder를 이용하여 성능테스트하기   
 
