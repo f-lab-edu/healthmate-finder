@@ -12,7 +12,7 @@
 ![프로젝트 구조도](https://user-images.githubusercontent.com/25305130/121920868-6be47700-cd73-11eb-8b00-318f46a39391.png)   
 
 # DB ERD
-![helparty erd](https://user-images.githubusercontent.com/25305130/121932177-845a8e80-cd7f-11eb-972c-baa3ec27598c.png)   
+![helparty erd](https://user-images.githubusercontent.com/25305130/121939907-7e1ce000-cd88-11eb-8997-f84f2f6e4e8f.png)
 
 
 
