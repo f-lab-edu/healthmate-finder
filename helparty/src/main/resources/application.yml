@@ -1,7 +1,7 @@
 ## Database 설정
 spring:
   profiles:
-    active: prod
+    active: dev
 ---
 logging:
   config: classpath:log4j2.yml
