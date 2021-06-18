@@ -11,7 +11,6 @@ public class RoutingDataSource extends AbstractRoutingDataSource {
         
         boolean isReadOnly = TransactionSynchronizationManager.isCurrentTransactionReadOnly();
         
-        
         return isReadOnly ? DatabaseType.SLAVE : DatabaseType.MASTER;
     }
 }
