@@ -41,7 +41,7 @@ public class GymBoardServiceImpl implements GymBoardService {
     }
     
     @Transactional(readOnly = true)
-    @Cacheable(value = "gymboards")
+    @Cacheable(cacheNames = "gymboards", key = "#page")
     public List<GetGymBoardResponse> getGymBoards(int page, int size) {
         return gymBoardMapper.findGymBoardsByPage(page * size, size).stream()
             .map(GetGymBoardResponse::of).collect(Collectors.toList());
