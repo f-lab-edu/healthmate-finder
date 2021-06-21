@@ -1,7 +1,10 @@
-## Database 설정
 spring:
   profiles:
     active: dev
+  session:
+    store-type: redis
+  cache:
+    type: redis
 ---
 logging:
   config: classpath:log4j2.yml
