@@ -6,11 +6,11 @@ spring:
     password: 1234
   redis:
     session:
-      host: localhost
+      host: 101.101.209.124
       port: 6379
     cache:
-      host: localhost
-      port: 6378
+      host: 118.67.135.65
+      port: 6379
 mybatis:
   config-location: classpath:mybatis-config.xml
   configuration:
