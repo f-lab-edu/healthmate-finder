@@ -62,18 +62,18 @@
 
     <select id="findGymIdByGymBoardId" resultType="Long">
         SELECT gym_id
-        FROM GYMBOARD
+        FROM gymboard
         WHERE id = #{gymBoardId}
     </select>
 
     <insert id="insertGymBoard" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.hamryt.helparty.dto.board.gymboard.SimpleGymBoard">
-        INSERT INTO GYMBOARD (title, content, gym_id, created_at, modified_at)
+        INSERT INTO gymboard (title, content, gym_id, created_at, modified_at)
         VALUES (#{title}, #{content}, #{gymId}, NOW(), NOW())
     </insert>
 
     <update id="updateGymBoard" parameterType="com.hamryt.helparty.dto.board.gymboard.request.UpdateGymBoardRequest">
-        UPDATE GYMBOARD
+        UPDATE gymboard
         SET title       = #{title},
             content     = #{content},
             modified_at = NOW()
