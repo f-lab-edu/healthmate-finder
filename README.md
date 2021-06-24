@@ -50,9 +50,11 @@
 
 
 # 이슈 해결 과정
-- [#8] Ngrinder를 이용하여 성능테스트하기   
-
-- [#7] 젠킨스를 이용한 CI/CD 환경 구축   
+- [#9] 부하 분산을 위한 데이터베이스 이중화 작업 - MySQL Replication   
+https://hamryt.tistory.com/12
+- [#8] Ngrinder를 이용하여 성능테스트하기      
+https://hamryt.tistory.com/11
+- [#7] 젠킨스를 이용한 CI/CD 환경 구축      
   
 - [#6] 쿼리의 성능 튜닝   
 https://hamryt.tistory.com/10?category=961846   
