@@ -1,64 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hamryt.helparty.mapper.GymBoardMapper">
 
-  <resultMap id="gymBoardDTO"
-    type="com.hamryt.helparty.dto.board.gymboard.GymBoardDTO">
-    <id property="id" column="id"/>
-    <result property="title" column="title"/>
-    <result property="content" column="content"/>
-    <result property="createdAt" column="created_at"/>
-    <result property="modifiedAt" column="modified_at"/>
-    <association property="gymInfo">
-      <result property="gymName" column="gym_name"/>
-      <result property="phoneNumber" column="phone_number"/>
-      <result property="addressDetail" column="address_detail"/>
-      <result property="addressCode" column="address_code"/>
-    </association>
-    <collection property="productList" ofType="com.hamryt.helparty.dto.board.product.ProductDTO">
-      <id property="id" column="id"/>
-      <result property="title" column="product_title"/>
-      <result property="content" column="product_content"/>
-      <result property="price" column="price"/>
-      <result property="scope" column="scope"/>
-      <result property="boardType" column="board_type"/>
-    </collection>
-  </resultMap>
+    <resultMap id="gymBoardDTO"
+               type="com.hamryt.helparty.dto.board.gymboard.GymBoardDTO">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="modifiedAt" column="modified_at"/>
+        <association property="gymInfo">
+            <result property="gymName" column="gym_name"/>
+            <result property="phoneNumber" column="phone_number"/>
+            <result property="addressDetail" column="address_detail"/>
+            <result property="addressCode" column="address_code"/>
+        </association>
+        <collection property="productList" ofType="com.hamryt.helparty.dto.board.product.ProductDTO">
+            <id property="id" column="product_id"/>
+            <result property="title" column="product_title"/>
+            <result property="content" column="product_content"/>
+            <result property="price" column="price"/>
+            <result property="scope" column="scope"/>
+            <result property="boardType" column="board_type"/>
+            <result property="gymBoardId" column="gym_board_id"/>
+        </collection>
+    </resultMap>
 
-  <sql id="selectGymBoardDTO">
-    SELECT gb.id id,
-    gb.title title,
-    gb.content content,
-    gb.created_at create_at,
-    gb.modified_at modified_at,
-    g.gym_name gym_name,
-    g.phone_number phone_number,
-    g.address_detail address_detail,
-    g.address_code address_code,
-    p.title product_title,
-    p.content product_content,
-    p.price price,
-    p.scope scope
-    FROM gymboard gb LEFT OUTER JOIN product p ON (gb.id = p.gym_board_id)
-    LEFT OUTER JOIN gym g ON (gb.gym_id = g.id)
-  </sql>
+    <sql id="selectGymBoardDTO">
+        SELECT gb.id            id,
+               gb.title         title,
+               gb.content       content,
+               gb.created_at    create_at,
+               gb.modified_at   modified_at,
+               g.gym_name       gym_name,
+               g.phone_number   phone_number,
+               g.address_detail address_detail,
+               g.address_code   address_code,
+               p.id             product_id,
+               p.title          product_title,
+               p.content        product_content,
+               p.price          price,
+               p.scope          scope,
+               p.board_type     board_type,
+               p.gym_board_id   gym_board_id
+        FROM gymboard gb
+                 LEFT OUTER JOIN product p ON (gb.id = p.gym_board_id)
+                 LEFT OUTER JOIN gym g ON (gb.gym_id = g.id)
+    </sql>
 
-  <select id="findGymBoardsByPage" resultMap="gymBoardDTO">
-    <include refid="selectGymBoardDTO"/>
-    ORDER BY id DESC LIMIT #{index}, #{size}
-  </select>
+    <select id="findGymBoardsByPage" resultMap="gymBoardDTO">
+        <include refid="selectGymBoardDTO"/>
+        ORDER BY id DESC LIMIT #{index}, #{size}
+    </select>
 
-  <select id="findGymBoardById" resultMap="gymBoardDTO">
-    <include refid="selectGymBoardDTO"/>
-    WHERE gb.id = #{id}
-  </select>
+    <select id="findGymBoardById" resultMap="gymBoardDTO">
+        <include refid="selectGymBoardDTO"/>
+        WHERE gb.id = #{id}
+    </select>
 
-  <insert id="insertGymBoard" useGeneratedKeys="true" keyProperty="id"
-    parameterType="com.hamryt.helparty.dto.board.gymboard.SimpleGymBoard">
-    INSERT INTO GYMBOARD (title, content, gym_product_id, gym_id, created_at, modified_at)
-    VALUES(#{title}, #{content}, #{gymId}, #{gymId}, NOW(), NOW())
-  </insert>
+    <select id="findGymIdByGymBoardId" resultType="Long">
+        SELECT gym_id
+        FROM gymboard
+        WHERE id = #{gymBoardId}
+    </select>
+
+    <insert id="insertGymBoard" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.hamryt.helparty.dto.board.gymboard.SimpleGymBoard">
+        INSERT INTO gymboard (title, content, gym_id, created_at, modified_at)
+        VALUES (#{title}, #{content}, #{gymId}, NOW(), NOW())
+    </insert>
+
+    <update id="updateGymBoard" parameterType="com.hamryt.helparty.dto.board.gymboard.request.UpdateGymBoardRequest">
+        UPDATE gymboard
+        SET title       = #{title},
+            content     = #{content},
+            modified_at = NOW()
+        WHERE id = #{gymboardId}
+    </update>
 
 </mapper>

@@ -1,16 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.hamryt.helparty.mapper.ProductMapper">
 
-  <insert id="insertProductList" parameterType="java.util.List">
-    INSERT INTO product (title, content, price, scope, board_type, gym_board_id)
-    VALUES
-    <foreach collection="productList" item="product" separator=",">
-      (#{product.title}, #{product.content}, #{product.price}, #{product.scope},
-      #{product.boardType}, #{gymBoardId})
-    </foreach>
-  </insert>
+    <insert id="insertProductList" parameterType="java.util.List">
+        INSERT INTO product (title, content, price, scope, board_type, gym_board_id)
+        VALUES
+        <foreach collection="productList" item="product" separator=",">
+            (#{product.title}, #{product.content}, #{product.price}, #{product.scope},
+            #{product.boardType}, #{gymBoardId})
+        </foreach>
+    </insert>
+
+    <update id="updateProductList" parameterType="java.util.List">
+        <foreach collection="productList" item="product" open="" close="" separator=";">
+            UPDATE product SET
+            title = #{product.title},
+            content = #{product.content},
+            price = #{product.price},
+            scope = #{product.scope},
+            board_type = #{product.boardType},
+            gym_board_id = #{gymBoardId}
+            WHERE id = #{product.id}
+        </foreach>
+    </update>
+
+    <delete id="deleteProductList" parameterType="java.util.List">
+        <foreach collection="deleteProductIdList" item="productId" open="" close="" separator=";">
+            DELETE FROM product WHERE id = #{productId}
+        </foreach>
+    </delete>
 
 </mapper>
