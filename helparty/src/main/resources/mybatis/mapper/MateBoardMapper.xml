@@ -54,7 +54,7 @@
 
   <insert id="insertMateBoard" useGeneratedKeys="true" keyProperty="id"
     parameterType="com.hamryt.helparty.dto.board.mateboard.MateBoardDTO">
-    INSERT INTO MATEBOARD (gym, content, start_time, end_time, created_at, modified_at, user_id)
+    INSERT INTO mateboard (gym, content, start_time, end_time, created_at, modified_at, user_id)
     VALUES(#{gym}, #{content}, #{startTime}, #{endTime}, NOW(), NOW(), #{userId})
   </insert>
 

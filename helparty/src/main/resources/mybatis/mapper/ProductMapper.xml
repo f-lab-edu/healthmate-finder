@@ -15,7 +15,7 @@
 
     <update id="updateProductList" parameterType="java.util.List">
         <foreach collection="productList" item="product" open="" close="" separator=";">
-            UPDATE PRODUCT SET
+            UPDATE product SET
             title = #{product.title},
             content = #{product.content},
             price = #{product.price},
@@ -28,7 +28,7 @@
 
     <delete id="deleteProductList" parameterType="java.util.List">
         <foreach collection="deleteProductIdList" item="productId" open="" close="" separator=";">
-            DELETE FROM PRODUCT WHERE id = #{productId}
+            DELETE FROM product WHERE id = #{productId}
         </foreach>
     </delete>
 
