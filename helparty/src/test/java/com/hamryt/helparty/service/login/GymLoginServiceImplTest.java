@@ -43,16 +43,10 @@ class GymLoginServiceImplTest {
         String gymName = "test";
         String phoneNumber = "01012345678";
         String addressCode = "0123";
+        String addressDetail = "seoul";
         UserType userType = UserType.GYM;
         
-        GymDTO mockGym = GymDTO.builder()
-            .email(email)
-            .password(encryptedPassword)
-            .gymName(gymName)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .userType(userType)
-            .build();
+        GymDTO mockGym = GymDTO.create(null, email, gymName, encryptedPassword, phoneNumber, addressCode, addressDetail, userType);
         
         given(gymService.findGymByEmailAndPassword(eq(email), eq(encryptedPassword)))
             .willReturn(mockGym);

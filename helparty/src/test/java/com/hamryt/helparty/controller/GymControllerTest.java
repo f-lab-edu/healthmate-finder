@@ -3,9 +3,7 @@ package com.hamryt.helparty.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,7 +32,6 @@ class GymControllerTest {
     
     @MockBean
     private GymServiceImpl gymService;
-    
     
     ObjectMapper mapper = new ObjectMapper();
     
@@ -70,60 +67,17 @@ class GymControllerTest {
         verify(gymService).insertGym(any());
     }
     
-    @Test
-    @DisplayName("운동시설 관리자 계정 정보 업데이트 성공하면 해당 업데이트 내역을 반환한다.")
-    public void update_Success() throws Exception {
-        
-        UpdateGymRequest updateGymRequest =
-            getUpdateGymRequest(gymName, password, phoneNumber, addressCode, addressDetail,
-                userType);
-        
-        UpdateGymResponse updateGymResponse =
-            getUpdateGymResponse(1004L, password, phoneNumber, addressCode, addressDetail);
-        
-        String request = mapper.writeValueAsString(updateGymRequest);
-        given(gymService.updateGym(any(), any())).willReturn(updateGymResponse);
-        
-        mvc.perform(put("/gyms")
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .content(request))
-            .andExpect(status().isOk());
-        
-        verify(gymService).updateGym(any(), any());
-    }
-    
-    @Test
-    @DisplayName("운동시설 관리자 계정 삭제 성공시 상태 코드 200을 반환")
-    public void delete_Success() throws Exception {
-        mvc.perform(delete("/gyms"))
-            .andExpect(status().isOk());
-        
-        verify(gymService).deleteGym(any());
-    }
-    
     private UpdateGymRequest getUpdateGymRequest(String gymName, String password,
         String phoneNumber, String addressCode, String addressDetail, UserType userType) {
-        return UpdateGymRequest.builder()
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
+        return UpdateGymRequest
+            .create(gymName, password, phoneNumber, addressCode, addressDetail, userType);
     }
     
     private SignUpGymRequest getSignGymRequest(String email, String gymName, String password,
         String phoneNumber, String addressCode, String addressDetail, UserType userType) {
-        return SignUpGymRequest.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber(phoneNumber)
-            .addressCode(addressCode)
-            .addressDetail(addressDetail)
-            .userType(userType)
-            .build();
+        return SignUpGymRequest
+            .create(email, gymName, password, phoneNumber, addressCode, addressDetail, userType);
+        
     }
     
     private UpdateGymResponse getUpdateGymResponse(Long id, String password, String phoneNumber,
