@@ -19,61 +19,62 @@ import javax.validation.constraints.NotEmpty
 @Service
 class GymServiceImpl(
 
-        private val encryptor: Encryptor,
+    private val encryptor: Encryptor,
 
-        private val gymMapper: GymMapper
+    private val gymMapper: GymMapper
 
 ) : GymService {
 
     override fun insertGym(resource: SignUpGymRequest): SignUpGymResponse {
         resource.userType.validEqualUserType("GYM")
 
-        if(isExistsEmail(resource.email)){
+        if (isExistsEmail(resource.email)) {
             throw EmailExistedException(resource.email)
         }
 
-        var encodedpassword = encryptor.encrypt(resource.password)
+        val encodedpassword = encryptor.encrypt(resource.password)
 
-        var newGym = GymDTO.create(
-                null,
-                resource.email,
-                resource.gymName,
-                encodedpassword,
-                resource.phoneNumber,
-                resource.addressCode,
-                resource.addressDetail,
-                resource.userType
+        val newGym = GymDTO.create(
+            null,
+            resource.email,
+            resource.gymName,
+            encodedpassword,
+            resource.phoneNumber,
+            resource.addressCode,
+            resource.addressDetail,
+            resource.userType
         )
 
-        if(gymMapper.insertGym(newGym) != 1){throw InsertGymFailedException()}
+        if (gymMapper.insertGym(newGym) != 1) {
+            throw InsertGymFailedException()
+        }
 
         return SignUpGymResponse.of(newGym)
     }
 
     @Transactional(readOnly = true)
     override fun findGymByEmailAndPassword(email: String, password: String): GymDTO {
-        return gymMapper.findGymByEmailAndPassword(email, password)?: throw GymNotFoundException(email)
+        return gymMapper.findGymByEmailAndPassword(email, password) ?: throw GymNotFoundException(email)
     }
 
     override fun updateGym(loginId: Long, updateGymRequest: UpdateGymRequest): UpdateGymResponse {
-        var encodedPassword = encryptor.encrypt(updateGymRequest.password)
+        val encodedPassword = encryptor.encrypt(updateGymRequest.password)
 
-        var updateGymResponse = UpdateGymResponse.of(loginId, encodedPassword, updateGymRequest)
+        val updateGymResponse = UpdateGymResponse.of(loginId, encodedPassword, updateGymRequest)
 
-        if(gymMapper.updateGym(updateGymResponse)!=1){
-            throw UpdateFailedException(loginId);
+        if (gymMapper.updateGym(updateGymResponse) != 1) {
+            throw UpdateFailedException(loginId)
         }
 
         return updateGymResponse
     }
 
     override fun deleteGym(loginId: Long) {
-        if(gymMapper.deleteGymById(loginId) != 1){
+        if (gymMapper.deleteGymById(loginId) != 1) {
             throw GymDeleteFailedException(loginId)
         }
     }
 
     @Transactional(readOnly = true)
     private fun isExistsEmail(email: @NotEmpty String) = gymMapper.isExistsEmail(email)
-
 }

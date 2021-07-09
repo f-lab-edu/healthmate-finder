@@ -16,15 +16,15 @@ class GymController(private val gymService: GymService) {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     fun signUpGym(@Valid @RequestBody resource: SignUpGymRequest) =
-            gymService.insertGym(resource)
+        gymService.insertGym(resource)
 
     @LoginValidation
     @PutMapping
     fun updateGym(@LoginId loginId: Long, @Valid @RequestBody updateGymRequest: UpdateGymRequest) =
-            gymService.updateGym(loginId, updateGymRequest)
+        gymService.updateGym(loginId, updateGymRequest)
 
     @LoginValidation
     @DeleteMapping
     fun deleteGym(@LoginId loginId: Long) =
-            gymService.deleteGym(loginId)
+        gymService.deleteGym(loginId)
 }
