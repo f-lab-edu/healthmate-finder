@@ -1,0 +1,30 @@
+pipeline{
+ 
+  agent any
+  
+  tools{
+    gradle 'gradle 5.0'
+  }
+  
+  stages{
+    stage('Poll'){
+      steps{
+        checkout scm
+      }
+    }
+    
+    stage('Build'){
+      steps{
+        sh 'gradle clean build'
+      }
+    }
+    
+    stage('Unit Tests'){
+      steps{
+        junit '**/build/test-results/test/*.xml'
+      }
+    }
+    
+  }
+  
+}
