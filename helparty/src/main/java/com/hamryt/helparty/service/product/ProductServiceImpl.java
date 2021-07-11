@@ -20,7 +20,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper productMapper;
 
     @Transactional
-    public void insertProductList(List<ProductDTO> productList, long gymBoardId) {
+    public void insertProductList(List<ProductDTO> productList, Long gymBoardId) {
 
         if (productMapper.insertProductList(productList, gymBoardId) != productList.size()) {
             throw new InsertProductFailedException(
@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    public void updateProductList(List<ProductDTO> productList, long gymBoardId) {
+    public void updateProductList(List<ProductDTO> productList, Long gymBoardId) {
 
         if (productMapper.updateProductList(productList, gymBoardId) != 1) {
             throw new UpdateProductFailedException(
@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Transactional
-    public void deleteProductList(List<Integer> deleteProductIdList, long gymBoardId) {
+    public void deleteProductList(List<Integer> deleteProductIdList, Long gymBoardId) {
 
         if (productMapper.deleteProductList(deleteProductIdList, gymBoardId) != 1) {
             throw new DeleteProductFailedException(
