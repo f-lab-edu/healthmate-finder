@@ -1,26 +1,25 @@
 package com.hamryt.helparty.service.product;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.BDDMockito.given;
+
 import com.hamryt.helparty.dto.board.product.ProductDTO;
 import com.hamryt.helparty.dto.board.product.ProductDTO.BoardType;
 import com.hamryt.helparty.exception.product.DeleteProductFailedException;
 import com.hamryt.helparty.exception.product.InsertProductFailedException;
 import com.hamryt.helparty.exception.product.UpdateProductFailedException;
 import com.hamryt.helparty.mapper.ProductMapper;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
@@ -59,7 +58,7 @@ class ProductServiceImplTest {
 
         InsertProductFailedException insertProductFailedException
             = assertThrows(InsertProductFailedException.class,
-            () -> productService.insertProductList(mockProductList, 1004));
+            () -> productService.insertProductList(mockProductList, 1004L));
 
         assertEquals("데이터베이스에 상품 리스트 insert 실패. gymBoardId: " + 1004,
             insertProductFailedException.getMessage());
@@ -110,7 +109,7 @@ class ProductServiceImplTest {
 
         DeleteProductFailedException deleteProductFailedException
             = assertThrows(DeleteProductFailedException.class,
-            () -> productService.deleteProductList(deleteProductIdList, 1004));
+            () -> productService.deleteProductList(deleteProductIdList, 1004L));
 
         assertEquals("데이터베이스에 상품 리스트 Delete 실패. gymBoardId: 1004", deleteProductFailedException.getMessage());
     }
