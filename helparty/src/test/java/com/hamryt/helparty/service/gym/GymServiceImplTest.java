@@ -49,34 +49,18 @@ class GymServiceImplTest {
     UserType userTypeGym = UserType.GYM;
     UserType userTypeUser = UserType.USER;
     
-    SignUpGymRequest signUpGymRequestGym = SignUpGymRequest.builder()
-        .email(email)
-        .gymName(gymName)
-        .password(password)
-        .phoneNumber(phoneNumber)
-        .addressCode(addressCode)
-        .addressDetail(addressDetail)
-        .userType(userTypeGym)
-        .build();
+    SignUpGymRequest signUpGymRequestGym = SignUpGymRequest.create(
+        email, gymName, password, phoneNumber, addressCode, addressDetail, userTypeGym
+    );
     
-    SignUpGymRequest signUpGymRequestUser = SignUpGymRequest.builder()
-        .email(email)
-        .gymName(gymName)
-        .password(password)
-        .phoneNumber(phoneNumber)
-        .addressCode(addressCode)
-        .addressDetail(addressDetail)
-        .userType(userTypeUser)
-        .build();
+    SignUpGymRequest signUpGymRequestUser = SignUpGymRequest.create(
+        email, gymName, password, phoneNumber, addressCode, addressDetail, userTypeUser
+    );
     
-    UpdateGymRequest updateGymRequest = UpdateGymRequest.builder()
-        .gymName(gymName)
-        .password(password)
-        .phoneNumber(phoneNumber)
-        .addressCode(addressCode)
-        .addressDetail(addressDetail)
-        .userType(userTypeGym)
-        .build();
+    
+    UpdateGymRequest updateGymRequest = UpdateGymRequest.create(
+        gymName, password, phoneNumber, addressCode, addressDetail, userTypeGym
+    );
     
     @Test
     @DisplayName("운동 시설 관리자 계정정보 수정 성공")
@@ -109,6 +93,7 @@ class GymServiceImplTest {
         
         given(gymMapper.isExistsEmail(any())).willReturn(false);
         given(gymMapper.insertGym(any())).willReturn(1);
+        given(encryptor.encrypt(any())).willReturn("encodedPassword");
         
         SignUpGymResponse signUpGymResponse = gymService.insertGym(signUpGymRequestGym);
         
@@ -124,7 +109,8 @@ class GymServiceImplTest {
             = assertThrows(PermissionException.class,
             () -> gymService.insertGym(signUpGymRequestUser));
         
-        assertEquals("403 FORBIDDEN \"This UserType does not appropriate for the board. this.userType: USER, AuthType: GYM\"",
+        assertEquals(
+            "403 FORBIDDEN \"This UserType does not appropriate for the board. this.userType: USER, AuthType: GYM\"",
             permissionException.getMessage());
     }
     
@@ -148,6 +134,7 @@ class GymServiceImplTest {
         
         given(gymMapper.isExistsEmail(any())).willReturn(false);
         given(gymMapper.insertGym(any())).willReturn(0);
+        given(encryptor.encrypt(any())).willReturn("encodedPassword");
         
         InsertGymFailedException insertGymFailedException
             = assertThrows(InsertGymFailedException.class,
@@ -161,15 +148,8 @@ class GymServiceImplTest {
     @DisplayName("Eamil과 Password로 GymDTO 조회 성공")
     public void findGymByEmailAndPassword_Success() {
         
-        GymDTO MockGym = GymDTO.builder()
-            .email(email)
-            .gymName(gymName)
-            .password(password)
-            .phoneNumber("01012345678")
-            .addressCode("0123")
-            .addressDetail("seoul")
-            .userType(UserType.GYM)
-            .build();
+        GymDTO MockGym = GymDTO
+            .create(null, email, gymName, password, "01012345678", "0123", "seoul", UserType.GYM);
         
         given(gymMapper.findGymByEmailAndPassword(eq(email), eq(password))).willReturn(MockGym);
         

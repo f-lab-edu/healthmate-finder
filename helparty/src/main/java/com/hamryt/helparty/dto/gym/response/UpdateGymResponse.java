@@ -1,11 +1,9 @@
 package com.hamryt.helparty.dto.gym.response;
 
 import com.hamryt.helparty.dto.gym.request.UpdateGymRequest;
-import com.hamryt.helparty.dto.user.response.UpdateUserResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
 @Getter
 @NoArgsConstructor
@@ -37,14 +35,14 @@ public class UpdateGymResponse {
         this.addressDetail = addressDetail;
     }
     
-    public static UpdateGymResponse of(Long id, String encodedPassword, UpdateGymRequest udpateGymRequest){
+    public static UpdateGymResponse of(Long id, String encodedPassword, UpdateGymRequest updateGymRequest){
         return UpdateGymResponse.builder()
             .id(id)
             .password(encodedPassword)
-            .gymName(udpateGymRequest.getGymName())
-            .phoneNumber(udpateGymRequest.getPhoneNumber())
-            .addressCode(udpateGymRequest.getAddressCode())
-            .addressDetail(udpateGymRequest.getAddressDetail())
+            .gymName(updateGymRequest.getGymName())
+            .phoneNumber(updateGymRequest.getPhoneNumber())
+            .addressCode(updateGymRequest.getAddressCode())
+            .addressDetail(updateGymRequest.getAddressDetail())
             .build();
     }
     
