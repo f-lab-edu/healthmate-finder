@@ -76,5 +76,5 @@ class GymServiceImpl(
     }
 
     @Transactional(readOnly = true)
-    private fun isExistsEmail(email: @NotEmpty String) = gymMapper.isExistsEmail(email)
+    fun isExistsEmail(email: @NotEmpty String) = gymMapper.isExistsEmail(email)
 }
