@@ -39,16 +39,17 @@ class GymLoginServiceImplTest {
     @DisplayName("운동시설 관리자 로그인 성공")
     public void loginGym_Success() {
         
-        String encryptedPassword = encryptor.encrypt(password);
+        String password = "password";
         String gymName = "test";
         String phoneNumber = "01012345678";
         String addressCode = "0123";
         String addressDetail = "seoul";
         UserType userType = UserType.GYM;
         
-        GymDTO mockGym = GymDTO.create(null, email, gymName, encryptedPassword, phoneNumber, addressCode, addressDetail, userType);
-        
-        given(gymService.findGymByEmailAndPassword(eq(email), eq(encryptedPassword)))
+        GymDTO mockGym = GymDTO.create(null, email, gymName, password, phoneNumber, addressCode, addressDetail, userType);
+
+        given(encryptor.encrypt(eq(password))).willReturn(password);
+        given(gymService.findGymByEmailAndPassword(eq(email), eq(password)))
             .willReturn(mockGym);
         
         LoginDTO loginDTO = loginService.login(email, password);

@@ -59,7 +59,7 @@ class ProductServiceImplTest {
 
         InsertProductFailedException insertProductFailedException
             = assertThrows(InsertProductFailedException.class,
-            () -> productService.insertProductList(mockProductList, 1004));
+            () -> productService.insertProductList(mockProductList, 1004L));
 
         assertEquals("데이터베이스에 상품 리스트 insert 실패. gymBoardId: " + 1004,
             insertProductFailedException.getMessage());
@@ -110,7 +110,7 @@ class ProductServiceImplTest {
 
         DeleteProductFailedException deleteProductFailedException
             = assertThrows(DeleteProductFailedException.class,
-            () -> productService.deleteProductList(deleteProductIdList, 1004));
+            () -> productService.deleteProductList(deleteProductIdList, 1004L));
 
         assertEquals("데이터베이스에 상품 리스트 Delete 실패. gymBoardId: 1004", deleteProductFailedException.getMessage());
     }
