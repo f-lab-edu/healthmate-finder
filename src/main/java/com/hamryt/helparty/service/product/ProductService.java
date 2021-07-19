@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ProductService {
 
-    void insertProductList(List<ProductDTO> productList, long gymBoardId);
+    void insertProductList(List<ProductDTO> productList, Long gymBoardId);
 
-    void updateProductList(List<ProductDTO> productList, long gymBoardId);
+    void updateProductList(List<ProductDTO> productList, Long gymBoardId);
 
-    void deleteProductList(List<Integer> deleteProductIdList, long gymBoardId);
+    void deleteProductList(List<Integer> deleteProductIdList, Long gymBoardId);
 }
