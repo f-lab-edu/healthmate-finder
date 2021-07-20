@@ -4,4 +4,4 @@ EXPOSE 8080
 
 COPY build/libs/*.jar helparty.jar
 
-ENTRYPOINT ["java", "--spring.config.location=classpath:file:/app/application-dev.yml", "-jar", "/helparty.jar"]
+ENTRYPOINT ["java", "-jar", "/helparty.jar", "--spring.config.location=classpath:file:/app/application-dev.yml"]
