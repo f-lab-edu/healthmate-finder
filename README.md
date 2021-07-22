@@ -9,7 +9,8 @@
 
 # 프로젝트의 전체적인 구조
 
-![프로젝트 구조도](https://user-images.githubusercontent.com/25305130/121920868-6be47700-cd73-11eb-8b00-318f46a39391.png)   
+![프로젝트 구조도 (2)](https://user-images.githubusercontent.com/25305130/126603634-65653d56-3908-4214-9af8-37a95d6d12bb.png)
+
 
 # DB ERD
 ![helparty erd](https://user-images.githubusercontent.com/25305130/121939907-7e1ce000-cd88-11eb-8997-f84f2f6e4e8f.png)
